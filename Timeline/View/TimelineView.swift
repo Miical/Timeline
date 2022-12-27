@@ -14,11 +14,15 @@ struct TimelineView: View {
         TabView {
             timelineBody.tabItem {
                 Image(systemName: "1.circle")
-                Text("Tab 1")
+                Text("时间轴")
             }
             TimingView().tabItem {
                 Image(systemName: "2.circle")
-                Text("Tab 2")
+                Text("计时")
+            }
+            TaskCategoryManagementView().tabItem {
+                Image(systemName: "3.circle")
+                Text("类别管理")
             }
         }
     }

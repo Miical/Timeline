@@ -41,5 +41,12 @@ class Timeline: ObservableObject {
         taskCategoryModel.taskCategoryList
     }
     
+    func removeTaskCategory(at offsets: IndexSet) {
+        taskCategoryModel.removeTaskCategory(at: offsets)
+    }
+    
+    func moveTaskCategory(from offsets: IndexSet, to newOffset: Int) {
+        taskCategoryModel.moveTaskCategory(from: offsets, to: newOffset)
+    }
     
 }

@@ -30,4 +30,14 @@ struct TaskCategoryManager {
             id: 3))
     }
     
+    mutating func removeTaskCategory(at offsets: IndexSet) {
+        taskCategoryList.remove(atOffsets: offsets)
+    }
+    
+    mutating func moveTaskCategory(from offsets: IndexSet, to newOffset: Int) {
+        taskCategoryList.move(fromOffsets: offsets, toOffset: newOffset)
+    }
+    
+    
+    
 }
