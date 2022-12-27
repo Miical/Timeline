@@ -11,12 +11,21 @@ enum Record: Codable, Identifiable {
     case completedTask(CompletedTask)
     case plannedTask(PlannedTask)
     
-    func getTime() -> Date? {
+    func getBeginTime() -> Date? {
         switch self {
         case let .completedTask(task):
             return task.beginTime
         case let .plannedTask(task):
             return task.beginTime
+        }
+    }
+    
+    func getEndTime() -> Date? {
+        switch self {
+        case let .completedTask(task):
+            return task.endTime
+        case let .plannedTask(task):
+            return task.endTime
         }
     }
     

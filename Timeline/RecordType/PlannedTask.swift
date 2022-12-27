@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct PlannedTask: Codable, Identifiable {
+struct PlannedTask: Recordable {
     var beginTime: Date
-    var durationInSeconds: Int
+    var endTime: Date
     var taskCategory: TaskCategory
     var id: Int
 }

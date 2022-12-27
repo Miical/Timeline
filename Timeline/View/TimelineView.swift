@@ -11,23 +11,56 @@ struct TimelineView: View {
     var timeline: Timeline
     
     var body: some View {
-        Text("时光轴")
         VStack {
-            ForEach(timeline.allRecord(for: Date())) { record in
-                EventCard(record: record).padding(.all)
+            Text("时光轴")
+            ScrollView {
+                VStack {
+                    ForEach(timeline.allRecord(for: Date())) { record in
+                        EventCard(record: record).padding(.all)
+                    }
+                }
             }
         }
     }
+    
 }
 
 struct EventCard: View {
     var record: Record
     
     var body: some View {
-        ZStack {
-            Rectangle().stroke(lineWidth: 3)
-            Text("\(record.getTime()!)")
+        switch record {
+        case let .completedTask(completedTask):
+            ZStack {
+                Rectangle().stroke(lineWidth: 3)
+                VStack {
+                    Text("\(getTimeText(of: completedTask.beginTime)) - \(getTimeText(of: record.getEndTime()!))")
+                    Text("时长：\(completedTask.durationInSeconds)")
+                    Text("类别：\(completedTask.taskCategory.name)")
+                }
+                
+            }
+        case let .plannedTask(plannedTask):
+            ZStack {
+                Rectangle().stroke(lineWidth: 3)
+                VStack {
+                    Text("计划")
+                    Text("\(getTimeText(of: plannedTask.beginTime)) - \(getTimeText(of: record.getEndTime()!))")
+                    Text("时长：\(plannedTask.durationInSeconds)")
+                    Text("类别：\(plannedTask.taskCategory.name)")
+                }
+                
+            }
+        default:
+            Text("other")
         }
+    }
+    
+    // 将 Date 类型转换为 hh:mm:ss 格式的字符串
+    func getTimeText(of time: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm:ss"
+        return dateFormatter.string(from: time)
     }
     
 }
