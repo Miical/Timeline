@@ -20,6 +20,14 @@ struct TaskCategoryManager {
             name: "Sport",
             themeColor: RGBAColor(red: 0, green: 255, blue: 0, alpha: 1),
             id: 1))
+        taskCategoryList.append(TaskCategory(
+            name: "Art",
+            themeColor: RGBAColor(red: 0, green: 0, blue: 255, alpha: 1),
+            id: 2))
+        taskCategoryList.append(TaskCategory(
+            name: "Study",
+            themeColor: RGBAColor(red: 0, green: 255, blue: 255, alpha: 1),
+            id: 3))
     }
     
 }

@@ -24,13 +24,17 @@ struct TimingView: View {
                 .font(.largeTitle)
                 .fontWeight(.medium)
             Spacer()
+            taskCategoriesBody
+            Spacer()
             if timeline.ongoingTask == nil {
                 Button("Start") {
-                    timeCostInSeconds = 0
-                    timeline.startATask(of: timeline.taskCategoryList[0], at: Date())
-                    timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                        timeCostInSeconds = Calendar.current.dateComponents([.second],
-                            from: timeline.ongoingTask!.1, to: Date()).second!
+                    if selectedTaskCategory != nil {
+                        timeCostInSeconds = 0
+                        timeline.startATask(of: selectedTaskCategory!, at: Date())
+                        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                            timeCostInSeconds = Calendar.current.dateComponents([.second],
+                                from: timeline.ongoingTask!.1, to: Date()).second!
+                        }
                     }
                 }
             } else {
@@ -40,6 +44,19 @@ struct TimingView: View {
                 }
             }
         }
+    }
+    
+    @State var selectedTaskCategory: TaskCategory?
+    
+    var taskCategoriesBody: some View {
+        VStack {
+            ForEach(timeline.taskCategoryList) { taskCategory in
+                Text(taskCategory.name).onTapGesture {
+                    selectedTaskCategory = taskCategory
+                }.font(selectedTaskCategory?.id == taskCategory.id ? .title : .title2)
+            }
+        }
+        
     }
 }
 

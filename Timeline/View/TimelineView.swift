@@ -52,6 +52,7 @@ struct EventCard: View {
                     Text("\(getTimeText(of: completedTask.beginTime)) - \(getTimeText(of: record.getEndTime()!))")
                     Text("时长：\(completedTask.durationInSeconds) s")
                     Text("类别：\(completedTask.taskCategory.name)")
+                        .foregroundColor(Color(rgbaColor: completedTask.taskCategory.themeColor))
                 }
                 
             }
@@ -63,6 +64,7 @@ struct EventCard: View {
                     Text("\(getTimeText(of: plannedTask.beginTime)) - \(getTimeText(of: record.getEndTime()!))")
                     Text("时长：\(plannedTask.durationInSeconds) s")
                     Text("类别：\(plannedTask.taskCategory.name)")
+                        .foregroundColor(Color(rgbaColor: plannedTask.taskCategory.themeColor))
                 }
                 
             }
