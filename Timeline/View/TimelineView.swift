@@ -33,6 +33,7 @@ struct TimelineView: View {
                     }
                 }
             }
+            Spacer()
         }
     }
     
