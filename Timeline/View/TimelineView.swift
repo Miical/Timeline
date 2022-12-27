@@ -8,9 +8,22 @@
 import SwiftUI
 
 struct TimelineView: View {
-    var timeline: Timeline
+    @EnvironmentObject var timeline: Timeline
     
     var body: some View {
+        TabView {
+            timelineBody.tabItem {
+                Image(systemName: "1.circle")
+                Text("Tab 1")
+            }
+            TimingView().tabItem {
+                Image(systemName: "2.circle")
+                Text("Tab 2")
+            }
+        }
+    }
+    
+    var timelineBody: some View {
         VStack {
             Text("时光轴")
             ScrollView {
@@ -34,8 +47,9 @@ struct EventCard: View {
             ZStack {
                 Rectangle().stroke(lineWidth: 3)
                 VStack {
+                    Text("已完成")
                     Text("\(getTimeText(of: completedTask.beginTime)) - \(getTimeText(of: record.getEndTime()!))")
-                    Text("时长：\(completedTask.durationInSeconds)")
+                    Text("时长：\(completedTask.durationInSeconds) s")
                     Text("类别：\(completedTask.taskCategory.name)")
                 }
                 
@@ -46,13 +60,11 @@ struct EventCard: View {
                 VStack {
                     Text("计划")
                     Text("\(getTimeText(of: plannedTask.beginTime)) - \(getTimeText(of: record.getEndTime()!))")
-                    Text("时长：\(plannedTask.durationInSeconds)")
+                    Text("时长：\(plannedTask.durationInSeconds) s")
                     Text("类别：\(plannedTask.taskCategory.name)")
                 }
                 
             }
-        default:
-            Text("other")
         }
     }
     
@@ -67,7 +79,7 @@ struct EventCard: View {
 
 struct TimelineView_Previews: PreviewProvider {
     static var previews: some View {
-        let timeline = Timeline()
-        TimelineView(timeline: timeline)
+        TimelineView()
+            .environmentObject(Timeline())
     }
 }

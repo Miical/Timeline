@@ -8,7 +8,7 @@
 import Foundation
 
 struct TaskCategoryManager {
-    var taskCategoryList: [TaskCategory]
+    private(set) var taskCategoryList: [TaskCategory]
     
     init() {
         taskCategoryList = []

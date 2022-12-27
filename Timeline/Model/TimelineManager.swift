@@ -12,6 +12,7 @@ struct TimelineManager {
     
     init() {
         recordList = []
+        ongoingTask = nil
         for h in 1..<12 {
             recordList.append(
                 .completedTask(CompletedTask(
@@ -49,7 +50,8 @@ struct TimelineManager {
     // MARK: - 管理任务执行
     
     // 正在进行的任务，包含任务类别以及任务的开始时间
-    private var ongoingTask: (TaskCategory, Date)?
+    typealias OngoingTask = (TaskCategory, Date)?
+    private(set) var ongoingTask: OngoingTask
     
     mutating func startATask(of taskCategory: TaskCategory, at time: Date) {
         assert(ongoingTask == nil, "there is a task in progress")

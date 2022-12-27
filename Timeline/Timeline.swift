@@ -21,6 +21,25 @@ class Timeline: ObservableObject {
         return timelineModel.allRecord(for: date)
     }
     
+    // MARK: - 管理任务执行
+    
+    var ongoingTask: TimelineManager.OngoingTask {
+        return timelineModel.ongoingTask
+    }
+    
+    func startATask(of taskCategory: TaskCategory, at time: Date) {
+        timelineModel.startATask(of: taskCategory, at: time)
+    }
+    
+    func endTask(at time: Date) {
+        timelineModel.endTask(at: time)
+    }
+    
+    // MARK: - 管理任务类别
+    
+    var taskCategoryList: [TaskCategory] {
+        taskCategoryModel.taskCategoryList
+    }
     
     
 }

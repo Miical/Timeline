@@ -9,10 +9,11 @@ import SwiftUI
 
 @main
 struct TimelineApp: App {
-    var timeline = Timeline()
+    @StateObject var timeline = Timeline()
     var body: some Scene {
         WindowGroup {
-            TimelineView(timeline: timeline)
+            TimelineView()
+                .environmentObject(timeline)
         }
     }
 }
