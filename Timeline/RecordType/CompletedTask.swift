@@ -10,6 +10,6 @@ import Foundation
 struct CompletedTask: Recordable {
     var beginTime: Date
     var endTime: Date
-    var taskCategory: TaskCategory
+    var taskCategoryName: String
     var id: Int
 }

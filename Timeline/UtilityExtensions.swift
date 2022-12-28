@@ -29,3 +29,35 @@ extension RGBAColor {
         self.init(red: Double(red), green: Double(green), blue: Double(blue), alpha: Double(alpha))
     }
 }
+
+
+// 添加对可识别元素的扩展，方便使用下标或函数定位或删除具有相同id的元素
+
+extension Collection where Element: Identifiable {
+    func index(matching element: Element) -> Self.Index? {
+        firstIndex(where: { $0.id == element.id })
+    }
+}
+
+extension RangeReplaceableCollection where Element: Identifiable {
+    mutating func remove(_ element: Element) {
+        if let index = index(matching: element) {
+            remove(at: index)
+        }
+    }
+
+    subscript(_ element: Element) -> Element {
+        get {
+            if let index = index(matching: element) {
+                return self[index]
+            } else {
+                return element
+            }
+        }
+        set {
+            if let index = index(matching: element) {
+                replaceSubrange(index...index, with: [newValue])
+            }
+        }
+    }
+}

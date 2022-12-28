@@ -44,6 +44,7 @@ struct TimelineView: View {
 }
 
 struct EventCard: View {
+    @EnvironmentObject var timeline: Timeline
     var record: Record
     
     var body: some View {
@@ -55,8 +56,8 @@ struct EventCard: View {
                     Text("已完成")
                     Text("\(getTimeText(of: completedTask.beginTime)) - \(getTimeText(of: record.getEndTime()!))")
                     Text("时长：\(completedTask.durationInSeconds) s")
-                    Text("类别：\(completedTask.taskCategory.name)")
-                        .foregroundColor(Color(rgbaColor: completedTask.taskCategory.themeColor))
+                    Text("类别：\(completedTask.taskCategoryName)")
+                        .foregroundColor(timeline.getThemeColor(of: completedTask.taskCategoryName))
                 }
                 
             }
@@ -67,8 +68,8 @@ struct EventCard: View {
                     Text("计划")
                     Text("\(getTimeText(of: plannedTask.beginTime)) - \(getTimeText(of: record.getEndTime()!))")
                     Text("时长：\(plannedTask.durationInSeconds) s")
-                    Text("类别：\(plannedTask.taskCategory.name)")
-                        .foregroundColor(Color(rgbaColor: plannedTask.taskCategory.themeColor))
+                    Text("类别：\(plannedTask.taskCategoryName)")
+                        .foregroundColor(timeline.getThemeColor(of: plannedTask.taskCategoryName))
                 }
                 
             }

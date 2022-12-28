@@ -14,6 +14,22 @@ class Timeline: ObservableObject {
     init() {
         taskCategoryModel = TaskCategoryManager()
         timelineModel = TimelineManager()
+        loadDemoContent()
+    }
+    
+    func loadDemoContent() {
+        taskCategoryModel.addTaskCategory(name: "学习", themeColor: RGBAColor(red: 255, green: 0, blue: 0, alpha: 1))
+        taskCategoryModel.addTaskCategory(name: "运动", themeColor: RGBAColor(red: 255, green: 255, blue: 0, alpha: 1))
+        taskCategoryModel.addTaskCategory(name: "玩游戏", themeColor: RGBAColor(red: 255, green: 0, blue: 255, alpha: 1))
+        taskCategoryModel.addTaskCategory(name: "听音乐", themeColor: RGBAColor(red: 0, green: 0, blue: 255, alpha: 1))
+        taskCategoryModel.addTaskCategory(name: "学英语", themeColor: RGBAColor(red: 0, green: 255, blue: 255, alpha: 1))
+        
+        for i in 1..<10 {
+            timelineModel.addCompletedTask(
+                taskCategoryName: taskCategoryList.randomElement()!.name,
+                beginTime: Date(timeIntervalSinceNow: TimeInterval(i * 10)),
+                endTime: Date(timeIntervalSinceNow: TimeInterval(i * 10 + 5)))
+        }
     }
     
     // 按照时间顺序返回指定日期的所有记录
@@ -41,6 +57,17 @@ class Timeline: ObservableObject {
         taskCategoryModel.taskCategoryList
     }
     
+    func getThemeColor(of taskCategoryName: String) -> Color {
+        Color(rgbaColor: taskCategoryList
+            .filter({ $0.id == taskCategoryName })
+            .first! .themeColor)
+    }
+    
+    func addTaskCategory(_ taskCategory: TaskCategory) {
+        taskCategoryModel.addTaskCategory(name: taskCategory.name,
+                                          themeColor: taskCategory.themeColor)
+    }
+    
     func removeTaskCategory(at offsets: IndexSet) {
         taskCategoryModel.removeTaskCategory(at: offsets)
     }
@@ -49,4 +76,8 @@ class Timeline: ObservableObject {
         taskCategoryModel.moveTaskCategory(from: offsets, to: newOffset)
     }
     
+    // 将列表中与 newTaskCategory 具有相同id的元素替换为 newTaskCategory
+    func replaceTaskCategory(with newTaskCategory: TaskCategory) {
+        taskCategoryModel.replaceTaskCategory(with: newTaskCategory)
+    }
 }

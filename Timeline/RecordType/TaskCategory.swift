@@ -10,7 +10,7 @@ import Foundation
 struct TaskCategory: Codable, Identifiable {
     var name: String
     var themeColor: RGBAColor
-    var id: Int
+    var id: String { name }
 }
 
 

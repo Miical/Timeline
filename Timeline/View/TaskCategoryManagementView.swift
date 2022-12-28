@@ -9,11 +9,12 @@ import SwiftUI
 
 struct TaskCategoryManagementView: View {
     @EnvironmentObject var timeline: Timeline
+    
     var body: some View {
         NavigationView {
             List {
                 ForEach(timeline.taskCategoryList) { taskCategory in
-                    NavigationLink(destination: Text("None")) {
+                    NavigationLink(destination: TaskCategoryEditor(taskCategory)) {
                         HStack() {
                             Text(taskCategory.name)
                             Spacer()

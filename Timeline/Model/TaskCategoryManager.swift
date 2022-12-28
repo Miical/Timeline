@@ -12,22 +12,10 @@ struct TaskCategoryManager {
     
     init() {
         taskCategoryList = []
-        taskCategoryList.append(TaskCategory(
-            name: "Game",
-            themeColor: RGBAColor(red: 255, green: 0, blue: 0, alpha: 1),
-            id: 0))
-        taskCategoryList.append(TaskCategory(
-            name: "Sport",
-            themeColor: RGBAColor(red: 0, green: 255, blue: 0, alpha: 1),
-            id: 1))
-        taskCategoryList.append(TaskCategory(
-            name: "Art",
-            themeColor: RGBAColor(red: 0, green: 0, blue: 255, alpha: 1),
-            id: 2))
-        taskCategoryList.append(TaskCategory(
-            name: "Study",
-            themeColor: RGBAColor(red: 0, green: 255, blue: 255, alpha: 1),
-            id: 3))
+    }
+    
+    mutating func addTaskCategory(name: String, themeColor: RGBAColor) {
+        taskCategoryList.append(TaskCategory(name: name, themeColor: themeColor))
     }
     
     mutating func removeTaskCategory(at offsets: IndexSet) {
@@ -38,6 +26,9 @@ struct TaskCategoryManager {
         taskCategoryList.move(fromOffsets: offsets, toOffset: newOffset)
     }
     
-    
+    // 将列表中与 newTaskCategory 具有相同id的元素替换为 newTaskCategory
+    mutating func replaceTaskCategory(with newTaskCategory: TaskCategory) {
+        taskCategoryList[newTaskCategory] = newTaskCategory
+    }
     
 }
