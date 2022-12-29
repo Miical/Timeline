@@ -30,21 +30,15 @@ struct TimingView: View {
             TextField("任务描述", text: $taskDescription)
             Spacer()
             if timeline.ongoingTask == nil {
-                Button("Start") {
-                    if selectedTaskCategory != nil {
-                        timeCostInSeconds = 0
-                        timeline.startATask(of: selectedTaskCategory!, with: taskDescription, at: Date())
-                        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                            timeCostInSeconds = Calendar.current.dateComponents([.second],
-                                from: timeline.ongoingTask!.2, to: Date()).second!
-                        }
-                    }
+                Button("开始") {
+                    startTask()
                 }
             } else {
-                Button("End") {
-                    timeline.endTask(at: Date())
-                    timer?.invalidate()
+                Button("切换任务") {
+                    endTask()
+                    startTask()
                 }
+                Button("结束") { endTask() }
             }
         }
     }
@@ -59,7 +53,22 @@ struct TimingView: View {
                 }.font(selectedTaskCategory?.id == taskCategory.id ? .title : .title2)
             }
         }
-        
+    }
+    
+    func startTask() {
+        if selectedTaskCategory != nil {
+            timeCostInSeconds = 0
+            timeline.startATask(of: selectedTaskCategory!, with: taskDescription, at: Date())
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                timeCostInSeconds = Calendar.current.dateComponents([.second],
+                    from: timeline.ongoingTask!.2, to: Date()).second!
+            }
+        }
+    }
+    
+    func endTask() {
+        timeline.endTask(at: Date())
+        timer?.invalidate()
     }
 }
 
