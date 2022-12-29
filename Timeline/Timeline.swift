@@ -24,24 +24,32 @@ class Timeline: ObservableObject {
         taskCategoryModel.addTaskCategory(name: "听音乐", themeColor: RGBAColor(red: 0, green: 0, blue: 255, alpha: 1))
         taskCategoryModel.addTaskCategory(name: "学英语", themeColor: RGBAColor(red: 0, green: 255, blue: 255, alpha: 1))
         
-        for i in 1..<10 {
+        for i in 1..<4 {
             timelineModel.addCompletedTask(
                 taskCategoryName: taskCategoryList.randomElement()!.name,
-                taskDescription: "示例任务 \(i)", 
+                taskDescription: "示例已完成任务 \(i)",
                 beginTime: Date(timeIntervalSinceNow: TimeInterval(i * 10)),
                 endTime: Date(timeIntervalSinceNow: TimeInterval(i * 10 + 5)))
+        }
+        
+        for i in 1..<4 {
+            timelineModel.addPlannedTask(
+                taskCategoryName: taskCategoryList.randomElement()!.name,
+                taskDescription: "示例计划任务 \(i)",
+                beginTime: Date(timeIntervalSinceNow: TimeInterval(100 + i * 10)),
+                endTime: Date(timeIntervalSinceNow: TimeInterval(100 + i * 10 + 20)))
         }
     }
     
     
     // MARK: - 管理记录
     
-    // 按照时间顺序返回指定日期的所有记录
+    /// 按照时间顺序返回指定日期的所有记录
     func allRecord(for date: Date) -> [Record] {
         return timelineModel.allRecord(for: date)
     }
     
-    // 删除指定id的记录
+    /// 删除指定id的记录
     func removeRecord(at idSet: IndexSet) {
         timelineModel.removeRecord(at: idSet)
     }

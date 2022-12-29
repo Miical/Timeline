@@ -60,8 +60,7 @@ struct TimingView: View {
             timeCostInSeconds = 0
             timeline.startATask(of: selectedTaskCategory!, with: taskDescription, at: Date())
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                timeCostInSeconds = Calendar.current.dateComponents([.second],
-                    from: timeline.ongoingTask!.2, to: Date()).second!
+                timeCostInSeconds = intervalSeconds(between: timeline.ongoingTask!.2, and: Date())
             }
         }
     }

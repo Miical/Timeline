@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		961E5B93295D7DED002C2983 /* UtilityFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B92295D7DED002C2983 /* UtilityFunction.swift */; };
 		962A6DF1295BDB6500FFF169 /* TaskCategoryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */; };
 		962A6DF3295BFA7100FFF169 /* TaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962A6DF2295BFA7100FFF169 /* TaskEditor.swift */; };
 		9630747B295A9A7C00AFE5FC /* CompletedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9630747A295A9A7C00AFE5FC /* CompletedTask.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		961E5B92295D7DED002C2983 /* UtilityFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunction.swift; sourceTree = "<group>"; };
 		962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCategoryEditor.swift; sourceTree = "<group>"; };
 		962A6DF2295BFA7100FFF169 /* TaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditor.swift; sourceTree = "<group>"; };
 		9630747A295A9A7C00AFE5FC /* CompletedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTask.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				96307481295AA44D00AFE5FC /* TimelineApp.swift */,
 				96307492295AD70C00AFE5FC /* UtilityViews.swift */,
 				9630747F295AA04A00AFE5FC /* UtilityExtensions.swift */,
+				961E5B92295D7DED002C2983 /* UtilityFunction.swift */,
 				B61036CB2959EC44007BC4F6 /* Assets.xcassets */,
 				B61036CD2959EC44007BC4F6 /* Preview Content */,
 			);
@@ -213,6 +216,7 @@
 				96D2D229295B43F500F00D4C /* TaskCategoryManagementView.swift in Sources */,
 				96307489295AA6E300AFE5FC /* PlannedTask.swift in Sources */,
 				9630747B295A9A7C00AFE5FC /* CompletedTask.swift in Sources */,
+				961E5B93295D7DED002C2983 /* UtilityFunction.swift in Sources */,
 				96307482295AA44D00AFE5FC /* TimelineApp.swift in Sources */,
 				96307491295AB0FB00AFE5FC /* Timeline.swift in Sources */,
 				962A6DF1295BDB6500FFF169 /* TaskCategoryEditor.swift in Sources */,

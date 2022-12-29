@@ -21,9 +21,17 @@ struct TimelineManager {
             .sorted { record1, record2 in record1.getBeginTime()! < record2.getBeginTime()! }
     }
     
-    // MARK: - 记录的增加、修改、删除
+    // MARK: - 记录管理
     
     var recordCount: Int = 0
+    
+    mutating func removeRecord(at idSet: IndexSet) {
+        for id in idSet {
+            recordList.removeAll(where: { $0.id == id })
+        }
+    }
+    
+    // MARK: - 已完成任务管理
     
     mutating func addCompletedTask(taskCategoryName: String, taskDescription: String,
                                    beginTime: Date,  endTime: Date) {
@@ -36,15 +44,22 @@ struct TimelineManager {
         recordCount += 1
     }
     
-    mutating func removeRecord(at idSet: IndexSet) {
-        for id in idSet {
-            recordList.removeAll(where: { $0.id == id })
-        }
-    }
-    
     mutating func replaceCompletedTask(with newCompletedTask: CompletedTask) {
         recordList.removeAll(where: { $0.id == newCompletedTask.id })
         recordList.append(Record.completedTask(newCompletedTask))
+    }
+    
+    // MARK: - 计划任务管理
+    
+    mutating func addPlannedTask(taskCategoryName: String, taskDescription: String,
+                                 beginTime: Date,  endTime: Date) {
+        recordList.append(.plannedTask(PlannedTask(
+            beginTime: beginTime,
+            endTime: endTime,
+            taskCategoryName: taskCategoryName,
+            taskDescription: taskDescription,
+            id: recordCount)))
+        recordCount += 1
     }
     
     // MARK: - 管理任务执行
