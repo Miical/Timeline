@@ -39,6 +39,12 @@ class Timeline: ObservableObject {
                 beginTime: Date(timeIntervalSinceNow: TimeInterval(100 + i * 10)),
                 endTime: Date(timeIntervalSinceNow: TimeInterval(100 + i * 10 + 20)))
         }
+        
+        for i in 1..<4 {
+            timelineModel.addTodoTask(
+                taskName: "示例代办 \(i)",
+                beginTime: Date(timeIntervalSinceNow: TimeInterval(200 + i * 10)))
+        }
     }
     
     
@@ -78,6 +84,23 @@ class Timeline: ObservableObject {
     
     func modifyPlannedTask(with plannedTask: PlannedTask) {
         timelineModel.modifyPlannedTask(with: plannedTask)
+    }
+    
+    
+    func addTodoTask(taskName: String, beginTime: Date) {
+        timelineModel.addTodoTask(taskName: taskName, beginTime: beginTime)
+    }
+    
+    func completeTodoTask(_ todoTask: TodoTask, at time: Date) {
+        timelineModel.completeTodoTask(todoTask, at: time)
+    }
+    
+    func cancelCompletion(of todoTask: TodoTask) {
+        timelineModel.cancelCompletion(of: todoTask)
+    }
+    
+    func replaceTodoTask(with newTodoTask: TodoTask) {
+        timelineModel.replaceTodoTask(with: newTodoTask)
     }
     
     // MARK: - 管理任务执行

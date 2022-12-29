@@ -76,6 +76,33 @@ struct TimelineManager {
         }
     }
     
+    // MARK: - 代办任务管理
+    
+    mutating func addTodoTask(taskName: String, beginTime: Date) {
+        recordList.append(.todoTask(TodoTask(
+            name: taskName, beginTime: beginTime,id: recordCount)))
+        recordCount += 1
+    }
+    
+    mutating func completeTodoTask(_ todoTask: TodoTask, at time: Date) {
+        recordList.removeAll(where: { $0.id == todoTask.id })
+        var newTodoTask = todoTask
+        newTodoTask.complete(at: time)
+        recordList.append(Record.todoTask(newTodoTask))
+    }
+    
+    mutating func cancelCompletion(of todoTask: TodoTask) {
+        recordList.removeAll(where: { $0.id == todoTask.id })
+        var newTodoTask = todoTask
+        newTodoTask.cancleCompletion()
+        recordList.append(Record.todoTask(newTodoTask))
+    }
+    
+    mutating func replaceTodoTask(with newTodoTask: TodoTask) {
+        recordList.removeAll(where: { $0.id == newTodoTask.id })
+        recordList.append(Record.todoTask(newTodoTask))
+    }
+    
     // MARK: - 管理任务执行
     
     // 正在进行的任务，任务类别, 任务描述，以及任务的开始时间

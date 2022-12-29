@@ -45,6 +45,10 @@ struct TimelineView: View {
                                     plannedTaskToExecute = plannedTask
                                 }
                         }
+                    case .todoTask(let todoTask) :
+                        NavigationLink(destination: TodoTaskEditor(todoTask)){
+                            EventCard(record: record).padding(.all)
+                        }
                     }
                     
                 }
@@ -105,7 +109,24 @@ struct EventCard: View {
                     Text("执行过程：\(plannedTask.totalExecutionTimeInSeconds) s")
                     Text("是否在执行：\(plannedTask.isExecuting ? "是" : "否")")
                 }
-                
+            }
+        case .todoTask(let todoTask) :
+            ZStack {
+                Rectangle().stroke(lineWidth: 3)
+                VStack {
+                    Text("待办任务")
+                    Text("任务名称：\(todoTask.name)")
+                    Text("任务时间\(getTimeText(of: todoTask.beginTime!))")
+                    if todoTask.isComplete {
+                        Button("取消") {
+                            timeline.cancelCompletion(of: todoTask)
+                        }
+                    } else {
+                        Button("完成") {
+                            timeline.completeTodoTask(todoTask, at: Date())
+                        }
+                    }
+                }
             }
         }
     }

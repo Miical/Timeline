@@ -10,6 +10,8 @@
 		961E5B93295D7DED002C2983 /* UtilityFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B92295D7DED002C2983 /* UtilityFunction.swift */; };
 		961E5B95295D8935002C2983 /* PlannedTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B94295D8935002C2983 /* PlannedTaskEditor.swift */; };
 		961E5B97295D9BB4002C2983 /* PlannedTimingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B96295D9BB4002C2983 /* PlannedTimingView.swift */; };
+		961E5B99295DB61F002C2983 /* TodoTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B98295DB61F002C2983 /* TodoTask.swift */; };
+		961E5B9B295DC548002C2983 /* TodoTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B9A295DC548002C2983 /* TodoTaskEditor.swift */; };
 		962A6DF1295BDB6500FFF169 /* TaskCategoryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */; };
 		962A6DF3295BFA7100FFF169 /* CompletedTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962A6DF2295BFA7100FFF169 /* CompletedTaskEditor.swift */; };
 		9630747B295A9A7C00AFE5FC /* CompletedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9630747A295A9A7C00AFE5FC /* CompletedTask.swift */; };
@@ -34,6 +36,8 @@
 		961E5B92295D7DED002C2983 /* UtilityFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunction.swift; sourceTree = "<group>"; };
 		961E5B94295D8935002C2983 /* PlannedTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedTaskEditor.swift; sourceTree = "<group>"; };
 		961E5B96295D9BB4002C2983 /* PlannedTimingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedTimingView.swift; sourceTree = "<group>"; };
+		961E5B98295DB61F002C2983 /* TodoTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTask.swift; sourceTree = "<group>"; };
+		961E5B9A295DC548002C2983 /* TodoTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTaskEditor.swift; sourceTree = "<group>"; };
 		962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCategoryEditor.swift; sourceTree = "<group>"; };
 		962A6DF2295BFA7100FFF169 /* CompletedTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTaskEditor.swift; sourceTree = "<group>"; };
 		9630747A295A9A7C00AFE5FC /* CompletedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTask.swift; sourceTree = "<group>"; };
@@ -82,6 +86,7 @@
 				9630747C295A9CD900AFE5FC /* TaskCategory.swift */,
 				9630747A295A9A7C00AFE5FC /* CompletedTask.swift */,
 				96307488295AA6E300AFE5FC /* PlannedTask.swift */,
+				961E5B98295DB61F002C2983 /* TodoTask.swift */,
 				9630748A295AA87000AFE5FC /* Record.swift */,
 			);
 			path = RecordType;
@@ -97,6 +102,7 @@
 				962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */,
 				962A6DF2295BFA7100FFF169 /* CompletedTaskEditor.swift */,
 				961E5B94295D8935002C2983 /* PlannedTaskEditor.swift */,
+				961E5B9A295DC548002C2983 /* TodoTaskEditor.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -218,7 +224,9 @@
 				96307493295AD70C00AFE5FC /* UtilityViews.swift in Sources */,
 				96307480295AA04A00AFE5FC /* UtilityExtensions.swift in Sources */,
 				962A6DF3295BFA7100FFF169 /* CompletedTaskEditor.swift in Sources */,
+				961E5B99295DB61F002C2983 /* TodoTask.swift in Sources */,
 				9630748F295AB05700AFE5FC /* TaskCategoryManager.swift in Sources */,
+				961E5B9B295DC548002C2983 /* TodoTaskEditor.swift in Sources */,
 				96D2D229295B43F500F00D4C /* TaskCategoryManagementView.swift in Sources */,
 				961E5B95295D8935002C2983 /* PlannedTaskEditor.swift in Sources */,
 				961E5B97295D9BB4002C2983 /* PlannedTimingView.swift in Sources */,

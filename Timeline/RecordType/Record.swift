@@ -10,12 +10,15 @@ import Foundation
 enum Record: Codable, Identifiable {
     case completedTask(CompletedTask)
     case plannedTask(PlannedTask)
+    case todoTask(TodoTask)
     
     func getBeginTime() -> Date? {
         switch self {
         case let .completedTask(task):
             return task.beginTime
         case let .plannedTask(task):
+            return task.beginTime
+        case let .todoTask(task):
             return task.beginTime
         }
     }
@@ -26,6 +29,8 @@ enum Record: Codable, Identifiable {
             return task.endTime
         case let .plannedTask(task):
             return task.endTime
+        default:
+            return nil
         }
     }
     
@@ -34,6 +39,8 @@ enum Record: Codable, Identifiable {
         case let .completedTask(task):
             return task.id
         case let .plannedTask(task):
+            return task.id
+        case let .todoTask(task):
             return task.id
         }
     }
