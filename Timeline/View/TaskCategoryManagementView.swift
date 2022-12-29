@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TaskCategoryManagementView: View {
     @EnvironmentObject var timeline: Timeline
+    @State var newCategoryEditor = false
     
     var body: some View {
         NavigationView {
@@ -29,11 +30,15 @@ struct TaskCategoryManagementView: View {
                     timeline.moveTaskCategory(from: indexSet, to: newOffset)
                 }
             }
-            .navigationTitle("Manage Palettes")
+            .navigationTitle("管理任务类别")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem { EditButton() }
+                ToolbarItem { Button("新建") {
+                    newCategoryEditor = true
+                }}
             }
+            .popover(isPresented: $newCategoryEditor, content: {TaskCategoryEditor(nil)})
         }
     }
 }

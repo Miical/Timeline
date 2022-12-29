@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TimelineView: View {
     @EnvironmentObject var timeline: Timeline
+    @State var completedTaskEditor = false
     
     var body: some View {
         TabView {
@@ -28,19 +29,37 @@ struct TimelineView: View {
     }
     
     var timelineBody: some View {
-        VStack {
-            Text("时光轴")
-            ScrollView {
-                VStack {
-                    ForEach(timeline.allRecord(for: Date())) { record in
-                        EventCard(record: record).padding(.all)
+        NavigationView {
+            List {
+                ForEach(timeline.allRecord(for: Date())) { record in
+                    switch(record) {
+                    case .completedTask(let completedTask) :
+                        NavigationLink(destination: CompletedTaskEditor(completedTask)) {
+                            EventCard(record: record).padding(.all)
+                        }
+                    default:
+                        Text("None")
                     }
+                    
+                }
+                .onDelete { indexSet in
+                    var idSet = IndexSet()
+                    for index in indexSet {
+                        idSet.insert(timeline.allRecord(for: Date())[index].id)
+                    }
+                    timeline.removeRecord(at: idSet)
                 }
             }
+            .navigationTitle("时光轴")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem { EditButton() }
+            }
+            .popover(isPresented: $completedTaskEditor, content: { CompletedTaskEditor(nil) })
+            
             Spacer()
         }
     }
-    
 }
 
 struct EventCard: View {
@@ -51,7 +70,6 @@ struct EventCard: View {
         switch record {
         case let .completedTask(completedTask):
             ZStack {
-                Rectangle().stroke(lineWidth: 3)
                 VStack {
                     Text("已完成")
                     Text("\(getTimeText(of: completedTask.beginTime)) - \(getTimeText(of: record.getEndTime()!))")

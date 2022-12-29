@@ -32,9 +32,26 @@ class Timeline: ObservableObject {
         }
     }
     
+    
+    // MARK: - 管理记录
+    
     // 按照时间顺序返回指定日期的所有记录
     func allRecord(for date: Date) -> [Record] {
         return timelineModel.allRecord(for: date)
+    }
+    
+    // 删除指定id的记录
+    func removeRecord(at idSet: IndexSet) {
+        timelineModel.removeRecord(at: idSet)
+    }
+    
+    func addCompletedTask(taskCategoryName: String, beginTime: Date, endTime: Date) {
+        timelineModel.addCompletedTask(
+            taskCategoryName: taskCategoryName, beginTime: beginTime, endTime: endTime)
+    }
+    
+    func replaceCompletedTask(with newCompletedTask: CompletedTask) {
+        timelineModel.replaceCompletedTask(with: newCompletedTask)
     }
     
     // MARK: - 管理任务执行

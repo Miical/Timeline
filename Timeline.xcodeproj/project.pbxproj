@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		962A6DF1295BDB6500FFF169 /* TaskCategoryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */; };
+		962A6DF3295BFA7100FFF169 /* TaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962A6DF2295BFA7100FFF169 /* TaskEditor.swift */; };
 		9630747B295A9A7C00AFE5FC /* CompletedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9630747A295A9A7C00AFE5FC /* CompletedTask.swift */; };
 		9630747D295A9CD900AFE5FC /* TaskCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9630747C295A9CD900AFE5FC /* TaskCategory.swift */; };
 		96307480295AA04A00AFE5FC /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9630747F295AA04A00AFE5FC /* UtilityExtensions.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCategoryEditor.swift; sourceTree = "<group>"; };
+		962A6DF2295BFA7100FFF169 /* TaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditor.swift; sourceTree = "<group>"; };
 		9630747A295A9A7C00AFE5FC /* CompletedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTask.swift; sourceTree = "<group>"; };
 		9630747C295A9CD900AFE5FC /* TaskCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCategory.swift; sourceTree = "<group>"; };
 		9630747F295AA04A00AFE5FC /* UtilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				96307496295B014300AFE5FC /* TimingView.swift */,
 				96D2D228295B43F500F00D4C /* TaskCategoryManagementView.swift */,
 				962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */,
+				962A6DF2295BFA7100FFF169 /* TaskEditor.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				9630748D295AABED00AFE5FC /* TimelineManager.swift in Sources */,
 				96307493295AD70C00AFE5FC /* UtilityViews.swift in Sources */,
 				96307480295AA04A00AFE5FC /* UtilityExtensions.swift in Sources */,
+				962A6DF3295BFA7100FFF169 /* TaskEditor.swift in Sources */,
 				9630748F295AB05700AFE5FC /* TaskCategoryManager.swift in Sources */,
 				96D2D229295B43F500F00D4C /* TaskCategoryManagementView.swift in Sources */,
 				96307489295AA6E300AFE5FC /* PlannedTask.swift in Sources */,
