@@ -67,7 +67,16 @@ class Timeline: ObservableObject {
         timelineModel.replaceCompletedTask(with: newCompletedTask)
     }
     
-    func modifyCompletedTask(with plannedTask: PlannedTask) {
+    func addPlannedTask(taskCategoryName: String, taskDescription: String,
+                          beginTime: Date, endTime: Date) {
+        timelineModel.addPlannedTask(
+            taskCategoryName: taskCategoryName,
+            taskDescription: taskDescription,
+            beginTime: beginTime,
+            endTime: endTime)
+    }
+    
+    func modifyPlannedTask(with plannedTask: PlannedTask) {
         timelineModel.modifyPlannedTask(with: plannedTask)
     }
     

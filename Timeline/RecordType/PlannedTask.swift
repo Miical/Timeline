@@ -12,6 +12,7 @@ struct PlannedTask: Recordable {
     var endTime: Date
     var taskCategoryName: String
     var taskDescription: String
+    var isOver = false
     var id: Int
     
     /// 存储任务实际执行的时间节点，依次代表：开始、暂停、继续、...、暂停、继续、结束
@@ -36,6 +37,11 @@ struct PlannedTask: Recordable {
     /// 任务是否正在执行
     var isExecuting: Bool {
         taskExecution.count % 2 == 1
+    }
+    
+    /// 任务是否已被执行
+    var isExecuted: Bool {
+        taskExecution.count > 0
     }
     
     /// 切换任务的执行状态

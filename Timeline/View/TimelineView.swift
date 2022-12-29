@@ -10,6 +10,7 @@ import SwiftUI
 struct TimelineView: View {
     @EnvironmentObject var timeline: Timeline
     @State var completedTaskEditor = false
+    @State var plannedTaskToExecute: PlannedTask?
     
     var body: some View {
         TabView {
@@ -40,6 +41,9 @@ struct TimelineView: View {
                     case .plannedTask(let plannedTask):
                         NavigationLink(destination: PlannedTaskEditor(plannedTask)) {
                             EventCard(record: record).padding(.all)
+                                .onLongPressGesture {
+                                    plannedTaskToExecute = plannedTask
+                                }
                         }
                     }
                     
@@ -58,6 +62,11 @@ struct TimelineView: View {
                 ToolbarItem { EditButton() }
             }
             .popover(isPresented: $completedTaskEditor, content: { CompletedTaskEditor(nil) })
+            .sheet(item: $plannedTaskToExecute, content: { plannedTask in
+                PlannedTimingView(plannedTask: plannedTask)
+            })
+            //.sheet(isPresented: , content: {
+             //   PlannedTimingView(plannedTask: plannedTaskToExecute!) })
             
             Spacer()
         }

@@ -33,13 +33,13 @@ struct PlannedTaskEditor: View {
             }
             Button("保存") {
                 if needToAdd {
-                    timeline.addCompletedTask(
+                    timeline.addPlannedTask(
                         taskCategoryName: plannedTask.taskCategoryName,
                         taskDescription: plannedTask.taskDescription,
                         beginTime: plannedTask.beginTime,
                         endTime: plannedTask.endTime)
                 } else {
-                    timeline.modifyCompletedTask(with: plannedTask)
+                    timeline.modifyPlannedTask(with: plannedTask)
                 }
             }.disabled(plannedTask.taskCategoryName == "")
         }
