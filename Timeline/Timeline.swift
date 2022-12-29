@@ -27,6 +27,7 @@ class Timeline: ObservableObject {
         for i in 1..<10 {
             timelineModel.addCompletedTask(
                 taskCategoryName: taskCategoryList.randomElement()!.name,
+                taskDescription: "示例任务 \(i)", 
                 beginTime: Date(timeIntervalSinceNow: TimeInterval(i * 10)),
                 endTime: Date(timeIntervalSinceNow: TimeInterval(i * 10 + 5)))
         }
@@ -45,9 +46,13 @@ class Timeline: ObservableObject {
         timelineModel.removeRecord(at: idSet)
     }
     
-    func addCompletedTask(taskCategoryName: String, beginTime: Date, endTime: Date) {
+    func addCompletedTask(taskCategoryName: String, taskDescription: String,
+                          beginTime: Date, endTime: Date) {
         timelineModel.addCompletedTask(
-            taskCategoryName: taskCategoryName, beginTime: beginTime, endTime: endTime)
+            taskCategoryName: taskCategoryName,
+            taskDescription: taskDescription,
+            beginTime: beginTime,
+            endTime: endTime)
     }
     
     func replaceCompletedTask(with newCompletedTask: CompletedTask) {
@@ -60,8 +65,8 @@ class Timeline: ObservableObject {
         return timelineModel.ongoingTask
     }
     
-    func startATask(of taskCategory: TaskCategory, at time: Date) {
-        timelineModel.startATask(of: taskCategory, at: time)
+    func startATask(of taskCategory: TaskCategory, with taskDescripion: String, at time: Date) {
+        timelineModel.startATask(of: taskCategory, with: taskDescripion, at: time)
     }
     
     func endTask(at time: Date) {

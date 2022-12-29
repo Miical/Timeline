@@ -17,7 +17,7 @@ struct CompletedTaskEditor: View {
         if completedTaskToEdit == nil {
             needToAdd = true
             self._completedTask = State(initialValue: CompletedTask(
-                beginTime: Date(), endTime: Date(), taskCategoryName: "", id: 0))
+                beginTime: Date(), endTime: Date(), taskCategoryName: "", taskDescription: "", id: 0))
         } else {
             needToAdd = false
             self._completedTask = State(initialValue: completedTaskToEdit!)
@@ -28,12 +28,14 @@ struct CompletedTaskEditor: View {
         VStack {
             Form {
                 nameSection
+                taskDescriptionSection
                 timeEditSection
             }
             Button("保存") {
                 if needToAdd {
                     timeline.addCompletedTask(
                         taskCategoryName: completedTask.taskCategoryName,
+                        taskDescription: completedTask.taskDescription,
                         beginTime: completedTask.beginTime,
                         endTime: completedTask.endTime)
                 } else {
@@ -54,6 +56,12 @@ struct CompletedTaskEditor: View {
             } label: {
                 Text("类别：\(completedTask.taskCategoryName)")
             }
+        }
+    }
+    
+    var taskDescriptionSection: some View {
+        Section(header: Text("任务描述")) {
+            TextField("任务描述", text: $completedTask.taskDescription)
         }
     }
     

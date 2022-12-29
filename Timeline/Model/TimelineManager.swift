@@ -25,11 +25,13 @@ struct TimelineManager {
     
     var recordCount: Int = 0
     
-    mutating func addCompletedTask(taskCategoryName: String, beginTime: Date,  endTime: Date) {
+    mutating func addCompletedTask(taskCategoryName: String, taskDescription: String,
+                                   beginTime: Date,  endTime: Date) {
         recordList.append(.completedTask(CompletedTask(
             beginTime: beginTime,
             endTime: endTime,
             taskCategoryName: taskCategoryName,
+            taskDescription: taskDescription,
             id: recordCount)))
         recordCount += 1
     }
@@ -47,18 +49,21 @@ struct TimelineManager {
     
     // MARK: - 管理任务执行
     
-    // 正在进行的任务，包含任务类别以及任务的开始时间
-    typealias OngoingTask = (String, Date)?
+    // 正在进行的任务，任务类别, 任务描述，以及任务的开始时间
+    typealias OngoingTask = (String, String, Date)?
     private(set) var ongoingTask: OngoingTask = nil
     
-    mutating func startATask(of taskCategory: TaskCategory, at time: Date) {
+    mutating func startATask(of taskCategory: TaskCategory, with taskDescription: String, at time: Date) {
         assert(ongoingTask == nil, "there is a task in progress")
-        ongoingTask = (taskCategory.name, time)
+        ongoingTask = (taskCategory.name, taskDescription, time)
     }
     
     mutating func endTask(at time: Date) {
-        addCompletedTask(taskCategoryName: ongoingTask!.0, beginTime: ongoingTask!.1, endTime: time)
+        addCompletedTask(
+            taskCategoryName: ongoingTask!.0,
+            taskDescription: ongoingTask!.1,
+            beginTime: ongoingTask!.2,
+            endTime: time)
         ongoingTask = nil
     }
-    
 }

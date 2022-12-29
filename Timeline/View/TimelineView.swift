@@ -76,6 +76,7 @@ struct EventCard: View {
                     Text("时长：\(completedTask.durationInSeconds) s")
                     Text("类别：\(completedTask.taskCategoryName)")
                         .foregroundColor(timeline.getThemeColor(of: completedTask.taskCategoryName))
+                    Text("任务描述：\(completedTask.taskDescription)")
                 }
                 
             }

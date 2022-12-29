@@ -13,6 +13,7 @@ struct TimingView: View {
     
     @State var timer: Timer?
     @State var timeCostInSeconds: Int = 0
+    @State var taskDescription: String = ""
     var body: some View {
         VStack {
             Spacer()
@@ -26,14 +27,16 @@ struct TimingView: View {
             Spacer()
             taskCategoriesBody
             Spacer()
+            TextField("任务描述", text: $taskDescription)
+            Spacer()
             if timeline.ongoingTask == nil {
                 Button("Start") {
                     if selectedTaskCategory != nil {
                         timeCostInSeconds = 0
-                        timeline.startATask(of: selectedTaskCategory!, at: Date())
+                        timeline.startATask(of: selectedTaskCategory!, with: taskDescription, at: Date())
                         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                             timeCostInSeconds = Calendar.current.dateComponents([.second],
-                                from: timeline.ongoingTask!.1, to: Date()).second!
+                                from: timeline.ongoingTask!.2, to: Date()).second!
                         }
                     }
                 }
