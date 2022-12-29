@@ -62,6 +62,20 @@ struct TimelineManager {
         recordCount += 1
     }
     
+    /// 将列表中相同id的元素信息替换为给定元素信息，但保持执行的相关信息不变。
+    mutating func modifyPlannedTask(with newPlannedTask: PlannedTask) {
+        let oldRecord = recordList.first(where: { $0.id == newPlannedTask.id })!
+        switch oldRecord {
+        case .plannedTask(let oldTask):
+            var task = newPlannedTask
+            task.taskExecution = oldTask.taskExecution
+            recordList.removeAll(where: { $0.id == newPlannedTask.id })
+            recordList.append(Record.plannedTask(newPlannedTask))
+        default:
+            break
+        }
+    }
+    
     // MARK: - 管理任务执行
     
     // 正在进行的任务，任务类别, 任务描述，以及任务的开始时间

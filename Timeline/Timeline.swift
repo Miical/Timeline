@@ -67,6 +67,10 @@ class Timeline: ObservableObject {
         timelineModel.replaceCompletedTask(with: newCompletedTask)
     }
     
+    func modifyCompletedTask(with plannedTask: PlannedTask) {
+        timelineModel.modifyPlannedTask(with: plannedTask)
+    }
+    
     // MARK: - 管理任务执行
     
     var ongoingTask: TimelineManager.OngoingTask {

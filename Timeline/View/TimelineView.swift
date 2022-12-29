@@ -37,8 +37,8 @@ struct TimelineView: View {
                         NavigationLink(destination: CompletedTaskEditor(completedTask)) {
                             EventCard(record: record).padding(.all)
                         }
-                    case .plannedTask:
-                        NavigationLink(destination: Text("None")) {
+                    case .plannedTask(let plannedTask):
+                        NavigationLink(destination: PlannedTaskEditor(plannedTask)) {
                             EventCard(record: record).padding(.all)
                         }
                     }
@@ -93,7 +93,7 @@ struct EventCard: View {
                     Text("类别：\(plannedTask.taskCategoryName)")
                         .foregroundColor(timeline.getThemeColor(of: plannedTask.taskCategoryName))
                     Text("任务描述：\(plannedTask.taskDescription)")
-                    Text("执行过程：\(plannedTask.totalExecutionTimeInSeconds)")
+                    Text("执行过程：\(plannedTask.totalExecutionTimeInSeconds) s")
                     Text("是否在执行：\(plannedTask.isExecuting ? "是" : "否")")
                 }
                 

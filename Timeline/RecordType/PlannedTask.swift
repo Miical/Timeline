@@ -15,7 +15,7 @@ struct PlannedTask: Recordable {
     var id: Int
     
     /// 存储任务实际执行的时间节点，依次代表：开始、暂停、继续、...、暂停、继续、结束
-    private(set) var taskExecution: [Date] = []
+    var taskExecution: [Date] = []
     
     /// 计算任务实际执行时间
     /// 若任务未开始则返回0，
