@@ -10,6 +10,7 @@ import Foundation
 struct TimelineManager {
     private(set) var recordList: [Record] = []
     private(set) var globalTodoTasks: [TodoTask] = []
+    private(set) var repeatPlans: [RepeatPlan] = []
     
     func allRecord(for date: Date) -> [Record] {
         return recordList
@@ -47,14 +48,28 @@ struct TimelineManager {
     
     // MARK: - 计划任务管理
     
+    /// 添加计划任务
+    /// 若指定了isAvailable则该计划任务为重复计划
     mutating func addPlannedTask(taskCategoryName: String, taskDescription: String,
-                                 beginTime: Date,  endTime: Date) {
-        recordList.append(.plannedTask(PlannedTask(
-            beginTime: beginTime,
-            endTime: endTime,
-            taskCategoryName: taskCategoryName,
-            taskDescription: taskDescription,
-            id: recordCount)))
+                                 beginTime: Date,  endTime: Date, isAvailable: [Bool]? = nil) {
+        if isAvailable != nil {
+            recordList.append(.plannedTask(PlannedTask(
+                beginTime: beginTime,
+                endTime: endTime,
+                taskCategoryName: taskCategoryName,
+                taskDescription: taskDescription,
+                id: recordCount)))
+        } else {
+            repeatPlans.append(RepeatPlan(
+                task: .plannedTask(PlannedTask(
+                    beginTime: beginTime,
+                    endTime: endTime,
+                    taskCategoryName: taskCategoryName,
+                    taskDescription: taskDescription,
+                    id: recordCount)),
+                isAvailable: isAvailable!
+            ))
+        }
         recordCount += 1
     }
     
@@ -72,11 +87,20 @@ struct TimelineManager {
         }
     }
     
-    // MARK: - 代办任务管理
+    // MARK: - 待办任务管理
     
-    mutating func addTodoTask(taskName: String, beginTime: Date) {
-        recordList.append(.todoTask(TodoTask(
-            name: taskName, beginTime: beginTime,id: recordCount)))
+    /// 添加待办任务
+    /// 若指定了isAvailable则该计划任务为重复待办任务
+    mutating func addTodoTask(taskName: String, beginTime: Date, isAvailable: [Bool]? = nil) {
+        if isAvailable != nil {
+            recordList.append(.todoTask(TodoTask(
+                name: taskName, beginTime: beginTime,id: recordCount)))
+        } else {
+            repeatPlans.append(RepeatPlan(
+                task: .todoTask(TodoTask(
+                    name: taskName, beginTime: beginTime,id: recordCount)),
+                isAvailable: isAvailable!))
+        }
         recordCount += 1
     }
     
@@ -117,8 +141,23 @@ struct TimelineManager {
     }
     
     mutating func removeGlobalTodoTask(at idSet: IndexSet) {
-        globalTodoTasks.remove(atOffsets: idSet)
+        for id in idSet {
+            globalTodoTasks.removeAll(where: { $0.id == id })
+        }
     }
+    
+    // MARK: - 重复计划管理
+    
+    mutating func removeRepeatPlan(at idSet: IndexSet) {
+        for id in idSet {
+            repeatPlans.removeAll(where: { $0.id == id })
+        }
+    }
+    
+    mutating func replaceRepeatPlan(with newNepeatPlan: RepeatPlan) {
+        repeatPlans[newNepeatPlan] = newNepeatPlan
+    }
+    
     
     // MARK: - 管理任务执行
     

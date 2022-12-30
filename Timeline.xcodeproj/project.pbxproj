@@ -13,6 +13,7 @@
 		961E5B99295DB61F002C2983 /* TodoTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B98295DB61F002C2983 /* TodoTask.swift */; };
 		961E5B9B295DC548002C2983 /* TodoTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B9A295DC548002C2983 /* TodoTaskEditor.swift */; };
 		961E5B9D295E7B68002C2983 /* GlobalTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B9C295E7B68002C2983 /* GlobalTodoView.swift */; };
+		961E5B9F295E8DED002C2983 /* RepeatPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B9E295E8DED002C2983 /* RepeatPlan.swift */; };
 		962A6DF1295BDB6500FFF169 /* TaskCategoryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */; };
 		962A6DF3295BFA7100FFF169 /* CompletedTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962A6DF2295BFA7100FFF169 /* CompletedTaskEditor.swift */; };
 		9630747B295A9A7C00AFE5FC /* CompletedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9630747A295A9A7C00AFE5FC /* CompletedTask.swift */; };
@@ -40,6 +41,7 @@
 		961E5B98295DB61F002C2983 /* TodoTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTask.swift; sourceTree = "<group>"; };
 		961E5B9A295DC548002C2983 /* TodoTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTaskEditor.swift; sourceTree = "<group>"; };
 		961E5B9C295E7B68002C2983 /* GlobalTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalTodoView.swift; sourceTree = "<group>"; };
+		961E5B9E295E8DED002C2983 /* RepeatPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatPlan.swift; sourceTree = "<group>"; };
 		962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCategoryEditor.swift; sourceTree = "<group>"; };
 		962A6DF2295BFA7100FFF169 /* CompletedTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTaskEditor.swift; sourceTree = "<group>"; };
 		9630747A295A9A7C00AFE5FC /* CompletedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTask.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				96307488295AA6E300AFE5FC /* PlannedTask.swift */,
 				961E5B98295DB61F002C2983 /* TodoTask.swift */,
 				9630748A295AA87000AFE5FC /* Record.swift */,
+				961E5B9E295E8DED002C2983 /* RepeatPlan.swift */,
 			);
 			path = RecordType;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				96307489295AA6E300AFE5FC /* PlannedTask.swift in Sources */,
 				961E5B9D295E7B68002C2983 /* GlobalTodoView.swift in Sources */,
 				9630747B295A9A7C00AFE5FC /* CompletedTask.swift in Sources */,
+				961E5B9F295E8DED002C2983 /* RepeatPlan.swift in Sources */,
 				961E5B93295D7DED002C2983 /* UtilityFunction.swift in Sources */,
 				96307482295AA44D00AFE5FC /* TimelineApp.swift in Sources */,
 				96307491295AB0FB00AFE5FC /* Timeline.swift in Sources */,

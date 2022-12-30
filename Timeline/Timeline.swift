@@ -78,12 +78,13 @@ class Timeline: ObservableObject {
     }
     
     func addPlannedTask(taskCategoryName: String, taskDescription: String,
-                          beginTime: Date, endTime: Date) {
+                        beginTime: Date, endTime: Date, isAvailable: [Bool]? = nil) {
         timelineModel.addPlannedTask(
             taskCategoryName: taskCategoryName,
             taskDescription: taskDescription,
             beginTime: beginTime,
-            endTime: endTime)
+            endTime: endTime,
+            isAvailable: isAvailable)
     }
     
     func modifyPlannedTask(with plannedTask: PlannedTask) {
@@ -91,8 +92,9 @@ class Timeline: ObservableObject {
     }
     
     
-    func addTodoTask(taskName: String, beginTime: Date) {
-        timelineModel.addTodoTask(taskName: taskName, beginTime: beginTime)
+    func addTodoTask(taskName: String, beginTime: Date, isAvailable: [Bool]? = nil) {
+        timelineModel.addTodoTask(
+            taskName: taskName, beginTime: beginTime, isAvailable: isAvailable)
     }
     
     func completeTodoTask(_ todoTask: TodoTask, at time: Date) {
@@ -129,6 +131,14 @@ class Timeline: ObservableObject {
     
     func removeGlobalTodoTask(at idSet: IndexSet) {
         timelineModel.removeGlobalTodoTask(at: idSet)
+    }
+    
+    func removeRepeatPlan(at idSet: IndexSet) {
+        timelineModel.removeRecord(at: idSet)
+    }
+    
+    func replaceRepeatPlan(with newNepeatPlan: RepeatPlan) {
+        timelineModel.replaceRepeatPlan(with: newNepeatPlan)
     }
     
     // MARK: - 管理任务执行
