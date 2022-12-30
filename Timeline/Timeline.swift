@@ -38,6 +38,7 @@ class Timeline: ObservableObject {
         do {
             let taskCategoryData: Data = try taskCategoryModel.json()
             try taskCategoryData.write(to: taskCategoryUrl)
+            print("\(taskCategoryData)")
             let timelineData: Data = try timelineModel.json()
             try timelineData.write(to: timelineUrl)
             print("\(thisfunction) success!")

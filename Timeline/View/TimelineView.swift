@@ -11,26 +11,33 @@ struct TimelineView: View {
     @EnvironmentObject var timeline: Timeline
     @State var completedTaskEditor = false
     @State var plannedTaskToExecute: PlannedTask?
+    @State var currentTab: Tab = .timeline
+    
+    init() {
+        UITabBar.appearance().isHidden = true
+    }
     
     var body: some View {
-        TabView {
-            timelineBody.tabItem {
-                Image(systemName: "1.circle")
-                Text("时间轴")
-            }
-            TimingView().tabItem {
-                Image(systemName: "2.circle")
-                Text("计时")
-            }
-            GlobalTodoView().tabItem {
-                Image(systemName: "3.circle")
-                Text("所有待办")
-            }
-            TaskCategoryManagementView().tabItem {
-                Image(systemName: "4.circle")
-                Text("类别管理")
+        VStack(spacing: 0) {
+            TabView(selection: $currentTab) {
+                timelineBody
+                    .applyBackGround()
+                    .tag(Tab.timeline)
+                GlobalTodoView()
+                    .applyBackGround()
+                    .tag(Tab.todo)
+                TimingView()
+                    .applyBackGround()
+                    .tag(Tab.timing)
+                Text("统计")
+                    .applyBackGround()
+                    .tag(Tab.statistics)
+                TaskCategoryManagementView()
+                    .applyBackGround()
+                    .tag(Tab.mine)
             }
         }
+        TimelineTabBar(currentTab: $currentTab)
     }
     
     var timelineBody: some View {
