@@ -34,6 +34,17 @@ enum Record: Codable, Identifiable {
         }
     }
     
+    var attachedRepeatPlan: Int? {
+        switch self {
+        case let .plannedTask(task):
+            return task.attachedRepeatPlanId
+        case let .todoTask(task):
+            return task.attachedRepeatPlanId
+        default:
+            return nil
+        }
+    }
+    
     var id: Int {
         switch self {
         case let .completedTask(task):

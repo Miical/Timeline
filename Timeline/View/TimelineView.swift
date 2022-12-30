@@ -36,7 +36,7 @@ struct TimelineView: View {
     var timelineBody: some View {
         NavigationView {
             List {
-                ForEach(timeline.allRecord(for: Date())) { record in
+                ForEach(timeline.allRecords(for: Date())) { record in
                     switch(record) {
                     case .completedTask(let completedTask) :
                         NavigationLink(destination: CompletedTaskEditor(completedTask)) {
@@ -59,7 +59,7 @@ struct TimelineView: View {
                 .onDelete { indexSet in
                     var idSet = IndexSet()
                     for index in indexSet {
-                        idSet.insert(timeline.allRecord(for: Date())[index].id)
+                        idSet.insert(timeline.allRecords(for: Date())[index].id)
                     }
                     timeline.removeRecord(at: idSet)
                 }

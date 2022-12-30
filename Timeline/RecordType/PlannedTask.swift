@@ -15,6 +15,9 @@ struct PlannedTask: Recordable {
     var isOver = false
     var id: Int
     
+    /// 若指定了该id，则此任务由该id的重复计划产生
+    var attachedRepeatPlanId: Int?
+    
     /// 存储任务实际执行的时间节点，依次代表：开始、暂停、继续、...、暂停、继续、结束
     var taskExecution: [Date] = []
     

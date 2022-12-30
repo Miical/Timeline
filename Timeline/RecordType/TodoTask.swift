@@ -17,6 +17,9 @@ struct TodoTask: Codable, Identifiable {
     var endTime: Date?
     var id: Int
     
+    /// 若指定了该id，则此任务由该id的重复计划产生
+    var attachedRepeatPlanId: Int?
+    
     var isComplete: Bool {
         endTime != nil
     }

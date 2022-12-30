@@ -38,12 +38,22 @@ class Timeline: ObservableObject {
                 taskDescription: "示例计划任务 \(i)",
                 beginTime: Date(timeIntervalSinceNow: TimeInterval(100 + i * 10)),
                 endTime: Date(timeIntervalSinceNow: TimeInterval(100 + i * 10 + 20)))
+            timelineModel.addPlannedTask(
+                taskCategoryName: taskCategoryList.randomElement()!.name,
+                taskDescription: "示例重复计划任务 \(i)",
+                beginTime: Date(timeIntervalSinceNow: TimeInterval(300 + i * 10)),
+                endTime: Date(timeIntervalSinceNow: TimeInterval(300 + i * 10 + 20)),
+                isAvailable: Array(repeating: true, count: 7))
         }
         
         for i in 1..<4 {
             timelineModel.addTodoTask(
                 taskName: "示例代办 \(i)",
                 beginTime: Date(timeIntervalSinceNow: TimeInterval(200 + i * 10)))
+            timelineModel.addTodoTask(
+                taskName: "示例重复代办 \(i)",
+                beginTime: Date(timeIntervalSinceNow: TimeInterval(400 + i * 10)),
+                isAvailable: Array(repeating: true, count: 7))
         }
         
         for i in 1..<4 {
@@ -55,8 +65,15 @@ class Timeline: ObservableObject {
     // MARK: - 管理记录
     
     /// 按照时间顺序返回指定日期的所有记录
-    func allRecord(for date: Date) -> [Record] {
-        return timelineModel.allRecord(for: date)
+    func allRecords(for date: Date) -> [Record] {
+        var allRecords = timelineModel.allRecord(for: date)
+        for repeatPlan in timelineModel.allRepeatPlans(for: date) {
+            if !allRecords.contains(where: { $0.attachedRepeatPlan == repeatPlan.id }) {
+                allRecords.append(repeatPlan.task)
+            }
+        }
+        return allRecords.sorted { record1, record2 in
+            record1.getBeginTime()! < record2.getBeginTime()! }
     }
     
     /// 删除指定id的记录
