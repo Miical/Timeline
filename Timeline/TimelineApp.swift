@@ -12,7 +12,7 @@ struct TimelineApp: App {
     @StateObject var timeline = Timeline()
     var body: some Scene {
         WindowGroup {
-            TimelineView()
+            ApplicationView()
                 .environmentObject(timeline)
         }
     }

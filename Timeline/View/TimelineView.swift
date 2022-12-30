@@ -11,38 +11,52 @@ struct TimelineView: View {
     @EnvironmentObject var timeline: Timeline
     @State var completedTaskEditor = false
     @State var plannedTaskToExecute: PlannedTask?
-    @State var currentTab: Tab = .timeline
-    
-    init() {
-        UITabBar.appearance().isHidden = true
-    }
     
     var body: some View {
-        VStack(spacing: 0) {
-            TabView(selection: $currentTab) {
-                timelineBody
-                    .applyBackGround()
-                    .tag(Tab.timeline)
-                GlobalTodoView()
-                    .applyBackGround()
-                    .tag(Tab.todo)
-                TimingView()
-                    .applyBackGround()
-                    .tag(Tab.timing)
-                Text("统计")
-                    .applyBackGround()
-                    .tag(Tab.statistics)
-                TaskCategoryManagementView()
-                    .applyBackGround()
-                    .tag(Tab.mine)
-            }
+        VStack {
+            titleBar
+            Spacer(minLength: 0)
+            timelineBody
         }
-        TimelineTabBar(currentTab: $currentTab)
+    }
+    
+    
+    var titleBar: some View {
+        HStack {
+            Button(action: {
+                
+            }) {
+                Image(systemName: "line.3.horizontal")
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 12, height: 12)
+                    .foregroundColor(.black)
+            }.padding(.leading, 15.0)
+            
+            Spacer(minLength: 0)
+            
+            Label("Timeline", systemImage: "calendar.day.timeline.leading")
+                .font(.custom("AvenirNextCondensed-DemiBold", size: 18))
+            
+            Spacer(minLength: 0)
+            
+            Button(action: {
+                
+            }) {
+                Image(systemName: "plus")
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 12, height: 12)
+                    .foregroundColor(.black)
+            }.padding(.trailing, 15.0)
+        }
+        .padding()
+        .background { Color.white }
     }
     
     var timelineBody: some View {
-        NavigationView {
-            List {
+        VStack {
+            ScrollView {
                 ForEach(timeline.allRecords(for: Date())) { record in
                     switch(record) {
                     case .completedTask(let completedTask) :
@@ -63,25 +77,8 @@ struct TimelineView: View {
                     }
                     
                 }
-                .onDelete { indexSet in
-                    var idSet = IndexSet()
-                    for index in indexSet {
-                        idSet.insert(timeline.allRecords(for: Date())[index].id)
-                    }
-                    timeline.removeRecord(at: idSet)
-                }
             }
-            .navigationTitle("时光轴")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem { EditButton() }
-            }
-            .popover(isPresented: $completedTaskEditor, content: { CompletedTaskEditor(nil) })
-            .sheet(item: $plannedTaskToExecute, content: { plannedTask in
-                PlannedTimingView(plannedTask: plannedTask)
-            })
-            
-            Spacer()
+            .foregroundColor(.black)
         }
     }
 }
