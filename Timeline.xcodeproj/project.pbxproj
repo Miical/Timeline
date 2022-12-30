@@ -12,6 +12,7 @@
 		961E5B97295D9BB4002C2983 /* PlannedTimingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B96295D9BB4002C2983 /* PlannedTimingView.swift */; };
 		961E5B99295DB61F002C2983 /* TodoTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B98295DB61F002C2983 /* TodoTask.swift */; };
 		961E5B9B295DC548002C2983 /* TodoTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B9A295DC548002C2983 /* TodoTaskEditor.swift */; };
+		961E5B9D295E7B68002C2983 /* GlobalTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B9C295E7B68002C2983 /* GlobalTodoView.swift */; };
 		962A6DF1295BDB6500FFF169 /* TaskCategoryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */; };
 		962A6DF3295BFA7100FFF169 /* CompletedTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962A6DF2295BFA7100FFF169 /* CompletedTaskEditor.swift */; };
 		9630747B295A9A7C00AFE5FC /* CompletedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9630747A295A9A7C00AFE5FC /* CompletedTask.swift */; };
@@ -38,6 +39,7 @@
 		961E5B96295D9BB4002C2983 /* PlannedTimingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedTimingView.swift; sourceTree = "<group>"; };
 		961E5B98295DB61F002C2983 /* TodoTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTask.swift; sourceTree = "<group>"; };
 		961E5B9A295DC548002C2983 /* TodoTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTaskEditor.swift; sourceTree = "<group>"; };
+		961E5B9C295E7B68002C2983 /* GlobalTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalTodoView.swift; sourceTree = "<group>"; };
 		962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCategoryEditor.swift; sourceTree = "<group>"; };
 		962A6DF2295BFA7100FFF169 /* CompletedTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTaskEditor.swift; sourceTree = "<group>"; };
 		9630747A295A9A7C00AFE5FC /* CompletedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTask.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				962A6DF2295BFA7100FFF169 /* CompletedTaskEditor.swift */,
 				961E5B94295D8935002C2983 /* PlannedTaskEditor.swift */,
 				961E5B9A295DC548002C2983 /* TodoTaskEditor.swift */,
+				961E5B9C295E7B68002C2983 /* GlobalTodoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 				961E5B95295D8935002C2983 /* PlannedTaskEditor.swift in Sources */,
 				961E5B97295D9BB4002C2983 /* PlannedTimingView.swift in Sources */,
 				96307489295AA6E300AFE5FC /* PlannedTask.swift in Sources */,
+				961E5B9D295E7B68002C2983 /* GlobalTodoView.swift in Sources */,
 				9630747B295A9A7C00AFE5FC /* CompletedTask.swift in Sources */,
 				961E5B93295D7DED002C2983 /* UtilityFunction.swift in Sources */,
 				96307482295AA44D00AFE5FC /* TimelineApp.swift in Sources */,

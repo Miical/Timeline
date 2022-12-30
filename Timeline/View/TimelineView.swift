@@ -22,8 +22,12 @@ struct TimelineView: View {
                 Image(systemName: "2.circle")
                 Text("计时")
             }
-            TaskCategoryManagementView().tabItem {
+            GlobalTodoView().tabItem {
                 Image(systemName: "3.circle")
+                Text("所有待办")
+            }
+            TaskCategoryManagementView().tabItem {
+                Image(systemName: "4.circle")
                 Text("类别管理")
             }
         }
@@ -69,8 +73,6 @@ struct TimelineView: View {
             .sheet(item: $plannedTaskToExecute, content: { plannedTask in
                 PlannedTimingView(plannedTask: plannedTask)
             })
-            //.sheet(isPresented: , content: {
-             //   PlannedTimingView(plannedTask: plannedTaskToExecute!) })
             
             Spacer()
         }

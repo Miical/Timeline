@@ -25,7 +25,7 @@ struct TodoTask: Codable, Identifiable {
         endTime = time
     }
     
-    mutating func cancleCompletion() {
+    mutating func cancelCompletion() {
         endTime = nil
     }
 }

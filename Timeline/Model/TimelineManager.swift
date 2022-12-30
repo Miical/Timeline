@@ -8,12 +8,8 @@
 import Foundation
 
 struct TimelineManager {
-    private(set) var recordList: [Record]
-    
-    init() {
-        recordList = []
-    }
-    
+    private(set) var recordList: [Record] = []
+    private(set) var globalTodoTasks: [TodoTask] = []
     
     func allRecord(for date: Date) -> [Record] {
         return recordList
@@ -94,13 +90,34 @@ struct TimelineManager {
     mutating func cancelCompletion(of todoTask: TodoTask) {
         recordList.removeAll(where: { $0.id == todoTask.id })
         var newTodoTask = todoTask
-        newTodoTask.cancleCompletion()
+        newTodoTask.cancelCompletion()
         recordList.append(Record.todoTask(newTodoTask))
     }
     
     mutating func replaceTodoTask(with newTodoTask: TodoTask) {
         recordList.removeAll(where: { $0.id == newTodoTask.id })
         recordList.append(Record.todoTask(newTodoTask))
+    }
+    
+    mutating func addGlobalTodoTask(taskName: String) {
+        globalTodoTasks.append(TodoTask(name: taskName, id: recordCount))
+        recordCount += 1
+    }
+    
+    mutating func completeGlobalTodoTask(_ todoTask: TodoTask, at time: Date) {
+        globalTodoTasks[todoTask].complete(at: time)
+    }
+    
+    mutating func cancelGlobalCompletion(of todoTask: TodoTask) {
+        globalTodoTasks[todoTask].cancelCompletion()
+    }
+    
+    mutating func replaceGlobalTodoTask(with newTodoTask: TodoTask) {
+        globalTodoTasks[newTodoTask] = newTodoTask
+    }
+    
+    mutating func removeGlobalTodoTask(at idSet: IndexSet) {
+        globalTodoTasks.remove(atOffsets: idSet)
     }
     
     // MARK: - 管理任务执行

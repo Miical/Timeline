@@ -45,6 +45,10 @@ class Timeline: ObservableObject {
                 taskName: "示例代办 \(i)",
                 beginTime: Date(timeIntervalSinceNow: TimeInterval(200 + i * 10)))
         }
+        
+        for i in 1..<4 {
+            timelineModel.addGlobalTodoTask(taskName: "示例全局代办 \(i)")
+        }
     }
     
     
@@ -101,6 +105,30 @@ class Timeline: ObservableObject {
     
     func replaceTodoTask(with newTodoTask: TodoTask) {
         timelineModel.replaceTodoTask(with: newTodoTask)
+    }
+    
+    var globalTodoTasks: [TodoTask] {
+        timelineModel.globalTodoTasks
+    }
+    
+    func addGlobalTodoTask(taskName: String) {
+        timelineModel.addGlobalTodoTask(taskName: taskName)
+    }
+    
+    func completeGlobalTodoTask(_ todoTask: TodoTask, at time: Date) {
+        timelineModel.completeGlobalTodoTask(todoTask, at: time)
+    }
+    
+    func cancelGlobalCompletion(of todoTask: TodoTask) {
+        timelineModel.cancelCompletion(of: todoTask)
+    }
+    
+    func replaceGlobalTodoTask(with newTodoTask: TodoTask) {
+        timelineModel.replaceGlobalTodoTask(with: newTodoTask)
+    }
+    
+    func removeGlobalTodoTask(at idSet: IndexSet) {
+        timelineModel.removeGlobalTodoTask(at: idSet)
     }
     
     // MARK: - 管理任务执行

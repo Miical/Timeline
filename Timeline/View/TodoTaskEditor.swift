@@ -22,7 +22,11 @@ struct TodoTaskEditor: View {
         } else {
             needToAdd = false
             self._todoTask = State(initialValue: todoTaskToEdit!)
-            self._beginTime = State(initialValue: todoTaskToEdit!.beginTime!)
+            if todoTaskToEdit!.beginTime != nil {
+                self._beginTime = State(initialValue: todoTaskToEdit!.beginTime!)
+            } else {
+                self._beginTime = State(initialValue: Date())
+            }
         }
     }
     
@@ -30,14 +34,24 @@ struct TodoTaskEditor: View {
         VStack {
             Form {
                 nameSection
-                timeEditSection
+                if todoTask.beginTime != nil {
+                    timeEditSection
+                }
             }
             Button("保存") {
                 if needToAdd {
-                    timeline.addTodoTask(taskName: todoTask.name, beginTime: beginTime)
+                    if todoTask.beginTime != nil {
+                        timeline.addTodoTask(taskName: todoTask.name, beginTime: beginTime)
+                    } else {
+                        timeline.addGlobalTodoTask(taskName: todoTask.name)
+                    }
                 } else {
-                    todoTask.beginTime = beginTime
-                    timeline.replaceTodoTask(with: todoTask)
+                    if todoTask.beginTime != nil {
+                        todoTask.beginTime = beginTime
+                        timeline.replaceTodoTask(with: todoTask)
+                    } else {
+                        timeline.replaceGlobalTodoTask(with: todoTask)
+                    }
                 }
             }.disabled(todoTask.name == "")
         }
