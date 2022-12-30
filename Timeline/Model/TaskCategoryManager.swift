@@ -7,11 +7,22 @@
 
 import Foundation
 
-struct TaskCategoryManager {
-    private(set) var taskCategoryList: [TaskCategory]
+struct TaskCategoryManager: Codable {
+    private(set) var taskCategoryList: [TaskCategory] = []
     
-    init() {
-        taskCategoryList = []
+    init() {}
+    
+    init(json: Data) throws {
+        self = try JSONDecoder().decode(TaskCategoryManager.self, from: json)
+    }
+    
+    init(url: URL) throws {
+        let data = try Data(contentsOf: url)
+        self = try TaskCategoryManager(json: data)
+    }
+    
+    func json() throws -> Data {
+        return try JSONEncoder().encode(self)
     }
     
     mutating func addTaskCategory(name: String, themeColor: RGBAColor) {

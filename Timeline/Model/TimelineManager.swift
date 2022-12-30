@@ -7,10 +7,24 @@
 
 import Foundation
 
-struct TimelineManager {
+struct TimelineManager: Codable {
     private(set) var recordList: [Record] = []
     private(set) var globalTodoTasks: [TodoTask] = []
     private(set) var repeatPlans: [RepeatPlan] = []
+    
+    init() {}
+    init(json: Data) throws {
+        self = try JSONDecoder().decode(TimelineManager.self, from: json)
+    }
+    
+    init(url: URL) throws {
+        let data = try Data(contentsOf: url)
+        self = try TimelineManager(json: data)
+    }
+    
+    func json() throws -> Data {
+        return try JSONEncoder().encode(self)
+    }
     
     func allRecord(for date: Date) -> [Record] {
         return recordList
@@ -194,19 +208,24 @@ struct TimelineManager {
     // MARK: - 管理任务执行
     
     // 正在进行的任务，任务类别, 任务描述，以及任务的开始时间
-    typealias OngoingTask = (String, String, Date)?
-    private(set) var ongoingTask: OngoingTask = nil
+    struct OngoingTask: Codable {
+        var taskCategoryName: String
+        var taskDescription: String
+        var beginTime: Date
+    }
+    private(set) var ongoingTask: OngoingTask? = nil
     
     mutating func startATask(of taskCategory: TaskCategory, with taskDescription: String, at time: Date) {
         assert(ongoingTask == nil, "there is a task in progress")
-        ongoingTask = (taskCategory.name, taskDescription, time)
+        ongoingTask = OngoingTask(taskCategoryName: taskCategory.name,
+                                  taskDescription: taskDescription, beginTime: time)
     }
     
     mutating func endTask(at time: Date) {
         addCompletedTask(
-            taskCategoryName: ongoingTask!.0,
-            taskDescription: ongoingTask!.1,
-            beginTime: ongoingTask!.2,
+            taskCategoryName: ongoingTask!.taskCategoryName,
+            taskDescription: ongoingTask!.taskDescription,
+            beginTime: ongoingTask!.beginTime,
             endTime: time)
         ongoingTask = nil
     }

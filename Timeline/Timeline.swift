@@ -8,13 +8,59 @@
 import SwiftUI
 
 class Timeline: ObservableObject {
-    @Published private var taskCategoryModel: TaskCategoryManager
-    @Published private var timelineModel: TimelineManager
+    @Published private var taskCategoryModel: TaskCategoryManager {
+        didSet { save() }
+    }
+    @Published private var timelineModel: TimelineManager {
+        didSet { save() }
+    }
+    
+    static let taskCategoryFilename = "Timeline.taskCategory"
+    static let timelineFilename = "Timeline.timeline"
+    static var taskCategoryUrl: URL? {
+        let timelineDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        return timelineDirectory?.appendingPathComponent(taskCategoryFilename)
+    }
+    static var timelineUrl: URL? {
+        let timelineDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        return timelineDirectory?.appendingPathComponent(timelineFilename)
+    }
+    
+    private func save() {
+        if let taskCategoryUrl = Timeline.taskCategoryUrl,
+           let timelineUrl = Timeline.timelineUrl {
+            save(to: taskCategoryUrl, and: timelineUrl)
+        }
+    }
+    
+    private func save(to taskCategoryUrl: URL, and timelineUrl: URL) {
+        let thisfunction = "\(String(describing: self)).\(#function)"
+        do {
+            let taskCategoryData: Data = try taskCategoryModel.json()
+            try taskCategoryData.write(to: taskCategoryUrl)
+            let timelineData: Data = try timelineModel.json()
+            try timelineData.write(to: timelineUrl)
+            print("\(thisfunction) success!")
+        } catch let encodingError where encodingError is EncodingError {
+            print("\(thisfunction) couldn't encode Timeline as JSON because \(encodingError.localizedDescription)")
+        } catch {
+            print("\(thisfunction) error = \(error)")
+        }
+    }
     
     init() {
-        taskCategoryModel = TaskCategoryManager()
-        timelineModel = TimelineManager()
-        loadDemoContent()
+        if let taskCategoryUrl = Timeline.taskCategoryUrl,
+           let timelineUrl = Timeline.timelineUrl,
+           let localTaskCategoryModel = try? TaskCategoryManager(url: taskCategoryUrl),
+           let localTimelineModel = try? TimelineManager(url: timelineUrl) {
+            
+            taskCategoryModel = localTaskCategoryModel
+            timelineModel = localTimelineModel
+        } else {
+            taskCategoryModel = TaskCategoryManager()
+            timelineModel = TimelineManager()
+            loadDemoContent()
+        }
     }
     
     func loadDemoContent() {
@@ -160,7 +206,7 @@ class Timeline: ObservableObject {
     
     // MARK: - 管理任务执行
     
-    var ongoingTask: TimelineManager.OngoingTask {
+    var ongoingTask: TimelineManager.OngoingTask? {
         return timelineModel.ongoingTask
     }
     
