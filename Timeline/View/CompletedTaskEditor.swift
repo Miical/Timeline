@@ -17,7 +17,7 @@ struct CompletedTaskEditor: View {
         if completedTaskToEdit == nil {
             needToAdd = true
             self._completedTask = State(initialValue: CompletedTask(
-                beginTime: Date(), endTime: Date(), taskCategoryName: "", taskDescription: "", id: 0))
+                beginTime: Date(), endTime: Date(), taskCategoryId: -1, taskDescription: "", id: 0))
         } else {
             needToAdd = false
             self._completedTask = State(initialValue: completedTaskToEdit!)
@@ -34,14 +34,14 @@ struct CompletedTaskEditor: View {
             Button("保存") {
                 if needToAdd {
                     timeline.addCompletedTask(
-                        taskCategoryName: completedTask.taskCategoryName,
+                        taskCategoryId: completedTask.taskCategoryId,
                         taskDescription: completedTask.taskDescription,
                         beginTime: completedTask.beginTime,
                         endTime: completedTask.endTime)
                 } else {
                     timeline.replaceCompletedTask(with: completedTask)
                 }
-            }.disabled(completedTask.taskCategoryName == "")
+            }.disabled(completedTask.taskCategoryId == -1)
         }
     }
     
@@ -50,11 +50,11 @@ struct CompletedTaskEditor: View {
              Menu {
                  ForEach (timeline.taskCategoryList) { taskCategory in
                      Button(taskCategory.name) {
-                         completedTask.taskCategoryName = taskCategory.name
+                         completedTask.taskCategoryId = taskCategory.id
                      }
                 }
             } label: {
-                Text("类别：\(completedTask.taskCategoryName)")
+                Text("类别：\(timeline.taskCategory(id: completedTask.taskCategoryId).name)")
             }
         }
     }

@@ -5,12 +5,21 @@
 //  Created by Jason Liu on 2022/12/27.
 //
 
-import Foundation
+import SwiftUI
 
 struct TaskCategory: Codable, Identifiable {
     var name: String
     var themeColor: RGBAColor
-    var id: String { name }
+    var iconSystemName: String
+    var id: Int
+    
+    var icon: Image {
+        return Image(systemName: iconSystemName)
+    }
+    
+    var color: Color {
+        return Color(rgbaColor: themeColor)
+    }
 }
 
 

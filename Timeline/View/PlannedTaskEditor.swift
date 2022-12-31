@@ -17,7 +17,7 @@ struct PlannedTaskEditor: View {
         if plannedTaskToEdit == nil {
             needToAdd = true
             self._plannedTask = State(initialValue: PlannedTask(
-                beginTime: Date(), endTime: Date(), taskCategoryName: "", taskDescription: "", id: 0))
+                beginTime: Date(), endTime: Date(), taskCategoryId: -1, taskDescription: "", id: 0))
         } else {
             needToAdd = false
             self._plannedTask = State(initialValue: plannedTaskToEdit!)
@@ -34,14 +34,14 @@ struct PlannedTaskEditor: View {
             Button("保存") {
                 if needToAdd {
                     timeline.addPlannedTask(
-                        taskCategoryName: plannedTask.taskCategoryName,
+                        taskCategoryId: plannedTask.taskCategoryId,
                         taskDescription: plannedTask.taskDescription,
                         beginTime: plannedTask.beginTime,
                         endTime: plannedTask.endTime)
                 } else {
                     timeline.modifyPlannedTask(with: plannedTask)
                 }
-            }.disabled(plannedTask.taskCategoryName == "")
+            }.disabled(plannedTask.taskCategoryId == -1)
         }
     }
     
@@ -50,11 +50,11 @@ struct PlannedTaskEditor: View {
              Menu {
                  ForEach (timeline.taskCategoryList) { taskCategory in
                      Button(taskCategory.name) {
-                         plannedTask.taskCategoryName = taskCategory.name
+                         plannedTask.taskCategoryId = taskCategory.id
                      }
                 }
             } label: {
-                Text("类别：\(plannedTask.taskCategoryName)")
+                Text("类别：\(timeline.taskCategory(id: plannedTask.taskCategoryId).name)")
             }
         }
     }

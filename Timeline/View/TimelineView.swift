@@ -93,11 +93,12 @@ struct EventCard: View {
             ZStack {
                 Rectangle().stroke(lineWidth: 3)
                 VStack {
+                    timeline.taskCategory(id: completedTask.taskCategoryId).icon
                     Text("已完成")
                     Text("\(getTimeText(of: completedTask.beginTime)) - \(getTimeText(of: record.getEndTime()!))")
                     Text("时长：\(completedTask.durationInSeconds) s")
-                    Text("类别：\(completedTask.taskCategoryName)")
-                        .foregroundColor(timeline.getThemeColor(of: completedTask.taskCategoryName))
+                    Text("类别：\(timeline.taskCategory(id: completedTask.taskCategoryId).name)")
+                        .foregroundColor(timeline.taskCategory(id: completedTask.taskCategoryId).color)
                     Text("任务描述：\(completedTask.taskDescription)")
                 }
                 
@@ -106,11 +107,12 @@ struct EventCard: View {
             ZStack {
                 Rectangle().stroke(lineWidth: 3)
                 VStack {
+                    timeline.taskCategory(id: plannedTask.taskCategoryId).icon
                     Text("计划")
                     Text("\(getTimeText(of: plannedTask.beginTime)) - \(getTimeText(of: record.getEndTime()!))")
                     Text("时长：\(plannedTask.durationInSeconds) s")
-                    Text("类别：\(plannedTask.taskCategoryName)")
-                        .foregroundColor(timeline.getThemeColor(of: plannedTask.taskCategoryName))
+                    Text("类别：\(timeline.taskCategory(id: plannedTask.taskCategoryId).name)")
+                        .foregroundColor(timeline.taskCategory(id: plannedTask.taskCategoryId).color)
                     Text("任务描述：\(plannedTask.taskDescription)")
                     Text("执行过程：\(plannedTask.totalExecutionTimeInSeconds) s")
                     Text("是否在执行：\(plannedTask.isExecuting ? "是" : "否")")

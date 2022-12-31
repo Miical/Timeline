@@ -44,12 +44,12 @@ struct TimelineManager: Codable {
     
     // MARK: - 已完成任务管理
     
-    mutating func addCompletedTask(taskCategoryName: String, taskDescription: String,
+    mutating func addCompletedTask(taskCategoryId: Int, taskDescription: String,
                                    beginTime: Date,  endTime: Date) {
         recordList.append(.completedTask(CompletedTask(
             beginTime: beginTime,
             endTime: endTime,
-            taskCategoryName: taskCategoryName,
+            taskCategoryId: taskCategoryId,
             taskDescription: taskDescription,
             id: recordCount)))
         recordCount += 1
@@ -64,7 +64,7 @@ struct TimelineManager: Codable {
     
     /// 添加计划任务
     /// 若指定了isAvailable则该计划任务为重复计划
-    mutating func addPlannedTask(taskCategoryName: String, taskDescription: String,
+    mutating func addPlannedTask(taskCategoryId: Int, taskDescription: String,
                                  beginTime: Date,  endTime: Date,
                                  isAvailable: [Bool]? = nil,
                                  attachedRepeatPlanId: Int? = nil) {
@@ -72,7 +72,7 @@ struct TimelineManager: Codable {
             recordList.append(.plannedTask(PlannedTask(
                 beginTime: beginTime,
                 endTime: endTime,
-                taskCategoryName: taskCategoryName,
+                taskCategoryId: taskCategoryId,
                 taskDescription: taskDescription,
                 id: recordCount,
                 attachedRepeatPlanId: attachedRepeatPlanId)))
@@ -81,7 +81,7 @@ struct TimelineManager: Codable {
                 task: .plannedTask(PlannedTask(
                     beginTime: beginTime,
                     endTime: endTime,
-                    taskCategoryName: taskCategoryName,
+                    taskCategoryId: taskCategoryId,
                     taskDescription: taskDescription,
                     id: recordCount)),
                 isAvailable: isAvailable!
@@ -209,7 +209,7 @@ struct TimelineManager: Codable {
     
     // 正在进行的任务，任务类别, 任务描述，以及任务的开始时间
     struct OngoingTask: Codable {
-        var taskCategoryName: String
+        var taskCategoryId: Int
         var taskDescription: String
         var beginTime: Date
     }
@@ -217,13 +217,13 @@ struct TimelineManager: Codable {
     
     mutating func startATask(of taskCategory: TaskCategory, with taskDescription: String, at time: Date) {
         assert(ongoingTask == nil, "there is a task in progress")
-        ongoingTask = OngoingTask(taskCategoryName: taskCategory.name,
+        ongoingTask = OngoingTask(taskCategoryId: taskCategory.id,
                                   taskDescription: taskDescription, beginTime: time)
     }
     
     mutating func endTask(at time: Date) {
         addCompletedTask(
-            taskCategoryName: ongoingTask!.taskCategoryName,
+            taskCategoryId: ongoingTask!.taskCategoryId,
             taskDescription: ongoingTask!.taskDescription,
             beginTime: ongoingTask!.beginTime,
             endTime: time)

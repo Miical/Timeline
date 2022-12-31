@@ -30,7 +30,7 @@ struct PlannedTimingView: View {
                 .font(.largeTitle)
                 .fontWeight(.medium)
             Spacer()
-            Text(plannedTask.taskCategoryName)
+            Text(timeline.taskCategory(id: plannedTask.taskCategoryId).name)
             Spacer()
             if !plannedTask.isOver {
                 if !plannedTask.isExecuting {

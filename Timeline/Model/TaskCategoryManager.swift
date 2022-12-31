@@ -9,6 +9,7 @@ import Foundation
 
 struct TaskCategoryManager: Codable {
     private(set) var taskCategoryList: [TaskCategory] = []
+    private var taskCategoryCount = 0
     
     init() {}
     
@@ -25,8 +26,10 @@ struct TaskCategoryManager: Codable {
         return try JSONEncoder().encode(self)
     }
     
-    mutating func addTaskCategory(name: String, themeColor: RGBAColor) {
-        taskCategoryList.append(TaskCategory(name: name, themeColor: themeColor))
+    mutating func addTaskCategory(name: String, themeColor: RGBAColor, iconSystemName: String) {
+        taskCategoryList.append(TaskCategory(name: name, themeColor: themeColor,
+                                             iconSystemName: iconSystemName, id: taskCategoryCount))
+        taskCategoryCount += 1
     }
     
     mutating func removeTaskCategory(at offsets: IndexSet) {

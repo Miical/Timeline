@@ -10,7 +10,7 @@ import Foundation
 struct PlannedTask: Recordable {
     var beginTime: Date
     var endTime: Date
-    var taskCategoryName: String
+    var taskCategoryId: Int
     var taskDescription: String
     var isOver = false
     var id: Int

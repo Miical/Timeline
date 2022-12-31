@@ -50,6 +50,7 @@ class Timeline: ObservableObject {
     }
     
     init() {
+        /*
         if let taskCategoryUrl = Timeline.taskCategoryUrl,
            let timelineUrl = Timeline.timelineUrl,
            let localTaskCategoryModel = try? TaskCategoryManager(url: taskCategoryUrl),
@@ -58,22 +59,23 @@ class Timeline: ObservableObject {
             taskCategoryModel = localTaskCategoryModel
             timelineModel = localTimelineModel
         } else {
+         */
             taskCategoryModel = TaskCategoryManager()
             timelineModel = TimelineManager()
             loadDemoContent()
-        }
+        // }
     }
     
     func loadDemoContent() {
-        taskCategoryModel.addTaskCategory(name: "学习", themeColor: RGBAColor(red: 255, green: 0, blue: 0, alpha: 1))
-        taskCategoryModel.addTaskCategory(name: "运动", themeColor: RGBAColor(red: 255, green: 255, blue: 0, alpha: 1))
-        taskCategoryModel.addTaskCategory(name: "玩游戏", themeColor: RGBAColor(red: 255, green: 0, blue: 255, alpha: 1))
-        taskCategoryModel.addTaskCategory(name: "听音乐", themeColor: RGBAColor(red: 0, green: 0, blue: 255, alpha: 1))
-        taskCategoryModel.addTaskCategory(name: "学英语", themeColor: RGBAColor(red: 0, green: 255, blue: 255, alpha: 1))
+        taskCategoryModel.addTaskCategory(name: "学习", themeColor: RGBAColor(red: 255, green: 0, blue: 0, alpha: 1), iconSystemName: "book.closed")
+        taskCategoryModel.addTaskCategory(name: "运动", themeColor: RGBAColor(red: 255, green: 255, blue: 0, alpha: 1), iconSystemName: "figure.disc.sports")
+        taskCategoryModel.addTaskCategory(name: "玩游戏", themeColor: RGBAColor(red: 255, green: 0, blue: 255, alpha: 1), iconSystemName: "gamecontroller")
+        taskCategoryModel.addTaskCategory(name: "听音乐", themeColor: RGBAColor(red: 0, green: 0, blue: 255, alpha: 1), iconSystemName: "music.quarternote.3")
+        taskCategoryModel.addTaskCategory(name: "学英语", themeColor: RGBAColor(red: 0, green: 255, blue: 255, alpha: 1), iconSystemName: "books.vertical")
         
         for i in 1..<4 {
             timelineModel.addCompletedTask(
-                taskCategoryName: taskCategoryList.randomElement()!.name,
+                taskCategoryId: taskCategoryList.randomElement()!.id,
                 taskDescription: "示例已完成任务 \(i)",
                 beginTime: Date(timeIntervalSinceNow: TimeInterval(i * 10)),
                 endTime: Date(timeIntervalSinceNow: TimeInterval(i * 10 + 5)))
@@ -81,12 +83,12 @@ class Timeline: ObservableObject {
         
         for i in 1..<4 {
             timelineModel.addPlannedTask(
-                taskCategoryName: taskCategoryList.randomElement()!.name,
+                taskCategoryId: taskCategoryList.randomElement()!.id,
                 taskDescription: "示例计划任务 \(i)",
                 beginTime: Date(timeIntervalSinceNow: TimeInterval(100 + i * 10)),
                 endTime: Date(timeIntervalSinceNow: TimeInterval(100 + i * 10 + 20)))
             timelineModel.addPlannedTask(
-                taskCategoryName: taskCategoryList.randomElement()!.name,
+                taskCategoryId: taskCategoryList.randomElement()!.id,
                 taskDescription: "示例重复计划任务 \(i)",
                 beginTime: Date(timeIntervalSinceNow: TimeInterval(300 + i * 10)),
                 endTime: Date(timeIntervalSinceNow: TimeInterval(300 + i * 10 + 20)),
@@ -128,10 +130,10 @@ class Timeline: ObservableObject {
         timelineModel.removeRecord(at: idSet)
     }
     
-    func addCompletedTask(taskCategoryName: String, taskDescription: String,
+    func addCompletedTask(taskCategoryId: Int, taskDescription: String,
                           beginTime: Date, endTime: Date) {
         timelineModel.addCompletedTask(
-            taskCategoryName: taskCategoryName,
+            taskCategoryId: taskCategoryId,
             taskDescription: taskDescription,
             beginTime: beginTime,
             endTime: endTime)
@@ -141,10 +143,10 @@ class Timeline: ObservableObject {
         timelineModel.replaceCompletedTask(with: newCompletedTask)
     }
     
-    func addPlannedTask(taskCategoryName: String, taskDescription: String,
+    func addPlannedTask(taskCategoryId: Int, taskDescription: String,
                         beginTime: Date, endTime: Date, isAvailable: [Bool]? = nil) {
         timelineModel.addPlannedTask(
-            taskCategoryName: taskCategoryName,
+            taskCategoryId: taskCategoryId,
             taskDescription: taskDescription,
             beginTime: beginTime,
             endTime: endTime,
@@ -225,15 +227,13 @@ class Timeline: ObservableObject {
         taskCategoryModel.taskCategoryList
     }
     
-    func getThemeColor(of taskCategoryName: String) -> Color {
-        Color(rgbaColor: taskCategoryList
-            .filter({ $0.id == taskCategoryName })
-            .first! .themeColor)
+    func taskCategory(id: Int) -> TaskCategory {
+        return taskCategoryList.first(where: { $0.id == id })!
     }
     
     func addTaskCategory(_ taskCategory: TaskCategory) {
         taskCategoryModel.addTaskCategory(name: taskCategory.name,
-                                          themeColor: taskCategory.themeColor)
+            themeColor: taskCategory.themeColor, iconSystemName: taskCategory.iconSystemName)
     }
     
     func removeTaskCategory(at offsets: IndexSet) {

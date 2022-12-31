@@ -19,7 +19,7 @@ struct TaskCategoryEditor: View {
             taskCategory = taskCategoryToEdit
             needCreateTaskCategory = false
         } else {
-            taskCategory = TaskCategory(name: "", themeColor: RGBAColor(color: Color(.white)))
+            taskCategory = TaskCategory(name: "", themeColor: RGBAColor(color: Color(.white)), iconSystemName: "", id: 0)
             needCreateTaskCategory = true
         }
     }
