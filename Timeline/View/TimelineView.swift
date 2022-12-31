@@ -16,7 +16,7 @@ struct TimelineView: View {
         VStack {
             titleBar
             Spacer(minLength: 0)
-            timelineBody2
+            timelineBody
         }
     }
     
@@ -54,14 +54,13 @@ struct TimelineView: View {
         .background { Color.white }
     }
     
-    var timelineBody2: some View {
+    var timelineBody: some View {
         VStack {
             ScrollView {
                 ForEach(timeline.allRecords(for: Date())) { record in
                     switch(record) {
                     case .completedTask(let completedTask) :
-                        Text("")
-                            .frame(height: 80)
+                        CompletedTaskCard(completedTask: completedTask)
                             .timelineCardify(
                                 color: timeline.taskCategory(id: completedTask.taskCategoryId).color,
                                 time: record.getBeginTime()!)
@@ -80,34 +79,6 @@ struct TimelineView: View {
                     }
                 }
             }
-        }
-    }
-    
-    var timelineBody: some View {
-        VStack {
-            ScrollView {
-                ForEach(timeline.allRecords(for: Date())) { record in
-                    switch(record) {
-                    case .completedTask(let completedTask) :
-                        NavigationLink(destination: CompletedTaskEditor(completedTask)) {
-                            EventCard(record: record).padding(.all)
-                        }
-                    case .plannedTask(let plannedTask):
-                        NavigationLink(destination: PlannedTaskEditor(plannedTask)) {
-                            EventCard(record: record).padding(.all)
-                                .onLongPressGesture {
-                                    plannedTaskToExecute = plannedTask
-                                }
-                        }
-                    case .todoTask(let todoTask) :
-                        NavigationLink(destination: TodoTaskEditor(todoTask)){
-                            EventCard(record: record).padding(.all)
-                        }
-                    }
-                    
-                }
-            }
-            .foregroundColor(.black)
         }
     }
 }
@@ -143,7 +114,7 @@ struct TimelineCardify: ViewModifier {
                     .frame(width: CardConstants.whiteCircleSize)
                     .offset(x: CardConstants.lineXOffset + CardConstants.lineWidth / 2
                             - CardConstants.whiteCircleSize / 2)
-                    Text("\(getTimeString(of: time))")
+                    Text("\(getDateTimeString(of: time))")
                         .font(Font.system(size: CardConstants.timeSize))
                         .foregroundColor(.gray)
                         .offset(x: CardConstants.lineXOffset + CardConstants.lineWidth / 2
@@ -155,9 +126,9 @@ struct TimelineCardify: ViewModifier {
                 ZStack {
                     RoundedRectangle(cornerRadius: CardConstants.cornerRadius)
                         .foregroundColor(.white)
-                        .padding(.horizontal, CardConstants.lineXOffset - CardConstants.whiteCircleSize / 2)
                     content
                 }
+                .padding(.horizontal, CardConstants.lineXOffset - CardConstants.whiteCircleSize / 2)
             }
         }
     }
@@ -172,64 +143,68 @@ struct TimelineCardify: ViewModifier {
     }
 }
 
-struct EventCard: View {
+struct CompletedTaskCard: View {
     @EnvironmentObject var timeline: Timeline
-    var record: Record
+    var completedTask: CompletedTask
     
     var body: some View {
-        switch record {
-        case let .completedTask(completedTask):
-            ZStack {
-                VStack {
+        HStack {
+            VStack {
+                HStack {
                     timeline.taskCategory(id: completedTask.taskCategoryId).icon
-                    Text("已完成")
-                    Text("\(getTimeString(of: completedTask.beginTime)) - \(getTimeString(of: record.getEndTime()!))")
-                    Text("时长：\(completedTask.durationInSeconds) s")
-                    Text("类别：\(timeline.taskCategory(id: completedTask.taskCategoryId).name)")
-                        .foregroundColor(timeline.taskCategory(id: completedTask.taskCategoryId).color)
-                    Text("任务描述：\(completedTask.taskDescription)")
+                        .foregroundColor(Color(red: 1, green: 0.85, blue: 0.35))
+                    Text(timeline.taskCategory(id: completedTask.taskCategoryId).name)
+                        .foregroundColor(.gray)
                 }
+                .font(.footnote)
+                Spacer()
+            }
+            .frame(minWidth: 80, maxWidth: 80)
+            Spacer()
+            
+            VStack (alignment: .leading) {
+                Text("\(getTimeString(of: completedTask.beginTime)) - \(getTimeString(of: completedTask.endTime))")
+                    .font(.headline)
+                    .padding(.vertical, 2)
                 
-            }
-        case let .plannedTask(plannedTask):
-            ZStack {
-                VStack {
-                    timeline.taskCategory(id: plannedTask.taskCategoryId).icon
-                    Text("计划")
-                    Text("\(getTimeString(of: plannedTask.beginTime)) - \(getTimeString(of: record.getEndTime()!))")
-                    Text("时长：\(plannedTask.durationInSeconds) s")
-                    Text("类别：\(timeline.taskCategory(id: plannedTask.taskCategoryId).name)")
-                        .foregroundColor(timeline.taskCategory(id: plannedTask.taskCategoryId).color)
-                    Text("任务描述：\(plannedTask.taskDescription)")
-                    Text("执行过程：\(plannedTask.totalExecutionTimeInSeconds) s")
-                    Text("是否在执行：\(plannedTask.isExecuting ? "是" : "否")")
+                HStack{
+                    Image(systemName: "list.dash.header.rectangle")
+                    Text(completedTask.taskDescription)
                 }
-            }
-        case .todoTask(let todoTask) :
-            ZStack {
-                VStack {
-                    Text("待办任务")
-                    Text("任务名称：\(todoTask.name)")
-                    Text("任务时间\(getTimeString(of: todoTask.beginTime!))")
-                    if todoTask.isComplete {
-                        Button("取消") {
-                            timeline.cancelCompletion(of: todoTask)
-                        }
-                    } else {
-                        Button("完成") {
-                            timeline.completeTodoTask(todoTask, at: Date())
-                        }
-                    }
+                .padding(.leading, 10)
+                .padding(.vertical, 1)
+                .font(.footnote)
+                .foregroundColor(.gray)
+                
+                HStack{
+                    Image(systemName: "clock")
+                    Text("\(timeStringFromSeconds(completedTask.durationInSeconds))")
+                        .padding(.leading, 3)
                 }
+                .padding(.leading, 12)
+                .font(.footnote)
+                .foregroundColor(.gray)
             }
+            
+            Spacer()
+            RoundedRectangle(cornerRadius: 2)
+                .frame(width: 4)
+                .opacity(0.4)
+                .foregroundColor(timeline.taskCategory(id: completedTask.taskCategoryId).color)
+                .padding(8)
         }
+        .padding()
     }
-    
 }
+
+
+
+
 
 struct TimelineView_Previews: PreviewProvider {
     static var previews: some View {
-        Text("HaHa")
-            .timelineCardify(color: .red, time: Date())
+        let timeline = Timeline()
+        ApplicationView()
+            .environmentObject(timeline)
     }
 }
