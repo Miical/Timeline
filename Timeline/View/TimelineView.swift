@@ -20,7 +20,6 @@ struct TimelineView: View {
         }
     }
     
-    
     var titleBar: some View {
         HStack {
             Button(action: {
@@ -69,9 +68,8 @@ struct TimelineView: View {
                             .timelineCardify(
                                 color: timeline.taskCategory(id: plannedTask.taskCategoryId).color,
                                 time: record.getBeginTime()!)
-                    case .todoTask:
-                        Text("")
-                            .frame(height: 80)
+                    case .todoTask(let todoTask):
+                        TodoTaskCard(todoTask: todoTask)
                             .timelineCardify(
                                 color: .yellow,
                                 time: record.getBeginTime()!)
@@ -264,9 +262,11 @@ struct PlannedTaskCard: View {
                     if plannedTask.isOver {
                         Text("已完成 ✓")
                             .foregroundColor(.green)
+                            .opacity(0.8)
                     } else {
                         Text("未完成 ✘")
                             .foregroundColor(.red)
+                            .opacity(0.8)
                     }
                 }
                 .padding(.leading, 12)
@@ -285,7 +285,48 @@ struct PlannedTaskCard: View {
     }
 }
 
+struct TodoTaskCard: View {
+    @EnvironmentObject var timeline: Timeline
+    var todoTask: TodoTask
+    
+    var body: some View {
+        HStack {
+            if todoTask.isComplete {
+                Image(systemName: "checkmark.square")
+                    .onTapGesture {
+                        withAnimation {
+                            timeline.cancelCompletion(of: todoTask)
+                        }
+                    }
+            } else {
+                Image(systemName: "square")
+                    .onTapGesture {
+                        withAnimation {
+                            timeline.completeTodoTask(todoTask, at: Date())
+                        }
+                    }
+            }
+            Text(todoTask.name)
+                .font(.system(size: 15))
+            
+            Spacer()
+            
+            if todoTask.isComplete {
+                Text("——于 \(getTimeString(of: todoTask.endTime!)) 完成")
+                    .foregroundColor(.gray)
+                    .font(.footnote)
+            }
+            
+            RoundedRectangle(cornerRadius: 2)
+                .frame(width: 4)
+                .opacity(0.4)
+                .foregroundColor(Color(red: 1, green: 0.85, blue: 0.35, opacity: 0.8))
+                .padding(8)
+        }
+        .padding()
+    }
 
+}
 
 
 struct TimelineView_Previews: PreviewProvider {
