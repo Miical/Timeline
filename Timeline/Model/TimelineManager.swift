@@ -101,7 +101,7 @@ struct TimelineManager: Codable {
     /// 将列表中相同id的元素信息替换为给定元素信息，但保持执行的相关信息不变。
     mutating func modifyPlannedTask(with newPlannedTask: PlannedTask) {
         let oldRecord = recordList.first(where: { $0.id == newPlannedTask.id })
-        if let oldRecord {
+        if let oldRecord  = oldRecord {
             switch oldRecord {
             case .plannedTask(let oldTask):
                 var task = newPlannedTask

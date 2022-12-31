@@ -15,7 +15,7 @@ struct TaskCategoryEditor: View {
     
     // taskCategoryToEdit 为 nil 时保存，将会新建一个任务分类
     init(_ taskCategoryToEdit: TaskCategory?) {
-        if let taskCategoryToEdit {
+        if let taskCategoryToEdit = taskCategoryToEdit {
             taskCategory = taskCategoryToEdit
             needCreateTaskCategory = false
         } else {
