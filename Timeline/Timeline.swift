@@ -78,7 +78,7 @@ class Timeline: ObservableObject {
                 taskCategoryId: taskCategoryList.randomElement()!.id,
                 taskDescription: "示例已完成任务 \(i)",
                 beginTime: Date(timeIntervalSinceNow: TimeInterval(i * 10)),
-                endTime: Date(timeIntervalSinceNow: TimeInterval(i * 10 + 5)))
+                endTime: Date(timeIntervalSinceNow: TimeInterval(i * 10 + 555)))
         }
         
         for i in 1..<4 {

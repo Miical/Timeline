@@ -83,7 +83,8 @@ struct TimelineManager: Codable {
                     endTime: endTime,
                     taskCategoryId: taskCategoryId,
                     taskDescription: taskDescription,
-                    id: recordCount)),
+                    id: recordCount,
+                    attachedRepeatPlanId: recordCount)),
                 isAvailable: isAvailable!
             ))
         }
@@ -130,7 +131,8 @@ struct TimelineManager: Codable {
         } else {
             repeatPlans.append(RepeatPlan(
                 task: .todoTask(TodoTask(
-                    name: taskName, beginTime: beginTime,id: recordCount)),
+                    name: taskName, beginTime: beginTime,
+                    id: recordCount, attachedRepeatPlanId: recordCount)),
                 isAvailable: isAvailable!))
         }
         recordCount += 1
