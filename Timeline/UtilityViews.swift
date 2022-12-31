@@ -14,3 +14,9 @@ extension View {
             .ignoresSafeArea(edges: [.bottom])
     }
 }
+
+extension View {
+    func timelineCardify(color: Color, time: Date) -> some View {
+        return self.modifier(TimelineCardify(themeColor: color, time: time))
+    }
+}

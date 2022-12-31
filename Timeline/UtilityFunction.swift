@@ -18,3 +18,11 @@ func intervalSeconds(between beginTime: Date, and endTime: Date) -> Int {
 func theDayOfTheWeek(at date: Date) -> Int {
     return Calendar.current.component(.weekday, from: date) - 1
 }
+
+// 将 Date 类型转换为 yyyy/MM/dd hh:mm:ss 格式的字符串
+func getTimeString(of time: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy/MM/dd hh:mm:ss"
+    return dateFormatter.string(from: time)
+}
+    
