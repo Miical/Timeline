@@ -10,66 +10,43 @@ import SwiftUI
 
 struct CompletedTaskEditor: View {
     @EnvironmentObject var timeline: Timeline
+    @Binding var completedTaskToEdit: CompletedTask?
     @State var completedTask: CompletedTask
     let needToAdd: Bool
     
-    init(_ completedTaskToEdit: CompletedTask?) {
-        if completedTaskToEdit == nil {
-            needToAdd = true
+    init(_ completedTaskToEdit: Binding<CompletedTask?>, needToAdd: Bool) {
+        self.needToAdd = needToAdd
+        self._completedTaskToEdit = completedTaskToEdit
+        if needToAdd == false {
             self._completedTask = State(initialValue: CompletedTask(
-                beginTime: Date(), endTime: Date(), taskCategoryId: -1, taskDescription: "", id: 0))
+                beginTime: Date(), endTime: Date(), taskCategoryId: 0, taskDescription: "", id: 0))
         } else {
-            needToAdd = false
-            self._completedTask = State(initialValue: completedTaskToEdit!)
+            self._completedTask = State(initialValue: completedTaskToEdit.wrappedValue!)
         }
     }
     
     var body: some View {
         VStack {
-            Form {
-                nameSection
-                taskDescriptionSection
-                timeEditSection
-            }
-            Button("保存") {
-                if needToAdd {
-                    timeline.addCompletedTask(
-                        taskCategoryId: completedTask.taskCategoryId,
-                        taskDescription: completedTask.taskDescription,
-                        beginTime: completedTask.beginTime,
-                        endTime: completedTask.endTime)
-                } else {
-                    timeline.replaceCompletedTask(with: completedTask)
-                }
-            }.disabled(completedTask.taskCategoryId == -1)
+            TextEditor(name: "任务描述", text: $completedTask.taskDescription, wordsLimit: 50)
+            TaskCategorySelector(taskCategoryId: $completedTask.taskCategoryId)
+            TimeEditor(name: "开始时间", time: $completedTask.beginTime)
+            TimeEditor(name: "结束时间", time: $completedTask.endTime)
+            
         }
-    }
-    
-    var nameSection: some View {
-        Section(header: Text("类别")) {
-             Menu {
-                 ForEach (timeline.taskCategoryList) { taskCategory in
-                     Button(taskCategory.name) {
-                         completedTask.taskCategoryId = taskCategory.id
-                     }
-                }
-            } label: {
-                Text("类别：\(timeline.taskCategory(id: completedTask.taskCategoryId).name)")
+        .turnToEditor(isPresent: Binding(
+            get: { completedTaskToEdit != nil },
+            set: { if $0 == false { completedTaskToEdit = nil }}),
+                      title: "编辑已完成任务") {
+            
+            if needToAdd {
+                timeline.addCompletedTask(
+                    taskCategoryId: completedTask.taskCategoryId,
+                    taskDescription: completedTask.taskDescription,
+                    beginTime: completedTask.beginTime,
+                    endTime: completedTask.endTime)
+            } else {
+                timeline.replaceCompletedTask(with: completedTask)
             }
         }
     }
-    
-    var taskDescriptionSection: some View {
-        Section(header: Text("任务描述")) {
-            TextField("任务描述", text: $completedTask.taskDescription)
-        }
-    }
-    
-    var timeEditSection: some View {
-        Section(header: Text("时间编辑")) {
-            DatePicker("开始时间", selection: $completedTask.beginTime, displayedComponents: .hourAndMinute)
-            DatePicker("结束时间", selection: $completedTask.endTime, displayedComponents: .hourAndMinute)
-        }
-    }
-    
 }

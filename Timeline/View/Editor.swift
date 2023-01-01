@@ -60,6 +60,7 @@ struct Editor: ViewModifier {
     var saveButton: some View {
         Button(action: {
             onSave()
+            isPresent = false
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
@@ -95,7 +96,7 @@ struct TextEditor: View {
 
 struct TaskCategorySelector: View {
     @EnvironmentObject var timeline: Timeline
-    @Binding var taskCategory: TaskCategory
+    @Binding var taskCategoryId: Int
     
     var body: some View {
         HStack {
@@ -106,17 +107,17 @@ struct TaskCategorySelector: View {
             Menu {
                 ForEach (timeline.taskCategoryList) { taskCategoryToSelect in
                     AnimatedActionButton(title: taskCategoryToSelect.name, systemImage: taskCategoryToSelect.iconSystemName) {
-                        taskCategory = taskCategoryToSelect
+                        taskCategoryId = taskCategoryToSelect.id
                     }
                 }
             } label: {
                 RoundedRectangle(cornerRadius: 5)
-                    .foregroundColor(taskCategory.color)
+                    .foregroundColor(timeline.taskCategory(id: taskCategoryId).color)
                     .opacity(0.8)
                     .overlay {
                         HStack {
-                            taskCategory.icon
-                            Text(taskCategory.name)
+                            timeline.taskCategory(id: taskCategoryId).icon
+                            Text(timeline.taskCategory(id: taskCategoryId).name)
                         }
                         .foregroundColor(.white)
                     }

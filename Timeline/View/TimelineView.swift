@@ -12,6 +12,9 @@ struct TimelineView: View {
     @State var completedTaskEditor = false
     @State var plannedTaskToExecute: PlannedTask?
     
+    @State var needToAdd = false
+    @State var completedTaskToEdit: CompletedTask?
+    
     var body: some View {
         ZStack {
             VStack {
@@ -20,8 +23,9 @@ struct TimelineView: View {
                 timelineBody
             }
             
-            // Text("2343")
-            // .turnToEditor(isPresent: .constant(true), title: "编辑", onSave: {})
+            if completedTaskToEdit != nil {
+                CompletedTaskEditor($completedTaskToEdit, needToAdd: needToAdd)
+            }
         }
     }
     
@@ -64,14 +68,7 @@ struct TimelineView: View {
                 ForEach(timeline.allRecords(for: Date())) { record in
                     switch(record) {
                     case .completedTask(let completedTask) :
-                        CompletedTaskCard(completedTask: completedTask)
-                            .contextMenu {
-                                AnimatedActionButton(title: "编辑", systemImage: "square.and.pencil") {
-                                }
-                            }
-                            .timelineCardify(
-                                color: timeline.taskCategory(id: completedTask.taskCategoryId).color,
-                                time: record.getBeginTime()!)
+                        completedTaskItem(completedTask: completedTask)
                     case .plannedTask(let plannedTask):
                         PlannedTaskCard(plannedTask: plannedTask)
                             .timelineCardify(
@@ -87,6 +84,21 @@ struct TimelineView: View {
                 Spacer(minLength: 100.0)
             }
         }
+    }
+    
+    func completedTaskItem(completedTask: CompletedTask) -> some View {
+        CompletedTaskCard(completedTask: completedTask)
+            .contextMenu {
+                AnimatedActionButton(title: "编辑", systemImage: "square.and.pencil") {
+                    completedTaskToEdit = completedTask
+                }
+                AnimatedActionButton(title: "删除", systemImage: "xmark.square") {
+                    timeline.removeRecord(at: IndexSet(integer: completedTask.id))
+                }
+            }
+            .timelineCardify(
+                color: timeline.taskCategory(id: completedTask.taskCategoryId).color,
+                time: completedTask.beginTime)
     }
 }
 
