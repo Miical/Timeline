@@ -15,6 +15,7 @@ struct TimelineView: View {
     @State var needToAdd = false
     @State var completedTaskToEdit: CompletedTask?
     @State var plannedTaskToEdit: PlannedTask?
+    @State var todoTaskToEdit: TodoTask?
     
     var body: some View {
         ZStack {
@@ -28,6 +29,8 @@ struct TimelineView: View {
                 CompletedTaskEditor($completedTaskToEdit, needToAdd: needToAdd)
             } else if plannedTaskToEdit != nil {
                 PlannedTaskEditor($plannedTaskToEdit, needToAdd: needToAdd)
+            } else if todoTaskToEdit != nil {
+                TodoTaskEditor($todoTaskToEdit, needToAdd: needToAdd)
             }
         }
     }
@@ -75,10 +78,7 @@ struct TimelineView: View {
                     case .plannedTask(let plannedTask):
                         plannedTaskItem(plannedTask: plannedTask)
                     case .todoTask(let todoTask):
-                        TodoTaskCard(todoTask: todoTask)
-                            .timelineCardify(
-                                color: .yellow,
-                                time: record.getBeginTime()!)
+                        todoTaskItem(todoTask: todoTask)
                     }
                 }
                 Spacer(minLength: 100.0)
@@ -106,8 +106,14 @@ struct TimelineView: View {
             .contextMenu {
                 AnimatedActionButton(title: "编辑", systemImage: "square.and.pencil") {
                     plannedTaskToEdit = plannedTask}
-                AnimatedActionButton(title: "删除", systemImage: "xmark.square") {
-                    timeline.removeRecord(at: IndexSet(integer: plannedTask.id))
+                AnimatedActionButton(
+                    title: plannedTask.attachedRepeatPlanId == nil ? "删除" : "删除重复待办",
+                    systemImage: "xmark.square") {
+                    if (plannedTask.attachedRepeatPlanId != nil) {
+                        timeline.removeRepeatPlan(at: IndexSet(integer: plannedTask.id))
+                    } else {
+                        timeline.removeRecord(at: IndexSet(integer: plannedTask.id))
+                    }
                 }
             }
             .timelineCardify(
@@ -115,6 +121,25 @@ struct TimelineView: View {
                 time: plannedTask.beginTime)
     }
     
+    func todoTaskItem(todoTask: TodoTask) -> some View {
+        TodoTaskCard(todoTask: todoTask)
+            .contextMenu {
+                AnimatedActionButton(title: "编辑", systemImage: "square.and.pencil") {
+                    todoTaskToEdit = todoTask }
+                AnimatedActionButton(
+                    title: todoTask.attachedRepeatPlanId == nil ? "删除" : "删除重复待办",
+                    systemImage: "xmark.square") {
+                    if (todoTask.attachedRepeatPlanId != nil) {
+                        timeline.removeRepeatPlan(at: IndexSet(integer: todoTask.id))
+                    } else {
+                        timeline.removeRecord(at: IndexSet(integer: todoTask.id))
+                    }
+                }
+            }
+            .timelineCardify(
+                color: Color(red: 1, green: 0.85, blue: 0.35),
+                time: todoTask.beginTime!)
+    }
 }
 
 

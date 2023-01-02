@@ -111,18 +111,26 @@
 				96619DA2295F330D00C6AC4C /* ApplicationView.swift */,
 				96307486295AA54E00AFE5FC /* TimelineView.swift */,
 				968ED73E29616F2B00384377 /* TimelineCard.swift */,
-				968ED740296178F900384377 /* Editor.swift */,
-				962A6DF2295BFA7100FFF169 /* CompletedTaskEditor.swift */,
-				961E5B94295D8935002C2983 /* PlannedTaskEditor.swift */,
 				96307496295B014300AFE5FC /* TimingView.swift */,
 				961E5B96295D9BB4002C2983 /* PlannedTimingView.swift */,
 				96D2D228295B43F500F00D4C /* TaskCategoryManagementView.swift */,
-				962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */,
-				961E5B9A295DC548002C2983 /* TodoTaskEditor.swift */,
 				961E5B9C295E7B68002C2983 /* GlobalTodoView.swift */,
 				96619DA0295F229D00C6AC4C /* TimelineTabBar.swift */,
+				968ED7432962C2B200384377 /* Editor */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		968ED7432962C2B200384377 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				968ED740296178F900384377 /* Editor.swift */,
+				962A6DF2295BFA7100FFF169 /* CompletedTaskEditor.swift */,
+				961E5B94295D8935002C2983 /* PlannedTaskEditor.swift */,
+				961E5B9A295DC548002C2983 /* TodoTaskEditor.swift */,
+				962A6DF0295BDB6500FFF169 /* TaskCategoryEditor.swift */,
+			);
+			path = Editor;
 			sourceTree = "<group>";
 		};
 		B61036BB2959EC42007BC4F6 = {

@@ -163,7 +163,7 @@ struct ThemeColorPicker: View {
 
 struct DaysSelector: View {
     @Binding var isAvailable: [Bool]
-    static var days = "一二三四五六日"
+    static var days = "日一二三四五六"
     var body: some View {
         VStack {
             HStack {

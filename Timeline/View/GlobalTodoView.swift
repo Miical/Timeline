@@ -13,7 +13,7 @@ struct GlobalTodoView: View {
         NavigationView {
             List {
                 ForEach(timeline.globalTodoTasks) { todoTask in
-                    NavigationLink(destination: TodoTaskEditor(todoTask)) {
+                    NavigationLink(destination: Text("None")) {
                         Text("\(todoTask.name)")
                         if todoTask.isComplete {
                             Button("取消") {
