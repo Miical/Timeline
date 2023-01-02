@@ -54,9 +54,21 @@ struct TimelineView: View {
             
             Spacer(minLength: 0)
             
-            Button(action: {
-                
-            }) {
+            Menu {
+                AnimatedActionButton(title: "新建已完成任务", action: {
+                    needToAdd = true
+                    completedTaskToEdit = CompletedTask(
+                        beginTime: Date(), endTime: Date(), taskCategoryId: 0, taskDescription: "", id: 0)
+                })
+                AnimatedActionButton(title: "新建计划任务", action: {
+                    needToAdd = true
+                    plannedTaskToEdit = PlannedTask(
+                        beginTime: Date(), endTime: Date(), taskCategoryId: 0, taskDescription: "", id: 0)
+                })
+                AnimatedActionButton(title: "新建待办", action: {
+                    needToAdd = true
+                    todoTaskToEdit = TodoTask(name: "", id: 0)})
+            } label: {
                 Image(systemName: "plus")
                     .resizable()
                     .renderingMode(.template)
@@ -90,6 +102,7 @@ struct TimelineView: View {
         CompletedTaskCard(completedTask: completedTask)
             .contextMenu {
                 AnimatedActionButton(title: "编辑", systemImage: "square.and.pencil") {
+                    needToAdd = false
                     completedTaskToEdit = completedTask
                 }
                 AnimatedActionButton(title: "删除", systemImage: "xmark.square") {
@@ -105,6 +118,7 @@ struct TimelineView: View {
         PlannedTaskCard(plannedTask: plannedTask)
             .contextMenu {
                 AnimatedActionButton(title: "编辑", systemImage: "square.and.pencil") {
+                    needToAdd = false
                     plannedTaskToEdit = plannedTask}
                 AnimatedActionButton(
                     title: plannedTask.attachedRepeatPlanId == nil ? "删除" : "删除重复待办",
@@ -125,6 +139,7 @@ struct TimelineView: View {
         TodoTaskCard(todoTask: todoTask)
             .contextMenu {
                 AnimatedActionButton(title: "编辑", systemImage: "square.and.pencil") {
+                    needToAdd = false
                     todoTaskToEdit = todoTask }
                 AnimatedActionButton(
                     title: todoTask.attachedRepeatPlanId == nil ? "删除" : "删除重复待办",
