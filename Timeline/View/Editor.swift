@@ -161,6 +161,75 @@ struct ThemeColorPicker: View {
     }
 }
 
+struct DaysSelector: View {
+    @Binding var isAvailable: [Bool]
+    static var days = "一二三四五六日"
+    var body: some View {
+        VStack {
+            HStack {
+                Text("自定义重复：")
+                    .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
+                Spacer()
+            }
+            HStack {
+                ForEach(isAvailable.indices, id: \.self) { num in
+                    Button {
+                        isAvailable[num].toggle()
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundColor(
+                                    isAvailable[num] ?
+                                    Color(red: 1, green: 0.85, blue: 0.35) :
+                                        Color(red: 0.9, green: 0.9, blue: 0.9))
+                            Text(String(DaysSelector.days[DaysSelector.days.index(DaysSelector.days.startIndex, offsetBy: num)]))
+                                .foregroundColor(.white)
+                                .font(.footnote)
+                        }
+                        .frame(height: 30.0)
+                    }
+                }
+            }
+        }
+        .padding(12)
+    }
+}
+
+struct TypeSelector: View {
+    @Binding var type: Bool
+    var trueTypeName: String
+    var falseTypeName: String
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundColor(Color(red: 0.9, green: 0.9, blue: 0.9))
+            HStack {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 15)
+                        .foregroundColor(type ? Color(red: 0.9, green: 0.9, blue: 0.9)
+                                         : Color(red: 1, green: 0.85, blue: 0.35))
+                    Text(falseTypeName)
+                        .foregroundColor(type ? .black: .white)
+                }
+                .padding(5)
+                .onTapGesture { type = false }
+                Spacer()
+                ZStack {
+                    RoundedRectangle(cornerRadius: 15)
+                        .foregroundColor(type ? Color(red: 1, green: 0.85, blue: 0.35)
+                                         : Color(red: 0.9, green: 0.9, blue: 0.9))
+                    Text(trueTypeName)
+                        .foregroundColor(type ? .white : .black)
+                }
+                .padding(5)
+                .onTapGesture { type = true }
+            }
+        }
+        .frame(height: 45)
+        .padding(10)
+    }
+}
+
 
 struct Editor_Previews: PreviewProvider {
     static var previews: some View {

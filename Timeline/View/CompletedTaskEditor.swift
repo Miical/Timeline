@@ -17,7 +17,7 @@ struct CompletedTaskEditor: View {
     init(_ completedTaskToEdit: Binding<CompletedTask?>, needToAdd: Bool) {
         self.needToAdd = needToAdd
         self._completedTaskToEdit = completedTaskToEdit
-        if needToAdd == false {
+        if needToAdd {
             self._completedTask = State(initialValue: CompletedTask(
                 beginTime: Date(), endTime: Date(), taskCategoryId: 0, taskDescription: "", id: 0))
         } else {

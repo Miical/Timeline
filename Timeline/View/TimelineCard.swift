@@ -15,6 +15,7 @@ struct TimelineCardify: ViewModifier {
         ZStack {
             HStack {
                 Rectangle()
+                    .shadow(color: Color(red: 0.9, green: 0.9, blue: 0.9), radius: 3)
                     .foregroundColor(themeColor)
                     .frame(width: CardConstants.lineWidth)
                     .opacity(0.1)
@@ -27,6 +28,7 @@ struct TimelineCardify: ViewModifier {
                     ZStack {
                         Circle()
                             .foregroundColor(.white)
+                            .shadow(color: Color(red: 0.9, green: 0.9, blue: 0.9), radius: 3)
                         Circle()
                             .stroke(lineWidth: 0.05)
                             .foregroundColor(themeColor)
@@ -50,6 +52,7 @@ struct TimelineCardify: ViewModifier {
                 ZStack {
                     RoundedRectangle(cornerRadius: CardConstants.cornerRadius)
                         .foregroundColor(.white)
+                        .shadow(color: Color(red: 0.92, green: 0.92, blue: 0.92), radius: 5)
                     content
                 }
                 .padding(.horizontal, CardConstants.lineXOffset - CardConstants.whiteCircleSize / 2)

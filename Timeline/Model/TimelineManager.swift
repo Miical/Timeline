@@ -192,6 +192,10 @@ struct TimelineManager: Codable {
     
     // MARK: - 重复计划管理
     
+    func repeatPlan(with id: Int) -> RepeatPlan {
+        return repeatPlans.first(where: { $0.id == id })!
+    }
+    
     func allRepeatPlans(for date: Date) -> [RepeatPlan] {
         return repeatPlans.filter({ $0.isAvailableAt(date: date) })
     }

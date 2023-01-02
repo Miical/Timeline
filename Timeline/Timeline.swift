@@ -199,6 +199,10 @@ class Timeline: ObservableObject {
         timelineModel.removeGlobalTodoTask(at: idSet)
     }
     
+    func repeatPlan(with id: Int) -> RepeatPlan {
+        timelineModel.repeatPlan(with: id)
+    }
+    
     func removeRepeatPlan(at idSet: IndexSet) {
         timelineModel.removeRecord(at: idSet)
     }

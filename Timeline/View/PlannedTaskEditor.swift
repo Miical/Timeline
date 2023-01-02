@@ -7,69 +7,86 @@
 
 import SwiftUI
 
-
 struct PlannedTaskEditor: View {
     @EnvironmentObject var timeline: Timeline
+    @Binding var plannedTaskToEdit: PlannedTask?
     @State var plannedTask: PlannedTask
+    @State var isAvailable: [Bool] = []
     let needToAdd: Bool
     
-    init(_ plannedTaskToEdit: PlannedTask?) {
-        if plannedTaskToEdit == nil {
-            needToAdd = true
+    var isRepeatPlan: Bool {
+        get {
+            plannedTask.attachedRepeatPlanId != nil
+        }
+        set {
+            if newValue == true {
+                plannedTask.attachedRepeatPlanId = 0
+            } else {
+                plannedTask.attachedRepeatPlanId = nil
+            }
+        }
+    }
+    
+    init(_ plannedTaskToEdit: Binding<PlannedTask?>, needToAdd: Bool) {
+        self.needToAdd = needToAdd
+        self._plannedTaskToEdit = plannedTaskToEdit
+        if needToAdd {
             self._plannedTask = State(initialValue: PlannedTask(
-                beginTime: Date(), endTime: Date(), taskCategoryId: -1, taskDescription: "", id: 0))
+                beginTime: Date(), endTime: Date(), taskCategoryId: 0, taskDescription: "", id: 0))
         } else {
-            needToAdd = false
-            self._plannedTask = State(initialValue: plannedTaskToEdit!)
+            self._plannedTask = State(initialValue: plannedTaskToEdit.wrappedValue!)
+        }
+        
+        if plannedTaskToEdit.wrappedValue?.attachedRepeatPlanId != nil {
+            self._isAvailable = State(initialValue: Array(repeating: true, count: 7))
         }
     }
     
     var body: some View {
         VStack {
-            Form {
-                nameSection
-                taskDescriptionSection
-                timeEditSection
+            if needToAdd {
+                TypeSelector(type: Binding(
+                    get: { plannedTask.attachedRepeatPlanId != nil },
+                    set: {
+                        if $0 == true { plannedTask.attachedRepeatPlanId = 0; isAvailable = Array(repeating: true, count: 7) }
+                        else { plannedTask.attachedRepeatPlanId = nil; isAvailable = [] }
+                    }), trueTypeName: "添加重复计划", falseTypeName: "添加计划")
             }
-            Button("保存") {
-                if needToAdd {
-                    timeline.addPlannedTask(
-                        taskCategoryId: plannedTask.taskCategoryId,
-                        taskDescription: plannedTask.taskDescription,
-                        beginTime: plannedTask.beginTime,
-                        endTime: plannedTask.endTime)
+            TextEditor(name: "任务描述", text: $plannedTask.taskDescription, wordsLimit: 50)
+            TaskCategorySelector(taskCategoryId: $plannedTask.taskCategoryId)
+            TimeEditor(name: "开始时间", time: $plannedTask.beginTime)
+            TimeEditor(name: "结束时间", time: $plannedTask.endTime)
+            if isAvailable.count == 7 {
+                DaysSelector(isAvailable: $isAvailable)
+            }
+            
+        }
+        .turnToEditor(isPresent: Binding(
+            get: { plannedTaskToEdit != nil },
+            set: { if $0 == false { plannedTaskToEdit = nil }}),
+                      title: "编辑\(isRepeatPlan ? "重复" : "")计划任务") {
+            
+            if needToAdd {
+                timeline.addPlannedTask(
+                    taskCategoryId: plannedTask.taskCategoryId,
+                    taskDescription: plannedTask.taskDescription,
+                    beginTime: plannedTask.beginTime,
+                    endTime: plannedTask.endTime,
+                    isAvailable: isAvailable.isEmpty ? nil : isAvailable)
+            } else {
+                if isRepeatPlan {
+                    timeline.replaceRepeatPlan(with: RepeatPlan(
+                        task: Record.plannedTask(plannedTask),
+                        isAvailable: isAvailable))
                 } else {
                     timeline.modifyPlannedTask(with: plannedTask)
                 }
-            }.disabled(plannedTask.taskCategoryId == -1)
+            }
         }
-    }
-    
-    var nameSection: some View {
-        Section(header: Text("类别")) {
-             Menu {
-                 ForEach (timeline.taskCategoryList) { taskCategory in
-                     Button(taskCategory.name) {
-                         plannedTask.taskCategoryId = taskCategory.id
-                     }
-                }
-            } label: {
-                Text("类别：\(timeline.taskCategory(id: plannedTask.taskCategoryId).name)")
+        .onAppear{
+            if isAvailable.count == 7 {
+                isAvailable = timeline.repeatPlan(with: plannedTask.attachedRepeatPlanId!).isAvailable
             }
         }
     }
-    
-    var taskDescriptionSection: some View {
-        Section(header: Text("任务描述")) {
-            TextField("任务描述", text: $plannedTask.taskDescription)
-        }
-    }
-    
-    var timeEditSection: some View {
-        Section(header: Text("时间编辑")) {
-            DatePicker("开始时间", selection: $plannedTask.beginTime, displayedComponents: .hourAndMinute)
-            DatePicker("结束时间", selection: $plannedTask.endTime, displayedComponents: .hourAndMinute)
-        }
-    }
-    
 }

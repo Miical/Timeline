@@ -14,6 +14,7 @@ struct TimelineView: View {
     
     @State var needToAdd = false
     @State var completedTaskToEdit: CompletedTask?
+    @State var plannedTaskToEdit: PlannedTask?
     
     var body: some View {
         ZStack {
@@ -25,6 +26,8 @@ struct TimelineView: View {
             
             if completedTaskToEdit != nil {
                 CompletedTaskEditor($completedTaskToEdit, needToAdd: needToAdd)
+            } else if plannedTaskToEdit != nil {
+                PlannedTaskEditor($plannedTaskToEdit, needToAdd: needToAdd)
             }
         }
     }
@@ -70,10 +73,7 @@ struct TimelineView: View {
                     case .completedTask(let completedTask) :
                         completedTaskItem(completedTask: completedTask)
                     case .plannedTask(let plannedTask):
-                        PlannedTaskCard(plannedTask: plannedTask)
-                            .timelineCardify(
-                                color: timeline.taskCategory(id: plannedTask.taskCategoryId).color,
-                                time: record.getBeginTime()!)
+                        plannedTaskItem(plannedTask: plannedTask)
                     case .todoTask(let todoTask):
                         TodoTaskCard(todoTask: todoTask)
                             .timelineCardify(
@@ -100,6 +100,21 @@ struct TimelineView: View {
                 color: timeline.taskCategory(id: completedTask.taskCategoryId).color,
                 time: completedTask.beginTime)
     }
+    
+    func plannedTaskItem(plannedTask: PlannedTask) -> some View {
+        PlannedTaskCard(plannedTask: plannedTask)
+            .contextMenu {
+                AnimatedActionButton(title: "编辑", systemImage: "square.and.pencil") {
+                    plannedTaskToEdit = plannedTask}
+                AnimatedActionButton(title: "删除", systemImage: "xmark.square") {
+                    timeline.removeRecord(at: IndexSet(integer: plannedTask.id))
+                }
+            }
+            .timelineCardify(
+                color: timeline.taskCategory(id: plannedTask.taskCategoryId).color,
+                time: plannedTask.beginTime)
+    }
+    
 }
 
 
