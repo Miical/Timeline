@@ -39,7 +39,8 @@ struct TimelineTabBar: View {
             .frame(maxWidth: .infinity)
             .background(alignment: .leading) {
                 Circle()
-                    .fill(Color(red: 1, green: 0.85, blue: 0.35, opacity: 0.8))
+                    .fill(timelineThemeColor)
+                    .opacity(0.9)
                     .frame(width: 20, height: 20)
                     .offset(x: 10, y: yOffset)
                     .offset(x: indicatorOffset(width: width))

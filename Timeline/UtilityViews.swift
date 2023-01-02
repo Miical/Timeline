@@ -7,8 +7,11 @@
 
 import SwiftUI
 
+var timelineThemeColor =  Color(red: 1, green: 0.85, blue: 0.35)
+var backgroundColor =  Color(red: 0.98, green: 0.98, blue: 0.98)
+
 extension View {
-    func applyBackGround(color: Color = Color(red: 0.98, green: 0.98, blue: 0.98)) -> some View {
+    func applyBackGround(color: Color = backgroundColor) -> some View {
         self.frame(maxWidth: .infinity, maxHeight: .infinity)
             .background { color }
             .ignoresSafeArea(edges: [.bottom])
