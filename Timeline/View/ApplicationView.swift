@@ -30,7 +30,7 @@ struct ApplicationView: View {
                 Text("统计")
                     .applyBackGround()
                     .tag(Tab.statistics)
-                TaskCategoryManagementView()
+                MineView()
                     .applyBackGround()
                     .tag(Tab.mine)
             }

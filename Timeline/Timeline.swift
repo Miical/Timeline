@@ -204,7 +204,7 @@ class Timeline: ObservableObject {
     }
     
     func removeRepeatPlan(at idSet: IndexSet) {
-        timelineModel.removeRecord(at: idSet)
+        timelineModel.removeRepeatPlan(at: idSet)
     }
     
     func replaceRepeatPlan(with newNepeatPlan: RepeatPlan) {

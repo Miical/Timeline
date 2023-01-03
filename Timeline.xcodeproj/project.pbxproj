@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		961243FB2964053200E86B23 /* MineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961243FA2964053200E86B23 /* MineView.swift */; };
 		961E5B93295D7DED002C2983 /* UtilityFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B92295D7DED002C2983 /* UtilityFunction.swift */; };
 		961E5B95295D8935002C2983 /* PlannedTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B94295D8935002C2983 /* PlannedTaskEditor.swift */; };
 		961E5B99295DB61F002C2983 /* TodoTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E5B98295DB61F002C2983 /* TodoTask.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		961243FA2964053200E86B23 /* MineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineView.swift; sourceTree = "<group>"; };
 		961E5B92295D7DED002C2983 /* UtilityFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunction.swift; sourceTree = "<group>"; };
 		961E5B94295D8935002C2983 /* PlannedTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedTaskEditor.swift; sourceTree = "<group>"; };
 		961E5B98295DB61F002C2983 /* TodoTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTask.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				96307486295AA54E00AFE5FC /* TimelineView.swift */,
 				968ED73E29616F2B00384377 /* TimelineCard.swift */,
 				96307496295B014300AFE5FC /* TimingView.swift */,
+				961243FA2964053200E86B23 /* MineView.swift */,
 				96D2D228295B43F500F00D4C /* TaskCategoryManagementView.swift */,
 				961E5B9C295E7B68002C2983 /* GlobalTodoView.swift */,
 				96619DA0295F229D00C6AC4C /* TimelineTabBar.swift */,
@@ -251,6 +254,7 @@
 				9630748F295AB05700AFE5FC /* TaskCategoryManager.swift in Sources */,
 				961E5B9B295DC548002C2983 /* TodoTaskEditor.swift in Sources */,
 				96D2D229295B43F500F00D4C /* TaskCategoryManagementView.swift in Sources */,
+				961243FB2964053200E86B23 /* MineView.swift in Sources */,
 				968ED73F29616F2B00384377 /* TimelineCard.swift in Sources */,
 				96619DA1295F229D00C6AC4C /* TimelineTabBar.swift in Sources */,
 				961E5B95295D8935002C2983 /* PlannedTaskEditor.swift in Sources */,
