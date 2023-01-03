@@ -257,6 +257,13 @@ struct SystemIconPicker: View {
     struct Constants {
         static var systemIconSet =  [
             "book", "book.closed", "books.vertical", "bookmark",
+            "figure.run.circle", "keyboard" ,"paintpalette", "cart",
+            "shower.fill", "bicycle", "tv.inset.filled", "basketball",
+            "football" , "volleyball" ,"book.circle", "tennis.racket",
+            "airplane" ,"car" ,"bus", "train.side.front.car", "fuelpump",
+            "ruler", "backpack", "paperclip", "figure.stairs", "keyboard",
+            "text.bubble", "phone.connection", "envelope", "bathtub",
+            "clock", "gamecontroller"
         ]
     }
 }
