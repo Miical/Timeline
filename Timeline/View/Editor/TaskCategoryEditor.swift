@@ -10,61 +10,34 @@ import SwiftUI
 struct TaskCategoryEditor: View {
     @EnvironmentObject var timeline: Timeline
     @State var taskCategory: TaskCategory
+    @Binding var isPresent: Bool
     
     var needCreateTaskCategory: Bool
     
     // taskCategoryToEdit 为 nil 时保存，将会新建一个任务分类
-    init(_ taskCategoryToEdit: TaskCategory?) {
+    init(_ taskCategoryToEdit: TaskCategory?, isPresent: Binding<Bool>) {
+        self._isPresent = isPresent
         if let taskCategoryToEdit = taskCategoryToEdit {
             taskCategory = taskCategoryToEdit
             needCreateTaskCategory = false
         } else {
-            taskCategory = TaskCategory(name: "", themeColor: RGBAColor(color: Color(.white)), iconSystemName: "", id: 0)
+            taskCategory = TaskCategory(name: "", themeColor: RGBAColor(color: Color(.white)), iconSystemName: "book", id: 0)
             needCreateTaskCategory = true
         }
     }
     
     var body: some View {
         VStack {
-            Form {
-                nameSection
-                changeColorSection
+            TextEditor(name: "名称", text: $taskCategory.name, wordsLimit: 10)
+            ThemeColorPicker(color: $taskCategory.themeColor)
+            SystemIconPicker(iconName: $taskCategory.iconSystemName)
+        }
+        .turnToEditor(isPresent: $isPresent, title: "编辑任务分类", onSave: {
+            if needCreateTaskCategory {
+                timeline.addTaskCategory(taskCategory)
+            } else {
+                timeline.replaceTaskCategory(with: taskCategory)
             }
-            Button("保存") {
-                if needCreateTaskCategory {
-                    timeline.addTaskCategory(taskCategory)
-                } else {
-                    timeline.replaceTaskCategory(with: taskCategory)
-                }
-                
-            }
-        }
-    }
-    
-    var nameSection: some View {
-        Section(header: Text("名称")) {
-            TextField("名称", text: $taskCategory.name)
-        }
-    }
-    
-    var changeColorSection: some View {
-        Section(header: Text("主题色")) {
-            ColorPicker(selection: Binding(
-            get: {
-                Color(rgbaColor: taskCategory.themeColor)
-            },
-            set: {
-                taskCategory.themeColor = RGBAColor(color: $0)
-            })){}
-        }
-    }
-
-}
-
-struct TaskCategoryEditor_Previews: PreviewProvider {
-    static var previews: some View {
-        let timeline = Timeline()
-        TaskCategoryEditor(timeline.taskCategoryList.randomElement()!)
-            .environmentObject(timeline)
+        })
     }
 }

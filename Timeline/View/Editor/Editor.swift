@@ -230,6 +230,37 @@ struct TypeSelector: View {
     }
 }
 
+struct SystemIconPicker: View {
+    @Binding var iconName: String
+    var body: some View {
+        HStack {
+            Text("任务图标：")
+                .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
+            Spacer()
+            Menu {
+                ForEach(SystemIconPicker.Constants.systemIconSet, id: \.self) { systemName in
+                    Button {
+                        iconName = systemName
+                    } label: {
+                        Image(systemName: systemName)
+                    }
+                }
+            } label: {
+                Image(systemName: iconName)
+                    .font(.title2)
+                    .foregroundColor(.black)
+            }
+        }
+        .padding(12)
+    }
+    
+    struct Constants {
+        static var systemIconSet =  [
+            "book", "book.closed", "books.vertical", "bookmark",
+        ]
+    }
+}
+
 
 struct Editor_Previews: PreviewProvider {
     static var previews: some View {

@@ -9,26 +9,41 @@ import SwiftUI
 
 struct TaskCategoryManagementView: View {
     @EnvironmentObject var timeline: Timeline
-    @State var newCategoryEditor = false
     @State private var editMode: EditMode = .inactive
     
+    @State private var isPresentEditor = false
+    @State private var taskCategoryToEditor: TaskCategory?
+    
     var body: some View {
-        NavigationView {
-            VStack {
-                titleBar
-                List {
-                    ForEach(timeline.taskCategoryList) { taskCategory in
-                        taskCategoryCard(taskCategory: taskCategory)
+        ZStack {
+            NavigationView {
+                VStack {
+                    titleBar
+                    List {
+                        ForEach(timeline.taskCategoryList) { taskCategory in
+                            taskCategoryCard(taskCategory: taskCategory)
+                                .onTapGesture {
+                                    if editMode == .active {
+                                        withAnimation {
+                                            taskCategoryToEditor = taskCategory
+                                            isPresentEditor = true
+                                        }
+                                    }
+                                }
+                        }
+                        .onDelete { indexSet in
+                            timeline.removeTaskCategory(at: indexSet)
+                        }
+                        .onMove { indexSet, newOffset in
+                            timeline.moveTaskCategory(from: indexSet, to: newOffset)
+                        }
                     }
-                    .onDelete { indexSet in
-                        timeline.removeTaskCategory(at: indexSet)
-                    }
-                    .onMove { indexSet, newOffset in
-                        timeline.moveTaskCategory(from: indexSet, to: newOffset)
-                    }
+                    .background(.white)
+                    .environment(\.editMode, $editMode)
                 }
-                .background(.white)
-                .environment(\.editMode, $editMode)
+            }
+            if isPresentEditor {
+                TaskCategoryEditor(taskCategoryToEditor, isPresent: $isPresentEditor)
             }
         }
     }
@@ -45,12 +60,18 @@ struct TaskCategoryManagementView: View {
                     .foregroundColor(.black)
             }.padding(.leading, 15.0)
             Spacer()
+            
             Text("任务分类管理")
                 .font(.title2)
                 .fontWeight(.medium)
                 .padding(.top, -50)
+            
             Spacer()
             Button {
+                withAnimation {
+                    taskCategoryToEditor = nil
+                    isPresentEditor = true
+                }
             } label: {
                 Image(systemName: "plus")
                     .foregroundColor(.black)
