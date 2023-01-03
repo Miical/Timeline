@@ -13,7 +13,7 @@ struct TimingView: View {
     @State var timer: Timer?
     @State var timeCostInSeconds: Int = 0
     
-    @State var attachedPlannedTask: PlannedTask? = PlannedTask(beginTime: Date(), endTime: Date(), taskCategoryId: 0, taskDescription: "jihus", id: 0)
+    @Binding var attachedPlannedTask: PlannedTask?
     @State var taskDescription: String = ""
     @State var selectedTaskCategory: TaskCategory?
     
@@ -97,8 +97,10 @@ struct TimingView: View {
                         .foregroundColor(.gray.opacity(0.1))
                     AnimatedActionButton(
                         title: "计划任务 " + getTimeString(of:  attachedPlannedTask!.beginTime),
-                        systemImage: "xmark") {
-                            attachedPlannedTask = nil
+                        systemImage: attachedPlannedTask!.isExecuting ? "" : "xmark") {
+                            if !attachedPlannedTask!.isExecuting {
+                                attachedPlannedTask = nil
+                            }
                         }
                         .foregroundColor(.gray)
                 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct TimelineView: View {
     @EnvironmentObject var timeline: Timeline
+    @Binding var currentTab: Tab
+    @Binding var attachedPlannedTask: PlannedTask?
     @State var completedTaskEditor = false
     @State var plannedTaskToExecute: PlannedTask?
     
@@ -117,6 +119,12 @@ struct TimelineView: View {
     func plannedTaskItem(plannedTask: PlannedTask) -> some View {
         PlannedTaskCard(plannedTask: plannedTask)
             .contextMenu {
+                if !plannedTask.isExecuted {
+                    AnimatedActionButton(title: "执行计划", systemImage: "hourglass.bottomhalf.filled") {
+                        attachedPlannedTask = plannedTask
+                        currentTab = .timing
+                    }
+                }
                 AnimatedActionButton(title: "编辑", systemImage: "square.and.pencil") {
                     needToAdd = false
                     plannedTaskToEdit = plannedTask}
