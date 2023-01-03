@@ -12,7 +12,7 @@ struct TaskCategoryManagementView: View {
     @State private var editMode: EditMode = .inactive
     
     @State private var isPresentEditor = false
-    @State private var taskCategoryToEditor: TaskCategory?
+    @State private var taskCategoryToEdit: TaskCategory?
     
     var body: some View {
         ZStack {
@@ -25,7 +25,7 @@ struct TaskCategoryManagementView: View {
                                 .onTapGesture {
                                     if editMode == .active {
                                         withAnimation {
-                                            taskCategoryToEditor = taskCategory
+                                            taskCategoryToEdit = taskCategory
                                             isPresentEditor = true
                                         }
                                     }
@@ -43,7 +43,7 @@ struct TaskCategoryManagementView: View {
                 }
             }
             if isPresentEditor {
-                TaskCategoryEditor(taskCategoryToEditor, isPresent: $isPresentEditor)
+                TaskCategoryEditor(taskCategoryToEdit, isPresent: $isPresentEditor)
             }
         }
     }
@@ -69,7 +69,7 @@ struct TaskCategoryManagementView: View {
             Spacer()
             Button {
                 withAnimation {
-                    taskCategoryToEditor = nil
+                    taskCategoryToEdit = nil
                     isPresentEditor = true
                 }
             } label: {

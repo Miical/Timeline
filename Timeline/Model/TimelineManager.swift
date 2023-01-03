@@ -174,6 +174,10 @@ struct TimelineManager: Codable {
     
     mutating func completeGlobalTodoTask(_ todoTask: TodoTask, at time: Date) {
         globalTodoTasks[todoTask].complete(at: time)
+        let id = globalTodoTasks.index(matching: todoTask)!
+        let newTodoTask = globalTodoTasks[id]
+        globalTodoTasks.remove(at: id)
+        globalTodoTasks.insert(newTodoTask, at: 0)
     }
     
     mutating func cancelGlobalCompletion(of todoTask: TodoTask) {
@@ -184,10 +188,11 @@ struct TimelineManager: Codable {
         globalTodoTasks[newTodoTask] = newTodoTask
     }
     
-    mutating func removeGlobalTodoTask(at idSet: IndexSet) {
-        for id in idSet {
-            globalTodoTasks.removeAll(where: { $0.id == id })
-        }
+    mutating func removeGlobalTodoTask(at indexSet: IndexSet) {
+        globalTodoTasks.remove(atOffsets: indexSet)
+    }
+    mutating func moveGlobalTodoTask(from offsets: IndexSet, to newOffset: Int) {
+        globalTodoTasks.move(fromOffsets: offsets, toOffset: newOffset)
     }
     
     // MARK: - 重复计划管理

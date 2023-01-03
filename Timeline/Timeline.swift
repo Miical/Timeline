@@ -188,15 +188,19 @@ class Timeline: ObservableObject {
     }
     
     func cancelGlobalCompletion(of todoTask: TodoTask) {
-        timelineModel.cancelCompletion(of: todoTask)
+        timelineModel.cancelGlobalCompletion(of: todoTask)
     }
     
     func replaceGlobalTodoTask(with newTodoTask: TodoTask) {
         timelineModel.replaceGlobalTodoTask(with: newTodoTask)
     }
     
-    func removeGlobalTodoTask(at idSet: IndexSet) {
-        timelineModel.removeGlobalTodoTask(at: idSet)
+    func removeGlobalTodoTask(at indexSet: IndexSet) {
+        timelineModel.removeGlobalTodoTask(at: indexSet)
+    }
+    
+    func moveGloblaTodoTask(from offsets: IndexSet, to newOffset: Int) {
+        timelineModel.moveGlobalTodoTask(from: offsets, to: newOffset)
     }
     
     func repeatPlan(with id: Int) -> RepeatPlan {
