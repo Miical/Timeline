@@ -19,6 +19,9 @@ struct TimelineView: View {
     @State var plannedTaskToEdit: PlannedTask?
     @State var todoTaskToEdit: TodoTask?
     
+    @Binding var selectedDate: Date
+    @Binding var isPresentSideBar: Bool
+    
     var body: some View {
         ZStack {
             VStack {
@@ -35,57 +38,71 @@ struct TimelineView: View {
                 TodoTaskEditor($todoTaskToEdit, needToAdd: needToAdd)
             }
         }
+        .dateSideBar(isPresent: $isPresentSideBar,date: $selectedDate)
     }
     
+    
     var titleBar: some View {
-        HStack {
-            Button(action: {
+        VStack {
+            HStack {
+                Button(action: {
+                    withAnimation {
+                        isPresentSideBar = true
+                    }
+                }) {
+                    Image(systemName: "line.3.horizontal")
+                        .foregroundColor(.black)
+                }.padding(.leading, 15.0)
                 
-            }) {
-                Image(systemName: "line.3.horizontal")
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: 12, height: 12)
-                    .foregroundColor(.black)
-            }.padding(.leading, 15.0)
+                Spacer(minLength: 0)
+                
+                Label("Timeline", systemImage: "calendar.day.timeline.leading")
+                    .font(.custom("AvenirNextCondensed-DemiBold", size: 18))
+                
+                Spacer(minLength: 0)
+                
+                Menu {
+                    AnimatedActionButton(title: "新建已完成任务", action: {
+                        needToAdd = true
+                        completedTaskToEdit = CompletedTask(
+                            beginTime: Date(), endTime: Date(), taskCategoryId: 0, taskDescription: "", id: 0)
+                    })
+                    AnimatedActionButton(title: "新建计划任务", action: {
+                        needToAdd = true
+                        plannedTaskToEdit = PlannedTask(
+                            beginTime: Date(), endTime: Date(), taskCategoryId: 0, taskDescription: "", id: 0)
+                    })
+                    AnimatedActionButton(title: "新建待办", action: {
+                        needToAdd = true
+                        todoTaskToEdit = TodoTask(name: "", id: 0)})
+                } label: {
+                    Image(systemName: "plus")
+                        .foregroundColor(.black)
+                }.padding(.trailing, 15.0)
+            }
+            .padding([.top, .horizontal])
+            Divider()
             
-            Spacer(minLength: 0)
+            HStack {
+                Image(systemName: "calendar")
+                Text(getDateString(of: selectedDate))
+                Spacer()
+            }
+            .font(.footnote)
+            .padding(.horizontal)
+            .foregroundColor(.gray)
+            .frame(height: 10.0)
             
-            Label("Timeline", systemImage: "calendar.day.timeline.leading")
-                .font(.custom("AvenirNextCondensed-DemiBold", size: 18))
-            
-            Spacer(minLength: 0)
-            
-            Menu {
-                AnimatedActionButton(title: "新建已完成任务", action: {
-                    needToAdd = true
-                    completedTaskToEdit = CompletedTask(
-                        beginTime: Date(), endTime: Date(), taskCategoryId: 0, taskDescription: "", id: 0)
-                })
-                AnimatedActionButton(title: "新建计划任务", action: {
-                    needToAdd = true
-                    plannedTaskToEdit = PlannedTask(
-                        beginTime: Date(), endTime: Date(), taskCategoryId: 0, taskDescription: "", id: 0)
-                })
-                AnimatedActionButton(title: "新建待办", action: {
-                    needToAdd = true
-                    todoTaskToEdit = TodoTask(name: "", id: 0)})
-            } label: {
-                Image(systemName: "plus")
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: 12, height: 12)
-                    .foregroundColor(.black)
-            }.padding(.trailing, 15.0)
+            Divider()
+                .opacity(0.5)
         }
-        .padding()
         .background { Color.white }
     }
     
     var timelineBody: some View {
         VStack {
             ScrollView {
-                ForEach(timeline.allRecords(for: Date())) { record in
+                ForEach(timeline.allRecords(for: selectedDate)) { record in
                     switch(record) {
                     case .completedTask(let completedTask) :
                         completedTaskItem(completedTask: completedTask)

@@ -11,6 +11,9 @@ struct ApplicationView: View {
     @State var currentTab: Tab = .timeline
     @State var attachedPlannedTask: PlannedTask?
     
+    @State var isPresentSideBar = false
+    @State var selectedDate = Date()
+    
     init() {
         UITabBar.appearance().isHidden = true
     }
@@ -18,7 +21,8 @@ struct ApplicationView: View {
     var body: some View {
         VStack(spacing: 0) {
             TabView(selection: $currentTab) {
-                TimelineView(currentTab: $currentTab, attachedPlannedTask: $attachedPlannedTask)
+                TimelineView(currentTab: $currentTab, attachedPlannedTask: $attachedPlannedTask,
+                             selectedDate: $selectedDate, isPresentSideBar: $isPresentSideBar)
                     .applyBackGround()
                     .tag(Tab.timeline)
                 GlobalTodoView()
@@ -34,7 +38,8 @@ struct ApplicationView: View {
                     .applyBackGround()
                     .tag(Tab.mine)
             }
+            TimelineTabBar(currentTab: $currentTab)
         }
-        TimelineTabBar(currentTab: $currentTab)
+        .dateSideBar(isPresent: $isPresentSideBar, date: $selectedDate)
     }
 }

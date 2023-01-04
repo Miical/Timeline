@@ -53,3 +53,58 @@ struct AnimatedActionButton: View {
     }
 }
 
+struct sideBarDatePicker: ViewModifier {
+    @Binding var isPresent: Bool
+    @Binding var date: Date
+    func body(content: Content) -> some View {
+        GeometryReader { geometry in
+            ZStack {
+                content
+                
+                ZStack {
+                    if isPresent {
+                        Rectangle()
+                            .foregroundColor(.black.opacity(0.2))
+                            .onTapGesture {
+                                withAnimation { isPresent = false }
+                            }
+                    }
+                    
+                    HStack {
+                        ZStack(alignment: .leading) {
+                            Rectangle()
+                                .foregroundColor(.white)
+                                .frame(width: geometry.size.width * 0.5)
+                            RoundedRectangle(cornerRadius: 30.0)
+                                .foregroundColor(.white)
+                            VStack {
+                                HStack {
+                                    Image(systemName: "calendar")
+                                    Text("选择日期")
+                                }
+                                .font(.title2)
+                                DatePicker("选择日期", selection: $date, displayedComponents: [.date])
+                                    .datePickerStyle(.graphical)
+                                    .padding()
+                                    .onChange(of: date) { _ in
+                                        withAnimation {
+                                            isPresent = false
+                                        }
+                                    }
+                            }
+                        }
+                        .frame(width: geometry.size.width * 0.75)
+                        Spacer()
+                    }
+                }
+                .offset(x: isPresent ? 0 : -geometry.size.width * 0.75)
+            }
+        }
+    }
+}
+
+extension View {
+    func dateSideBar(isPresent: Binding<Bool>, date: Binding<Date>) -> some View {
+        return self.modifier(sideBarDatePicker(isPresent: isPresent, date: date))
+    }
+}

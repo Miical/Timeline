@@ -26,6 +26,14 @@ func getDateTimeString(of time: Date) -> String {
     return dateFormatter.string(from: time)
 }
 
+// 将 Date 类型转换为 yyyy-MM-dd 格式的字符串
+func getDateString(of time: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    return dateFormatter.string(from: time)
+}
+
+
 // 将 Date 类型转换为 hh:mm:ss 格式的字符串
 func getTimeString(of time: Date) -> String {
     let dateFormatter = DateFormatter()
