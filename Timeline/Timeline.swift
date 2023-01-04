@@ -267,4 +267,33 @@ class Timeline: ObservableObject {
     func replaceTaskCategory(with newTaskCategory: TaskCategory) {
         taskCategoryModel.replaceTaskCategory(with: newTaskCategory)
     }
+    
+    func canRemove(_ taskCategory: TaskCategory) -> Bool {
+        for record in timelineModel.recordList {
+            switch(record) {
+            case .plannedTask(let plannedTask):
+                if plannedTask.taskCategoryId == taskCategory.id {
+                    return false
+                }
+            case .completedTask(let completedTask):
+                if completedTask.taskCategoryId == taskCategory.id {
+                    return false
+                }
+            default:
+                break
+            }
+        }
+        for repeatPlan in timelineModel.repeatPlans {
+            switch(repeatPlan.task) {
+            case .plannedTask(let plannedTask):
+                if plannedTask.taskCategoryId == taskCategory.id {
+                    return false
+                }
+            default:
+                break
+            }
+        }
+        
+        return false
+    }
 }

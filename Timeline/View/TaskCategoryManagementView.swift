@@ -14,6 +14,8 @@ struct TaskCategoryManagementView: View {
     @State private var isPresentEditor = false
     @State private var taskCategoryToEdit: TaskCategory?
     
+    @State private var isPresentAlert = false
+    
     var body: some View {
         ZStack {
             NavigationView {
@@ -32,7 +34,13 @@ struct TaskCategoryManagementView: View {
                                 }
                         }
                         .onDelete { indexSet in
-                            timeline.removeTaskCategory(at: indexSet)
+                            for index in indexSet {
+                                if timeline.canRemove(timeline.taskCategoryList[index]) {
+                                    timeline.removeTaskCategory(at: indexSet)
+                                } else {
+                                    isPresentAlert = true
+                                }
+                            }
                         }
                         .onMove { indexSet, newOffset in
                             timeline.moveTaskCategory(from: indexSet, to: newOffset)
@@ -46,6 +54,7 @@ struct TaskCategoryManagementView: View {
                 TaskCategoryEditor(taskCategoryToEdit, isPresent: $isPresentEditor)
             }
         }
+        .alert("无法删除任务分类", isPresented: $isPresentAlert, actions: {}, message: { Text("有现有的任务记录或计划任务使用了该任务分类")})
     }
     
     var titleBar: some View {
