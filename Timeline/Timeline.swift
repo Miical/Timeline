@@ -203,6 +203,17 @@ class Timeline: ObservableObject {
         timelineModel.moveGlobalTodoTask(from: offsets, to: newOffset)
     }
     
+    // MARK: - 重复计划管理
+    
+    var allRepeatPlans: [Record] {
+        var records: [Record] = []
+        for repeatPlan in timelineModel.repeatPlans {
+            records.append(repeatPlan.task)
+        }
+        return records.sorted { record1, record2 in
+            record1.getBeginTime()! < record2.getBeginTime()! }
+    }
+    
     func repeatPlan(with id: Int) -> RepeatPlan {
         timelineModel.repeatPlan(with: id)
     }

@@ -19,7 +19,9 @@ struct MineView: View {
                             cardView(systemName: "list.bullet", name: "任务分类管理")
                         }
                         Spacer()
-                        cardView(systemName: "calendar.badge.clock", name: "重复任务管理")
+                        NavigationLink(destination: RepeatPlanManagementView()) {
+                            cardView(systemName: "calendar.badge.clock", name: "重复任务管理")
+                        }
                     }
                     .padding()
                     Spacer()
