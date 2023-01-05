@@ -93,11 +93,11 @@ struct sideBarDatePicker: ViewModifier {
                                     }
                             }
                         }
-                        .frame(width: geometry.size.width * 0.75)
+                        .frame(width: geometry.size.width * 0.8)
                         Spacer()
                     }
                 }
-                .offset(x: isPresent ? 0 : -geometry.size.width * 0.75)
+                .offset(x: isPresent ? 0 : -geometry.size.width * 0.8)
             }
         }
     }

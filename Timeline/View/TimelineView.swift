@@ -22,6 +22,10 @@ struct TimelineView: View {
     @Binding var selectedDate: Date
     @Binding var isPresentSideBar: Bool
     
+    @State var timer: Timer?
+    @State var currentTime = Date()
+    @State var currentTimeForTimeBar = Date()
+    
     var body: some View {
         ZStack {
             VStack {
@@ -39,6 +43,14 @@ struct TimelineView: View {
             }
         }
         .dateSideBar(isPresent: $isPresentSideBar,date: $selectedDate)
+        .onAppear {
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    currentTime = Date()
+                }
+                currentTimeForTimeBar = Date()
+            }
+        }
     }
     
     
@@ -99,19 +111,59 @@ struct TimelineView: View {
         .background { Color.white }
     }
     
+    var currentTimeBar: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundColor(.white)
+                .shadow(color: Color(red: 0.9, green: 0.9, blue: 0.9), radius: 3)
+            RoundedRectangle(cornerRadius: 20)
+                .strokeBorder(lineWidth: 4)
+                .foregroundColor(timelineThemeColor.opacity(0.1))
+            HStack {
+                Image(systemName: "clock")
+                    .padding(.leading, 40)
+                Text(getTimeString(of: currentTimeForTimeBar))
+                Spacer()
+                Image(systemName: "figure.walk.motion")
+                    .padding(.trailing, 40)
+                    .foregroundColor(timelineThemeColor)
+            }
+            .font(.callout)
+        }
+        .frame(height: 40.0)
+        .padding(.horizontal)
+        .padding(.top)
+        
+    }
+    
     var timelineBody: some View {
         VStack {
             ScrollView {
-                ForEach(timeline.allRecords(for: selectedDate)) { record in
-                    switch(record) {
-                    case .completedTask(let completedTask) :
-                        completedTaskItem(completedTask: completedTask)
-                    case .plannedTask(let plannedTask):
-                        plannedTaskItem(plannedTask: plannedTask)
-                    case .todoTask(let todoTask):
-                        todoTaskItem(todoTask: todoTask)
+                ForEach(timeline.allRecords(for: selectedDate)
+                    .filter( { $0.getBeginTime()! <= currentTime })) { record in
+                        switch(record) {
+                        case .completedTask(let completedTask) :
+                            completedTaskItem(completedTask: completedTask)
+                        case .plannedTask(let plannedTask):
+                            plannedTaskItem(plannedTask: plannedTask)
+                        case .todoTask(let todoTask):
+                            todoTaskItem(todoTask: todoTask)
+                        }
                     }
-                }
+                
+                currentTimeBar
+                
+                ForEach(timeline.allRecords(for: selectedDate)
+                    .filter( { $0.getBeginTime()! > currentTime })) { record in
+                        switch(record) {
+                        case .completedTask(let completedTask) :
+                            completedTaskItem(completedTask: completedTask)
+                        case .plannedTask(let plannedTask):
+                            plannedTaskItem(plannedTask: plannedTask)
+                        case .todoTask(let todoTask):
+                            todoTaskItem(todoTask: todoTask)
+                        }
+                    }
                 Spacer(minLength: 100.0)
             }
         }
