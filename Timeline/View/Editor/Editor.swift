@@ -59,8 +59,8 @@ struct Editor: ViewModifier {
     
     var saveButton: some View {
         Button(action: {
-            onSave()
             isPresent = false
+            onSave()
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)

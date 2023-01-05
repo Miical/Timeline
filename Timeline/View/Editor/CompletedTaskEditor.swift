@@ -12,6 +12,7 @@ struct CompletedTaskEditor: View {
     @EnvironmentObject var timeline: Timeline
     @Binding var completedTaskToEdit: CompletedTask?
     @State var completedTask: CompletedTask
+    @State var isPresentAlert = false
     let needToAdd: Bool
     
     init(_ completedTaskToEdit: Binding<CompletedTask?>, needToAdd: Bool) {
@@ -38,7 +39,12 @@ struct CompletedTaskEditor: View {
             set: { if $0 == false { completedTaskToEdit = nil }}),
                       title: "编辑已完成任务") {
             
-            if needToAdd {
+            if (needToAdd && !timeline.canAddCompletedTask(
+                    from: completedTask.beginTime, to: completedTask.endTime))
+                || completedTask.beginTime > completedTask.endTime {
+                completedTaskToEdit = completedTask
+                isPresentAlert = true
+            } else if needToAdd {
                 timeline.addCompletedTask(
                     taskCategoryId: completedTask.taskCategoryId,
                     taskDescription: completedTask.taskDescription,
@@ -48,5 +54,6 @@ struct CompletedTaskEditor: View {
                 timeline.replaceCompletedTask(with: completedTask)
             }
         }
+        .alert("无法保存更改", isPresented: $isPresentAlert, actions: {}, message: { Text("任务时间不合法或与现有的任务记录冲突")})
     }
 }

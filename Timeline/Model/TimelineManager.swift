@@ -43,6 +43,25 @@ struct TimelineManager: Codable {
     }
     
     // MARK: - 已完成任务管理
+    func canAddCompletedTask(from beginTime: Date, to endTime: Date) -> Bool {
+        for record in recordList {
+            switch(record) {
+            case .completedTask(let completedTask):
+                if completedTask.beginTime < beginTime && beginTime < completedTask.endTime {
+                    return false
+                }
+                if completedTask.beginTime < endTime && endTime < completedTask.endTime {
+                    return false
+                }
+                if beginTime <= completedTask.beginTime && completedTask.endTime <= endTime {
+                    return false
+                }
+            default:
+                break
+            }
+        }
+        return true
+    }
     
     mutating func addCompletedTask(taskCategoryId: Int, taskDescription: String,
                                    beginTime: Date,  endTime: Date) {

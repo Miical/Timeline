@@ -130,6 +130,10 @@ class Timeline: ObservableObject {
         timelineModel.removeRecord(at: idSet)
     }
     
+    func canAddCompletedTask(from beginTime: Date, to endTime: Date) -> Bool {
+        timelineModel.canAddCompletedTask(from: beginTime, to: endTime)
+    }
+        
     func addCompletedTask(taskCategoryId: Int, taskDescription: String,
                           beginTime: Date, endTime: Date) {
         timelineModel.addCompletedTask(

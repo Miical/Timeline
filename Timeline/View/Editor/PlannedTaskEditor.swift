@@ -12,6 +12,7 @@ struct PlannedTaskEditor: View {
     @Binding var plannedTaskToEdit: PlannedTask?
     @State var plannedTask: PlannedTask
     @State var isAvailable: [Bool] = []
+    @State var isPresentAlert = false
     let needToAdd: Bool
     
     var isRepeatPlan: Bool {
@@ -66,7 +67,10 @@ struct PlannedTaskEditor: View {
             set: { if $0 == false { plannedTaskToEdit = nil }}),
                       title: "编辑\(isRepeatPlan ? "重复" : "")计划任务") {
             
-            if needToAdd {
+            if plannedTask.beginTime > plannedTask.endTime {
+                plannedTaskToEdit = plannedTask
+                isPresentAlert = true
+            } else if needToAdd {
                 timeline.addPlannedTask(
                     taskCategoryId: plannedTask.taskCategoryId,
                     taskDescription: plannedTask.taskDescription,
@@ -88,5 +92,6 @@ struct PlannedTaskEditor: View {
                 isAvailable = timeline.repeatPlan(with: plannedTask.attachedRepeatPlanId!).isAvailable
             }
         }
+        .alert("无法保存更改", isPresented: $isPresentAlert, actions: {}, message: { Text("任务时间不合法")})
     }
 }
