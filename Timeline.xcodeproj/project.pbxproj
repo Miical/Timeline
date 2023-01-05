@@ -35,6 +35,7 @@
 		968ED741296178F900384377 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968ED740296178F900384377 /* Editor.swift */; };
 		96A46E5C2964469400233F60 /* GlobalTodoTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A46E5B2964469400233F60 /* GlobalTodoTaskEditor.swift */; };
 		96A46E5E29653A9B00233F60 /* RepeatPlanManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A46E5D29653A9B00233F60 /* RepeatPlanManagementView.swift */; };
+		96A46E622966D46900233F60 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A46E612966D46900233F60 /* StatisticsView.swift */; };
 		96D2D229295B43F500F00D4C /* TaskCategoryManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D2D228295B43F500F00D4C /* TaskCategoryManagementView.swift */; };
 		B61036CC2959EC44007BC4F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B61036CB2959EC44007BC4F6 /* Assets.xcassets */; };
 		B61036CF2959EC44007BC4F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B61036CE2959EC44007BC4F6 /* Preview Assets.xcassets */; };
@@ -69,6 +70,7 @@
 		968ED740296178F900384377 /* Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
 		96A46E5B2964469400233F60 /* GlobalTodoTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalTodoTaskEditor.swift; sourceTree = "<group>"; };
 		96A46E5D29653A9B00233F60 /* RepeatPlanManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatPlanManagementView.swift; sourceTree = "<group>"; };
+		96A46E612966D46900233F60 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		96D2D228295B43F500F00D4C /* TaskCategoryManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCategoryManagementView.swift; sourceTree = "<group>"; };
 		B61036C42959EC42007BC4F6 /* Timeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B61036CB2959EC44007BC4F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -113,14 +115,15 @@
 			isa = PBXGroup;
 			children = (
 				96619DA2295F330D00C6AC4C /* ApplicationView.swift */,
+				96619DA0295F229D00C6AC4C /* TimelineTabBar.swift */,
 				96307486295AA54E00AFE5FC /* TimelineView.swift */,
 				968ED73E29616F2B00384377 /* TimelineCard.swift */,
+				961E5B9C295E7B68002C2983 /* GlobalTodoView.swift */,
 				96307496295B014300AFE5FC /* TimingView.swift */,
+				96A46E612966D46900233F60 /* StatisticsView.swift */,
 				961243FA2964053200E86B23 /* MineView.swift */,
 				96D2D228295B43F500F00D4C /* TaskCategoryManagementView.swift */,
 				96A46E5D29653A9B00233F60 /* RepeatPlanManagementView.swift */,
-				961E5B9C295E7B68002C2983 /* GlobalTodoView.swift */,
-				96619DA0295F229D00C6AC4C /* TimelineTabBar.swift */,
 				968ED7432962C2B200384377 /* Editor */,
 			);
 			path = View;
@@ -265,6 +268,7 @@
 				968ED73F29616F2B00384377 /* TimelineCard.swift in Sources */,
 				96619DA1295F229D00C6AC4C /* TimelineTabBar.swift in Sources */,
 				961E5B95295D8935002C2983 /* PlannedTaskEditor.swift in Sources */,
+				96A46E622966D46900233F60 /* StatisticsView.swift in Sources */,
 				96307489295AA6E300AFE5FC /* PlannedTask.swift in Sources */,
 				961E5B9D295E7B68002C2983 /* GlobalTodoView.swift in Sources */,
 				9630747B295A9A7C00AFE5FC /* CompletedTask.swift in Sources */,

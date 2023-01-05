@@ -300,4 +300,44 @@ class Timeline: ObservableObject {
         
         return false
     }
+    
+    // MARK: - 统计
+    
+    func getStatisticsData(for date: Date) -> [Pie] {
+        var taskCategoryTime = Array(repeating: 0, count: taskCategoryList.count)
+        
+        for record in allRecords(for: date) {
+            switch(record) {
+            case .completedTask(let completedTask):
+                let id = taskCategoryList.index(matching: taskCategory(id: completedTask.taskCategoryId))!
+                taskCategoryTime[id] += completedTask.durationInSeconds
+            case .plannedTask(let plannedTask):
+                let id = taskCategoryList.index(matching: taskCategory(id: plannedTask.taskCategoryId))!
+                taskCategoryTime[id] += plannedTask.totalExecutionTimeInSeconds
+            default:
+                break
+            }
+        }
+        
+        let totalTime: CGFloat = CGFloat(taskCategoryTime.reduce(0) { partialResult, time in
+            partialResult + time
+        })
+        
+        if totalTime == 0 {
+            return []
+        } else {
+            var statisticsData: [Pie] = []
+            for i in taskCategoryTime.indices {
+                if taskCategoryTime[i] > 0 {
+                    statisticsData.append(Pie(
+                        id: i,
+                        percent: CGFloat(taskCategoryTime[i]) / totalTime * 100.0,
+                        data: taskCategoryTime[i],
+                        name: taskCategoryList[i].name,
+                        color: taskCategoryList[i].color))
+                }
+            }
+            return statisticsData
+        }
+    }
 }

@@ -14,6 +14,9 @@ struct ApplicationView: View {
     @State var isPresentSideBar = false
     @State var selectedDate = Date()
     
+    @State var isPresentSideBarForStatistics = false
+    @State var selectedDateForStatistics = Date()
+    
     init() {
         UITabBar.appearance().isHidden = true
     }
@@ -31,7 +34,8 @@ struct ApplicationView: View {
                 TimingView(attachedPlannedTask: $attachedPlannedTask)
                     .applyBackGround()
                     .tag(Tab.timing)
-                Text("统计")
+                StatisticsView(selectedDate: $selectedDateForStatistics,
+                               isPresentSideBar: $isPresentSideBarForStatistics)
                     .applyBackGround()
                     .tag(Tab.statistics)
                 MineView()
@@ -41,5 +45,6 @@ struct ApplicationView: View {
             TimelineTabBar(currentTab: $currentTab)
         }
         .dateSideBar(isPresent: $isPresentSideBar, date: $selectedDate)
+        .dateSideBar(isPresent: $isPresentSideBarForStatistics, date: $selectedDateForStatistics)
     }
 }
