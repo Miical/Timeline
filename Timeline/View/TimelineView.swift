@@ -209,7 +209,7 @@ struct TimelineView: View {
                     title: plannedTask.attachedRepeatPlanId == nil ? "删除" : "删除重复计划任务",
                     systemImage: "xmark.square") {
                     if (plannedTask.attachedRepeatPlanId != nil) {
-                        timeline.removeRepeatPlan(at: IndexSet(integer: plannedTask.attachedRepeatPlanId!))
+                        timeline.removeRepeatPlan(at: plannedTask.attachedRepeatPlanId!)
                     } else {
                         timeline.removeRecord(at: IndexSet(integer: plannedTask.id))
                     }
@@ -230,7 +230,7 @@ struct TimelineView: View {
                     title: todoTask.attachedRepeatPlanId == nil ? "删除" : "删除重复待办",
                     systemImage: "xmark.square") {
                     if (todoTask.attachedRepeatPlanId != nil) {
-                        timeline.removeRepeatPlan(at: IndexSet(integer: todoTask.attachedRepeatPlanId!))
+                        timeline.removeRepeatPlan(at: todoTask.attachedRepeatPlanId!)
                     } else {
                         timeline.removeRecord(at: IndexSet(integer: todoTask.id))
                     }

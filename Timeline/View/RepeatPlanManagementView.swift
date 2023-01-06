@@ -51,9 +51,9 @@ struct RepeatPlanManagementView: View {
                             for index in indexSet {
                                 switch timeline.allRepeatPlans[index] {
                                 case .plannedTask(let plannedTask):
-                                    timeline.removeRepeatPlan(at: IndexSet(integer: plannedTask.attachedRepeatPlanId!))
+                                    timeline.removeRepeatPlan(at: plannedTask.attachedRepeatPlanId!)
                                 case .todoTask(let todoTask):
-                                    timeline.removeRepeatPlan(at: IndexSet(integer: todoTask.attachedRepeatPlanId!))
+                                    timeline.removeRepeatPlan(at: todoTask.attachedRepeatPlanId!)
                                 default:
                                     break
                                 }

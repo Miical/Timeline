@@ -224,10 +224,26 @@ struct TimelineManager: Codable {
         return repeatPlans.filter({ $0.isAvailableAt(date: date) })
     }
     
-    mutating func removeRepeatPlan(at idSet: IndexSet) {
-        for id in idSet {
-            repeatPlans.removeAll(where: { $0.id == id })
+    mutating func removeRepeatPlan(at id: Int) {
+        for record in recordList {
+            if record.attachedRepeatPlan != nil && record.attachedRepeatPlan! == id {
+                switch(record) {
+                case .plannedTask(let plannedTask):
+                    var newPlannedTask = plannedTask
+                    removeRecord(at: IndexSet(integer: plannedTask.id))
+                    newPlannedTask.attachedRepeatPlanId = nil
+                    recordList.append(Record.plannedTask(newPlannedTask))
+                case .todoTask(let todoTask):
+                    var newTodoTask = todoTask
+                    removeRecord(at: IndexSet(integer: todoTask.id))
+                    newTodoTask.attachedRepeatPlanId = nil
+                    recordList.append(Record.todoTask(newTodoTask))
+                default:
+                    break
+                }
+            }
         }
+        repeatPlans.removeAll(where: { $0.id == id })
     }
     
     mutating func replaceRepeatPlan(with newNepeatPlan: RepeatPlan) {

@@ -125,12 +125,16 @@ class Timeline: ObservableObject {
                         endTime: connectDateAndTime(date: date, time: plannedTask.endTime),
                         taskCategoryId: plannedTask.taskCategoryId,
                         taskDescription: plannedTask.taskDescription,
-                        id: plannedTask.id)))
+                        id: plannedTask.id,
+                        attachedRepeatPlanId: plannedTask.id
+                    )))
                 case .todoTask(let todoTask):
                     allRecords.append(Record.todoTask(TodoTask(
                         name: todoTask.name,
                         beginTime: connectDateAndTime(date: date, time: todoTask.beginTime!),
-                        id: todoTask.id)))
+                        id: todoTask.id,
+                        attachedRepeatPlanId: todoTask.id
+                    )))
                 default:
                     break
                 }
@@ -237,8 +241,8 @@ class Timeline: ObservableObject {
         timelineModel.repeatPlan(with: id)
     }
     
-    func removeRepeatPlan(at idSet: IndexSet) {
-        timelineModel.removeRepeatPlan(at: idSet)
+    func removeRepeatPlan(at id: Int) {
+        timelineModel.removeRepeatPlan(at: id)
     }
     
     func replaceRepeatPlan(with newNepeatPlan: RepeatPlan) {
