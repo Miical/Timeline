@@ -47,7 +47,8 @@ struct CompletedTaskEditor: View {
             
             if (needToAdd && !timeline.canAddCompletedTask(
                     from: completedTask.beginTime, to: completedTask.endTime))
-                || completedTask.beginTime > completedTask.endTime {
+                || completedTask.beginTime > completedTask.endTime
+                || completedTask.endTime > Date() {
                 completedTaskToEdit = completedTask
                 isPresentAlert = true
             } else if needToAdd {
