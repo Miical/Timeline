@@ -29,7 +29,7 @@ struct GlobalTodoTaskEditor: View {
         VStack {
             TextEditor(name: "名称", text: $todoTask.name, wordsLimit: 50)
         }
-        .turnToEditor(isPresent: $isPresent, title: "编辑待办", onSave: {
+        .turnToEditor(isPresent: $isPresent, title: "\(needToAdd ? "新建" : "编辑")待办", onSave: {
             if needToAdd {
                 timeline.addGlobalTodoTask(taskName: todoTask.name)
             } else {

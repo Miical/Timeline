@@ -43,7 +43,7 @@ struct CompletedTaskEditor: View {
         .turnToEditor(isPresent: Binding(
             get: { completedTaskToEdit != nil },
             set: { if $0 == false { completedTaskToEdit = nil }}),
-                      title: "编辑已完成任务") {
+                      title: (needToAdd ? "新建" : "编辑") + "已完成任务") {
             
             if (needToAdd && !timeline.canAddCompletedTask(
                     from: completedTask.beginTime, to: completedTask.endTime))

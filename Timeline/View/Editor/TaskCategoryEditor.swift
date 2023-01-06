@@ -32,7 +32,7 @@ struct TaskCategoryEditor: View {
             ThemeColorPicker(color: $taskCategory.themeColor)
             SystemIconPicker(iconName: $taskCategory.iconSystemName)
         }
-        .turnToEditor(isPresent: $isPresent, title: "编辑任务分类", onSave: {
+        .turnToEditor(isPresent: $isPresent, title: "\(needCreateTaskCategory ? "新建" : "编辑")任务分类", onSave: {
             if needCreateTaskCategory {
                 timeline.addTaskCategory(taskCategory)
             } else {

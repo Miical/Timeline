@@ -73,7 +73,7 @@ struct PlannedTaskEditor: View {
         .turnToEditor(isPresent: Binding(
             get: { plannedTaskToEdit != nil },
             set: { if $0 == false { plannedTaskToEdit = nil }}),
-                      title: "编辑\(isRepeatPlan ? "重复" : "")计划任务") {
+                      title: "\(needToAdd ? "新建" : "编辑")\(isRepeatPlan ? "重复" : "")计划任务") {
             
             if plannedTask.beginTime > plannedTask.endTime {
                 plannedTaskToEdit = plannedTask

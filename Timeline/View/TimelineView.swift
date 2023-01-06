@@ -225,6 +225,20 @@ struct TimelineView: View {
     func todoTaskItem(todoTask: TodoTask) -> some View {
         TodoTaskCard(todoTask: todoTask)
             .contextMenu {
+                if todoTask.isComplete {
+                    Button {
+                        timeline.cancelCompletion(of: todoTask)
+                    } label: {
+                        Label("取消完成", systemImage: "xmark.app")
+                    }
+                } else {
+                    Button {
+                        timeline.completeTodoTask(todoTask, at: Date())
+                    } label: {
+                        Label("完成", systemImage: "checkmark.square")
+                    }
+                }
+
                 AnimatedActionButton(title: "编辑", systemImage: "square.and.pencil") {
                     needToAdd = false
                     todoTaskToEdit = todoTask }

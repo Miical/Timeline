@@ -68,7 +68,7 @@ struct TodoTaskEditor: View {
         .turnToEditor(isPresent: Binding(
             get: { todoTaskToEdit != nil },
             set: { if $0 == false { todoTaskToEdit = nil }}),
-                      title: "编辑\(isRepeatPlan ? "重复" : "")待办") {
+                      title: "\(needToAdd ? "新建" : "编辑")\(isRepeatPlan ? "重复" : "")待办") {
             
             if needToAdd {
                 timeline.addTodoTask(
