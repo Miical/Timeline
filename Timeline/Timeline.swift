@@ -117,7 +117,8 @@ class Timeline: ObservableObject {
     func allRecords(for date: Date) -> [Record] {
         var allRecords = timelineModel.allRecord(for: date)
         for repeatPlan in timelineModel.allRepeatPlans(for: date) {
-            if !allRecords.contains(where: { $0.attachedRepeatPlan == repeatPlan.id }) {
+            if getTheStartOf(date: repeatPlan.task.getBeginTime()!) < date
+                && !allRecords.contains(where: { $0.attachedRepeatPlan == repeatPlan.id }) {
                 switch(repeatPlan.task) {
                 case .plannedTask(let plannedTask):
                     allRecords.append(Record.plannedTask(PlannedTask(

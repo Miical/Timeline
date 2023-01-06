@@ -19,14 +19,14 @@ func theDayOfTheWeek(at date: Date) -> Int {
     return Calendar.current.component(.weekday, from: date) - 1
 }
 
-// 将 Date 类型转换为 yyyy/MM/dd hh:mm:ss 格式的字符串
+/// 将 Date 类型转换为 yyyy/MM/dd hh:mm:ss 格式的字符串
 func getDateTimeString(of time: Date) -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy/MM/dd hh:mm:ss"
     return dateFormatter.string(from: time)
 }
 
-// 将 Date 类型转换为 yyyy-MM-dd 格式的字符串
+/// 将 Date 类型转换为 yyyy-MM-dd 格式的字符串
 func getDateString(of time: Date) -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -34,14 +34,14 @@ func getDateString(of time: Date) -> String {
 }
 
 
-// 将 Date 类型转换为 hh:mm:ss 格式的字符串
+/// 将 Date 类型转换为 hh:mm:ss 格式的字符串
 func getTimeString(of time: Date) -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "hh:mm:ss"
     return dateFormatter.string(from: time)
 }
     
-// 将秒数转换为时分秒表示的字符串
+/// 将秒数转换为时分秒表示的字符串
 func timeStringFromSeconds(_ seconds: Int) -> String {
     var timeString = "\(seconds % 60)s"
     if seconds / 60 > 0 {
@@ -53,7 +53,7 @@ func timeStringFromSeconds(_ seconds: Int) -> String {
     return timeString
 }
 
-// 由给定的时间日期生成新的Date对象
+/// 由给定的时间日期生成新的Date对象
 func connectDateAndTime(date: Date, time: Date) -> Date {
     let calendar = Calendar.current
     
@@ -67,4 +67,16 @@ func connectDateAndTime(date: Date, time: Date) -> Date {
     return calendar.date(from: DateComponents(
         calendar: calendar, year: year, month: month, day: day,
         hour: hour, minute: minute, second: second))!
+}
+
+/// 获取一天的开始
+func getTheStartOf(date: Date) -> Date {
+    let calendar = Calendar.current
+    
+    let year = calendar.component(.year, from: date)
+    let month = calendar.component(.month, from: date)
+    let day = calendar.component(.day, from: date)
+    return calendar.date(from: DateComponents(
+        calendar: calendar, year: year, month: month, day: day,
+        hour: 0, minute: 0, second: 0))!
 }

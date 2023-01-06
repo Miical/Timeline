@@ -224,7 +224,35 @@ struct TimelineManager: Codable {
         return repeatPlans.filter({ $0.isAvailableAt(date: date) })
     }
     
+    func containAttachedPlan(at date: Date, of attachedId: Int) -> Bool {
+        return allRecord(for: date).contains { record in
+            record.attachedRepeatPlan == attachedId
+        }
+    }
+    
     mutating func removeRepeatPlan(at id: Int) {
+        let repeatPlan = repeatPlan(with: id)
+        
+        var date = repeatPlan.task.getBeginTime()!
+        let currentDate = Date()
+        while date < currentDate {
+            if !containAttachedPlan(at: date, of: id) {
+                switch(repeatPlan.task) {
+                case .plannedTask(let plannedTask):
+                    addPlannedTask(taskCategoryId: plannedTask.taskCategoryId,
+                                   taskDescription: plannedTask.taskDescription,
+                                   beginTime: date,
+                                   endTime: connectDateAndTime(date: date, time: plannedTask.endTime))
+                case .todoTask(let todoTask):
+                    addTodoTask(taskName: todoTask.name, beginTime: date)
+                default:
+                    break
+                }
+            }
+            date = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+        }
+        
+        
         for record in recordList {
             if record.attachedRepeatPlan != nil && record.attachedRepeatPlan! == id {
                 switch(record) {
