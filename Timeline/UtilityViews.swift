@@ -34,11 +34,12 @@ extension View {
 struct AnimatedActionButton: View {
     var title: String? = nil
     var systemImage: String? = nil
+    var delay: Double = 0
     let action: () -> Void
     
     var body: some View {
         Button {
-            withAnimation {
+            withAnimation(Animation.easeInOut.delay(delay)) {
                 action()
             }
         } label: {

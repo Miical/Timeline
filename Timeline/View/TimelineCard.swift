@@ -58,6 +58,7 @@ struct TimelineCardify: ViewModifier {
                 .padding(.horizontal, CardConstants.lineXOffset - CardConstants.whiteCircleSize / 2)
             }
         }
+        .transition(.move(edge: .trailing))
     }
     
     struct CardConstants {

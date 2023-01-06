@@ -176,7 +176,7 @@ struct TimelineView: View {
                     needToAdd = false
                     completedTaskToEdit = completedTask
                 }
-                AnimatedActionButton(title: "删除", systemImage: "xmark.square") {
+                AnimatedActionButton(title: "删除", systemImage: "xmark.square", delay: 0.6) {
                     timeline.removeRecord(at: IndexSet(integer: completedTask.id))
                 }
             }
@@ -207,7 +207,7 @@ struct TimelineView: View {
                 }
                 AnimatedActionButton(
                     title: plannedTask.attachedRepeatPlanId == nil ? "删除" : "删除重复计划任务",
-                    systemImage: "xmark.square") {
+                    systemImage: "xmark.square", delay: 0.6) {
                     if (plannedTask.attachedRepeatPlanId != nil) {
                         timeline.removeRepeatPlan(at: plannedTask.attachedRepeatPlanId!)
                     } else {
@@ -228,7 +228,7 @@ struct TimelineView: View {
                     todoTaskToEdit = todoTask }
                 AnimatedActionButton(
                     title: todoTask.attachedRepeatPlanId == nil ? "删除" : "删除重复待办",
-                    systemImage: "xmark.square") {
+                    systemImage: "xmark.square", delay: 0.6) {
                     if (todoTask.attachedRepeatPlanId != nil) {
                         timeline.removeRepeatPlan(at: todoTask.attachedRepeatPlanId!)
                     } else {
