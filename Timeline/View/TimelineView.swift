@@ -151,7 +151,9 @@ struct TimelineView: View {
                         }
                     }
                 
-                currentTimeBar
+                if getDateString(of: Date()) == getDateString(of: selectedDate) {
+                    currentTimeBar
+                }
                 
                 ForEach(timeline.allRecords(for: selectedDate)
                     .filter( { $0.getBeginTime()! > currentTime })) { record in
