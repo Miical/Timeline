@@ -55,6 +55,14 @@ struct PlannedTaskEditor: View {
             }
             TextEditor(name: "任务描述", text: $plannedTask.taskDescription, wordsLimit: 50)
             TaskCategorySelector(taskCategoryId: $plannedTask.taskCategoryId)
+            if isAvailable.isEmpty {
+                DateEditor(name: "日期", date: Binding(get: {
+                    plannedTask.beginTime
+                }, set: {
+                    plannedTask.beginTime = $0
+                    plannedTask.endTime = connectDateAndTime(date: $0, time: plannedTask.endTime)
+                }))
+            }
             TimeEditor(name: "开始时间", time: $plannedTask.beginTime)
             TimeEditor(name: "结束时间", time: $plannedTask.endTime)
             if isAvailable.count == 7 {

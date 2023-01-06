@@ -142,6 +142,21 @@ struct TimeEditor: View {
     }
 }
 
+struct DateEditor: View {
+    var name: String
+    @Binding var date: Date
+    var body: some View {
+        HStack {
+            Text(name + "：")
+                .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
+            Spacer()
+            DatePicker("", selection: $date, displayedComponents: .date)
+        }
+        .padding(12)
+    }
+    
+}
+
 struct ThemeColorPicker: View {
     @Binding var color: RGBAColor
     var body: some View {

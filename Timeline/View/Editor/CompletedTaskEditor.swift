@@ -30,6 +30,12 @@ struct CompletedTaskEditor: View {
         VStack {
             TextEditor(name: "任务描述", text: $completedTask.taskDescription, wordsLimit: 50)
             TaskCategorySelector(taskCategoryId: $completedTask.taskCategoryId)
+            DateEditor(name: "日期", date: Binding(get: {
+                completedTask.beginTime
+            }, set: {
+                completedTask.beginTime = $0
+                completedTask.endTime = connectDateAndTime(date: $0, time: completedTask.endTime)
+            }))
             TimeEditor(name: "开始时间", time: $completedTask.beginTime)
             TimeEditor(name: "结束时间", time: $completedTask.endTime)
             

@@ -56,6 +56,9 @@ struct TodoTaskEditor: View {
                     }), trueTypeName: "添加重复待办", falseTypeName: "添加待办")
             }
             TextEditor(name: "名称", text: $todoTask.name, wordsLimit: 50)
+            if isAvailable.isEmpty {
+                DateEditor(name: "日期", date: $beginTime)
+            }
             TimeEditor(name: "计划时间", time: $beginTime)
             if isAvailable.count == 7 {
                 DaysSelector(isAvailable: $isAvailable)
