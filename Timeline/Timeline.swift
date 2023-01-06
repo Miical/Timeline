@@ -38,7 +38,6 @@ class Timeline: ObservableObject {
         do {
             let taskCategoryData: Data = try taskCategoryModel.json()
             try taskCategoryData.write(to: taskCategoryUrl)
-            print("\(taskCategoryData)")
             let timelineData: Data = try timelineModel.json()
             try timelineData.write(to: timelineUrl)
             print("\(thisfunction) success!")
@@ -67,11 +66,38 @@ class Timeline: ObservableObject {
     }
     
     func loadDemoContent() {
-        taskCategoryModel.addTaskCategory(name: "学习", themeColor: RGBAColor(red: 255, green: 0, blue: 0, alpha: 1), iconSystemName: "book.closed")
-        taskCategoryModel.addTaskCategory(name: "运动", themeColor: RGBAColor(red: 255, green: 255, blue: 0, alpha: 1), iconSystemName: "figure.disc.sports")
-        taskCategoryModel.addTaskCategory(name: "玩游戏", themeColor: RGBAColor(red: 255, green: 0, blue: 255, alpha: 1), iconSystemName: "gamecontroller")
-        taskCategoryModel.addTaskCategory(name: "听音乐", themeColor: RGBAColor(red: 0, green: 0, blue: 255, alpha: 1), iconSystemName: "music.quarternote.3")
-        taskCategoryModel.addTaskCategory(name: "学英语", themeColor: RGBAColor(red: 0, green: 255, blue: 255, alpha: 1), iconSystemName: "books.vertical")
+        taskCategoryModel.addTaskCategory(
+            name: "吃饭",
+            themeColor: RGBAColor(red: 0.96, green: 0.80, blue: 0.35, alpha: 1),
+            iconSystemName: "fork.knife")
+        taskCategoryModel.addTaskCategory(
+            name: "学习",
+            themeColor: RGBAColor(red: 0.64, green: 0.82, blue: 0.43, alpha: 1),
+            iconSystemName: "book.closed")
+        taskCategoryModel.addTaskCategory(
+            name: "工作",
+            themeColor: RGBAColor(red: 0.47, green: 0.83, blue: 0.97, alpha: 1),
+            iconSystemName: "bag")
+        taskCategoryModel.addTaskCategory(
+            name: "运动",
+            themeColor: RGBAColor(red: 0.93, green: 0.45, blue: 0.18, alpha: 1),
+            iconSystemName: "figure.disc.sports")
+        taskCategoryModel.addTaskCategory(
+            name: "休息",
+            themeColor: RGBAColor(red: 0.1, green: 0.25, blue: 0.64, alpha: 1),
+            iconSystemName: "bed.double")
+        taskCategoryModel.addTaskCategory(
+            name: "路上",
+            themeColor: RGBAColor(red: 0.52, green: 0.52, blue: 0.52, alpha: 1),
+            iconSystemName: "figure.walk")
+        taskCategoryModel.addTaskCategory(
+            name: "娱乐",
+            themeColor: RGBAColor(red: 0.92, green: 0.30, blue: 0.24, alpha: 1),
+            iconSystemName: "gamecontroller")
+        taskCategoryModel.addTaskCategory(
+            name: "听音乐", themeColor:
+                RGBAColor(red: 0.87, green: 0.83, blue: 0.27, alpha: 1),
+            iconSystemName: "music.quarternote.3")
         
         for i in 1..<4 {
             timelineModel.addCompletedTask(

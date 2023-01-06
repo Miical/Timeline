@@ -278,7 +278,8 @@ struct SystemIconPicker: View {
             "airplane" ,"car" ,"bus", "train.side.front.car", "fuelpump",
             "ruler", "backpack", "paperclip", "figure.stairs", "keyboard",
             "text.bubble", "phone.connection", "envelope", "bathtub",
-            "clock", "gamecontroller"
+            "clock", "gamecontroller", "fork.knife", "bag", "figure.disc.sports",
+            "bed.double", "figure.walk", "music.quarternote.3"
         ]
     }
 }

@@ -126,7 +126,7 @@ struct GlobalTodoTaskCard: View {
                 
                 RoundedRectangle(cornerRadius: 2)
                     .frame(width: 4)
-                    .opacity(0.4)
+                    .opacity(0.6)
                     .foregroundColor(Color(red: 1, green: 0.85, blue: 0.35, opacity: 0.8))
                     .padding(8)
             }

@@ -105,7 +105,7 @@ struct StatisticsView: View {
                                     Spacer(minLength: 0)
                                     HStack {
                                         Rectangle()
-                                            .fill(pie.color.opacity(0.6))
+                                            .fill(pie.color.opacity(0.65))
                                             .frame(width: self.getWidth(width: geometry.frame(in: .global).width,
                                                                         value: pie.percent),
                                                    height: 10.0)
@@ -151,7 +151,7 @@ struct DrawShape: View {
                             endAngle: .init(degrees: self.to()),
                             clockwise: false)
             }
-            .fill(data[index].color.opacity(0.55))
+            .fill(data[index].color.opacity(0.60))
             
             Path { path in
                 path.move(to: self.center)

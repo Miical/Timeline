@@ -120,7 +120,7 @@ struct CompletedTaskCard: View {
                 Spacer()
                 RoundedRectangle(cornerRadius: 2)
                     .frame(width: 4)
-                    .opacity(0.4)
+                    .opacity(0.6)
                     .foregroundColor(timeline.taskCategory(id: completedTask.taskCategoryId).color)
                     .padding(8)
             }
@@ -150,7 +150,7 @@ struct PlannedTaskCard: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: TimelineCardify.CardConstants.cornerRadius)
                             .foregroundColor(timeline.taskCategory(id: plannedTask.taskCategoryId).color)
-                            .opacity(0.4)
+                            .opacity(0.6)
                         HStack {
                             Image(systemName: "calendar")
                                 .foregroundColor(.white)
@@ -215,7 +215,7 @@ struct PlannedTaskCard: View {
                 Spacer()
                 RoundedRectangle(cornerRadius: 2)
                     .frame(width: 4)
-                    .opacity(0.4)
+                    .opacity(0.6)
                     .foregroundColor(timeline.taskCategory(id: plannedTask.taskCategoryId).color)
                     .padding(8)
             }
@@ -267,7 +267,7 @@ struct TodoTaskCard: View {
                 
                 RoundedRectangle(cornerRadius: 2)
                     .frame(width: 4)
-                    .opacity(0.4)
+                    .opacity(0.6)
                     .foregroundColor(Color(red: 1, green: 0.85, blue: 0.35, opacity: 0.8))
                     .padding(8)
             }

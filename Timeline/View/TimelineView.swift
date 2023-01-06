@@ -204,12 +204,14 @@ struct TimelineView: View {
                 }
 
                 AnimatedActionButton(title: "编辑", systemImage: "square.and.pencil") {
+                    attachedPlannedTask = nil
                     needToAdd = false
                     plannedTaskToEdit = plannedTask
                 }
                 AnimatedActionButton(
                     title: plannedTask.attachedRepeatPlanId == nil ? "删除" : "删除重复计划任务",
                     systemImage: "xmark.square", delay: 0.6) {
+                    attachedPlannedTask = nil
                     if (plannedTask.attachedRepeatPlanId != nil) {
                         timeline.removeRepeatPlan(at: plannedTask.attachedRepeatPlanId!)
                     } else {
