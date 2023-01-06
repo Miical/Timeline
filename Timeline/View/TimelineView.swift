@@ -188,15 +188,23 @@ struct TimelineView: View {
     func plannedTaskItem(plannedTask: PlannedTask) -> some View {
         PlannedTaskCard(plannedTask: plannedTask)
             .contextMenu {
-                if !plannedTask.isExecuted {
+                if !plannedTask.isExecuted
+                    && getDateString(of: plannedTask.beginTime) ==  getDateString(of: Date())
+                    && Date(timeInterval: 300, since: Date()) > plannedTask.beginTime
+                    && Date() < plannedTask.endTime {
+                    
                     AnimatedActionButton(title: "执行计划", systemImage: "hourglass.bottomhalf.filled") {
                         attachedPlannedTask = plannedTask
                         currentTab = .timing
                     }
+                } else if !plannedTask.isExecuted {
+                    Text("任务未在可执行时间内")
                 }
+
                 AnimatedActionButton(title: "编辑", systemImage: "square.and.pencil") {
                     needToAdd = false
-                    plannedTaskToEdit = plannedTask}
+                    plannedTaskToEdit = plannedTask
+                }
                 AnimatedActionButton(
                     title: plannedTask.attachedRepeatPlanId == nil ? "删除" : "删除重复计划任务",
                     systemImage: "xmark.square") {

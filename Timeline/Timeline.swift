@@ -118,7 +118,22 @@ class Timeline: ObservableObject {
         var allRecords = timelineModel.allRecord(for: date)
         for repeatPlan in timelineModel.allRepeatPlans(for: date) {
             if !allRecords.contains(where: { $0.attachedRepeatPlan == repeatPlan.id }) {
-                allRecords.append(repeatPlan.task)
+                switch(repeatPlan.task) {
+                case .plannedTask(let plannedTask):
+                    allRecords.append(Record.plannedTask(PlannedTask(
+                        beginTime: connectDateAndTime(date: date, time: plannedTask.beginTime),
+                        endTime: connectDateAndTime(date: date, time: plannedTask.endTime),
+                        taskCategoryId: plannedTask.taskCategoryId,
+                        taskDescription: plannedTask.taskDescription,
+                        id: plannedTask.id)))
+                case .todoTask(let todoTask):
+                    allRecords.append(Record.todoTask(TodoTask(
+                        name: todoTask.name,
+                        beginTime: connectDateAndTime(date: date, time: todoTask.beginTime!),
+                        id: todoTask.id)))
+                default:
+                    break
+                }
             }
         }
         return allRecords.sorted { record1, record2 in

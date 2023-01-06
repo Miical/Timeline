@@ -52,3 +52,19 @@ func timeStringFromSeconds(_ seconds: Int) -> String {
     }
     return timeString
 }
+
+// 由给定的时间日期生成新的Date对象
+func connectDateAndTime(date: Date, time: Date) -> Date {
+    let calendar = Calendar.current
+    
+    let year = calendar.component(.year, from: date)
+    let month = calendar.component(.month, from: date)
+    let day = calendar.component(.day, from: date)
+    
+    var newDate = time
+    newDate = calendar.date(bySetting: .year, value: year, of: newDate)!
+    newDate = calendar.date(bySetting: .month, value: month, of: newDate)!
+    newDate = calendar.date(bySetting: .day, value: day, of: newDate)!
+    
+    return newDate
+}
