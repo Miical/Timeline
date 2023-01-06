@@ -109,7 +109,7 @@ struct TimingView: View {
             }
             
             ZStack {
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 25)
                     .foregroundColor(.gray.opacity(0.1))
                 VStack {
                     if let attachedPlannedTask = attachedPlannedTask {
@@ -185,9 +185,10 @@ struct TimingView: View {
                 } label: {
                     HStack {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 20)
-                                .frame(width: 100, height: 40)
-                                .foregroundColor(.green.opacity(0.8))
+                            RoundedRectangle(cornerRadius: 25)
+                                .frame(width: 100, height: 50)
+                                .foregroundColor(.green.opacity(0.7))
+                                .shadow(radius: 4.0)
                             Text("开始")
                                 .foregroundColor(.white)
                         }
@@ -200,9 +201,10 @@ struct TimingView: View {
                 } label: {
                     HStack {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 20)
-                                .frame(width: 100, height: 40)
-                                .foregroundColor(.red.opacity(0.8))
+                            RoundedRectangle(cornerRadius: 25)
+                                .frame(width: 100, height: 50)
+                                .foregroundColor(.red.opacity(0.7))
+                                .shadow(radius: 4.0)
                             Text("结束")
                                 .foregroundColor(.white)
                         }
@@ -220,9 +222,10 @@ struct TimingView: View {
                 } label: {
                     HStack {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 20)
-                                .frame(width: 100, height: 40)
-                                .foregroundColor(.green.opacity(0.8))
+                            RoundedRectangle(cornerRadius: 25)
+                                .frame(width: 100, height: 50)
+                                .foregroundColor(.green.opacity(0.7))
+                                .shadow(radius: 4.0)
                             Text("切换任务")
                                 .foregroundColor(.white)
                         }
@@ -256,9 +259,10 @@ struct TimingView: View {
                             }
                         } label: {
                             ZStack {
-                                RoundedRectangle(cornerRadius: 20)
-                                    .frame(width: 100, height: 40)
-                                    .foregroundColor(.green.opacity(0.8))
+                                RoundedRectangle(cornerRadius: 25)
+                                    .frame(width: 100, height: 50)
+                                    .foregroundColor(.green.opacity(0.7))
+                                    .shadow(radius: 4.0)
                                 Text(attachedPlannedTask!.isExecuted ? "继续" : "开始")
                                     .foregroundColor(.white)
                             }
@@ -275,9 +279,10 @@ struct TimingView: View {
                             } label: {
                                 HStack {
                                     ZStack {
-                                        RoundedRectangle(cornerRadius: 20)
-                                            .frame(width: 100, height: 40)
-                                            .foregroundColor(.red.opacity(0.8))
+                                        RoundedRectangle(cornerRadius: 25)
+                                            .frame(width: 100, height: 50)
+                                            .foregroundColor(.red.opacity(0.7))
+                                            .shadow(radius: 4.0)
                                         Text("结束")
                                             .foregroundColor(.white)
                                     }
@@ -295,9 +300,10 @@ struct TimingView: View {
                         } label: {
                             HStack {
                                 ZStack {
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .frame(width: 100, height: 40)
-                                        .foregroundColor(.gray.opacity(0.8))
+                                    RoundedRectangle(cornerRadius: 25)
+                                        .frame(width: 100, height: 50)
+                                        .foregroundColor(.gray.opacity(0.7))
+                                        .shadow(radius: 4.0)
                                     Text("暂停")
                                         .foregroundColor(.white)
                                 }
@@ -315,9 +321,10 @@ struct TimingView: View {
                         } label: {
                             HStack {
                                 ZStack {
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .frame(width: 100, height: 40)
-                                        .foregroundColor(.red.opacity(0.8))
+                                    RoundedRectangle(cornerRadius: 25)
+                                        .frame(width: 100, height: 50)
+                                        .foregroundColor(.red.opacity(0.7))
+                                        .shadow(radius: 4.0)
                                     Text("结束")
                                         .foregroundColor(.white)
                                 }
@@ -337,10 +344,20 @@ struct TimingView: View {
             timeline.startATask(of: selectedTaskCategory!, with: taskDescription, at: Date())
             
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                timeCostInSeconds = intervalSeconds(between: timeline.ongoingTask!.beginTime, and: Date())
-                progress = CGFloat((timeCostInSeconds % 60)) / 60.0
-                if progress == 0 {
-                    reverse.toggle()
+                if getDateString(of: timeline.ongoingTask!.beginTime)
+                    != getDateString(of: Date()) {
+                    
+                    taskDescription = timeline.ongoingTask!.taskDescription
+                    selectedTaskCategory = timeline.taskCategory(id: timeline.ongoingTask!.taskCategoryId)
+                    endTask()
+                    startTask()
+                    
+                } else {
+                    timeCostInSeconds = intervalSeconds(between: timeline.ongoingTask!.beginTime, and: Date())
+                    progress = CGFloat((timeCostInSeconds % 60)) / 60.0
+                    if progress == 0 {
+                        reverse.toggle()
+                    }
                 }
             }
         }

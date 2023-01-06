@@ -51,6 +51,7 @@ struct StatisticsView: View {
                 
                 Image(systemName: "plus")
                     .foregroundColor(.black)
+                    .opacity(0)
             }
             .padding([.top, .horizontal])
             Divider()
