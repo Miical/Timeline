@@ -229,13 +229,13 @@ struct TimelineView: View {
                     Button {
                         timeline.cancelCompletion(of: todoTask)
                     } label: {
-                        Label("取消完成", systemImage: "xmark.app")
+                        Label("取消完成", systemImage: "xmark")
                     }
                 } else {
                     Button {
                         timeline.completeTodoTask(todoTask, at: Date())
                     } label: {
-                        Label("完成", systemImage: "checkmark.square")
+                        Label("完成", systemImage: "checkmark")
                     }
                 }
 
