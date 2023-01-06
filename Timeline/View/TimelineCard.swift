@@ -236,27 +236,33 @@ struct TodoTaskCard: View {
                 if todoTask.isComplete {
                     Image(systemName: "checkmark.square")
                         .onTapGesture {
-                            withAnimation {
-                                timeline.cancelCompletion(of: todoTask)
-                            }
+                            timeline.cancelCompletion(of: todoTask)
                         }
                 } else {
                     Image(systemName: "square")
                         .onTapGesture {
-                            withAnimation {
-                                timeline.completeTodoTask(todoTask, at: Date())
-                            }
+                            timeline.completeTodoTask(todoTask, at: Date())
                         }
                 }
-                Text(todoTask.name)
-                    .font(.system(size: 15))
+                
+                if todoTask.isComplete {
+                    Text(todoTask.name)
+                        .font(.system(size: 15))
+                        .strikethrough()
+                } else {
+                    Text(todoTask.name)
+                        .font(.system(size: 15))
+                }
                 
                 Spacer()
                 
                 if todoTask.isComplete {
-                    Text("——于 \(getTimeString(of: todoTask.endTime!)) 完成")
-                        .foregroundColor(.gray)
-                        .font(.footnote)
+                    VStack(alignment: .trailing) {
+                        Text("——完成时间")
+                        Text(getDateTimeString(of: todoTask.endTime!))
+                    }
+                    .foregroundColor(.gray)
+                    .font(.footnote)
                 }
                 
                 RoundedRectangle(cornerRadius: 2)

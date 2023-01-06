@@ -105,14 +105,23 @@ struct GlobalTodoTaskCard: View {
                             }
                         }
                 }
-                Text(todoTask.name)
+                
+                if todoTask.isComplete {
+                    Text(todoTask.name)
+                        .strikethrough()
+                } else {
+                    Text(todoTask.name)
+                }
                 
                 Spacer()
                 
                 if todoTask.isComplete {
-                    Text("——于 \(getTimeString(of: todoTask.endTime!)) 完成")
-                        .foregroundColor(.gray)
-                        .font(.footnote)
+                    VStack(alignment: .trailing) {
+                        Text("——完成时间")
+                        Text(getDateTimeString(of: todoTask.endTime!))
+                    }
+                    .foregroundColor(.gray)
+                    .font(.footnote)
                 }
                 
                 RoundedRectangle(cornerRadius: 2)
