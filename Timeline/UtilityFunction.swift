@@ -22,7 +22,7 @@ func theDayOfTheWeek(at date: Date) -> Int {
 /// 将 Date 类型转换为 yyyy/MM/dd hh:mm:ss 格式的字符串
 func getDateTimeString(of time: Date) -> String {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy/MM/dd hh:mm:ss"
+    dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
     return dateFormatter.string(from: time)
 }
 
@@ -37,7 +37,7 @@ func getDateString(of time: Date) -> String {
 /// 将 Date 类型转换为 hh:mm:ss 格式的字符串
 func getTimeString(of time: Date) -> String {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "hh:mm:ss"
+    dateFormatter.dateFormat = "HH:mm:ss"
     return dateFormatter.string(from: time)
 }
     
