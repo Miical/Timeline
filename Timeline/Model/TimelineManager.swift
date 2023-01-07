@@ -28,7 +28,7 @@ struct TimelineManager: Codable {
     
     func allRecord(for date: Date) -> [Record] {
         return recordList
-            .filter { Calendar.current.isDate(date, inSameDayAs: $0.getBeginTime()!) }
+            .filter { isSameDay(date, $0.getBeginTime()! )}
             .sorted { record1, record2 in record1.getBeginTime()! < record2.getBeginTime()! }
     }
     
@@ -249,7 +249,7 @@ struct TimelineManager: Codable {
                     break
                 }
             }
-            date = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+            date = TheNextDay(of: date)
         }
         
         

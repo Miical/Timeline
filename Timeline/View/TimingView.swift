@@ -153,13 +153,24 @@ struct TimingView: View {
                         .padding(.horizontal)
                     
                     if let attachedPlannedTask = attachedPlannedTask {
-                        HStack {
-                            Text(attachedPlannedTask.taskDescription)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .foregroundColor(.gray)
-                                .padding()
-                                .padding(.horizontal, 20)
-                            Spacer()
+                        VStack {
+                            HStack {
+                                Text("计划任务时长：\(timeStringFromSeconds(attachedPlannedTask.durationInSeconds))")
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .foregroundColor(.gray)
+                                    .padding(.top)
+                                    .padding(.bottom, 2)
+                                    .padding(.horizontal, 20)
+                                Spacer()
+                            }
+                            HStack {
+                                Text(attachedPlannedTask.taskDescription)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .foregroundColor(.gray)
+                                    .padding(.bottom)
+                                    .padding(.horizontal, 20)
+                                Spacer()
+                            }
                         }
                     } else {
                         TextField("任务描述", text: $taskDescription)
@@ -172,7 +183,7 @@ struct TimingView: View {
                 }
             }
             .frame(height: 30)
-            .padding(50)
+            .padding(60)
         }
     }
     

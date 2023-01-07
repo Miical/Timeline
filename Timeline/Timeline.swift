@@ -49,7 +49,6 @@ class Timeline: ObservableObject {
     }
     
     init() {
-        /*
         if let taskCategoryUrl = Timeline.taskCategoryUrl,
            let timelineUrl = Timeline.timelineUrl,
            let localTaskCategoryModel = try? TaskCategoryManager(url: taskCategoryUrl),
@@ -58,14 +57,14 @@ class Timeline: ObservableObject {
             taskCategoryModel = localTaskCategoryModel
             timelineModel = localTimelineModel
         } else {
-         */
             taskCategoryModel = TaskCategoryManager()
             timelineModel = TimelineManager()
+            loadDefaultTaskCategories()
             loadDemoContent()
-        // }
+        }
     }
     
-    func loadDemoContent() {
+    func loadDefaultTaskCategories() {
         taskCategoryModel.addTaskCategory(
             name: "吃饭",
             themeColor: RGBAColor(red: 0.96, green: 0.80, blue: 0.35, alpha: 1),
@@ -98,44 +97,87 @@ class Timeline: ObservableObject {
             name: "听音乐", themeColor:
                 RGBAColor(red: 0.87, green: 0.83, blue: 0.27, alpha: 1),
             iconSystemName: "music.quarternote.3")
-        
-        for i in 1..<4 {
-            timelineModel.addCompletedTask(
-                taskCategoryId: taskCategoryList.randomElement()!.id,
-                taskDescription: "示例已完成任务 \(i)",
-                beginTime: Date(timeIntervalSinceNow: TimeInterval(i * 10)),
-                endTime: Date(timeIntervalSinceNow: TimeInterval(i * 10 + 555)))
+    }
+    
+    func loadDemoContent() {
+        var date = TheDayBefore(numOfDays: 10, date: Date())
+        let currentDate = Date()
+        while date <= TheDayAfter(numOfDays: 10, since: currentDate) {
+            let startTime = getTheStartOf(date: date)
+            let completedTaskEndTime = isSameDay(date, currentDate) ? currentDate : getTheEndOf(date: date)
+            let endTime = getTheEndOf(date: date)
+            
+            if startTime < currentDate {
+                randomTask(between: startTime, and: completedTaskEndTime, type: 0, taskNumber: 10)
+                randomTask(between: startTime, and: completedTaskEndTime, type: 2, taskNumber: 2)
+            }
+            randomTask(between: startTime, and: endTime, type: 1, taskNumber: 3)
+            randomTask(between: startTime, and: endTime, type: 3, taskNumber: 4)
+            randomTask(between: startTime, and: endTime, type: 4, taskNumber: 2)
+            
+            date = TheNextDay(of: date)
         }
         
-        for i in 1..<4 {
-            timelineModel.addPlannedTask(
-                taskCategoryId: taskCategoryList.randomElement()!.id,
-                taskDescription: "示例计划任务 \(i)",
-                beginTime: Date(timeIntervalSinceNow: TimeInterval(100 + i * 10)),
-                endTime: Date(timeIntervalSinceNow: TimeInterval(100 + i * 10 + 20)))
-            timelineModel.addPlannedTask(
-                taskCategoryId: taskCategoryList.randomElement()!.id,
-                taskDescription: "示例重复计划任务 \(i)",
-                beginTime: Date(timeIntervalSinceNow: TimeInterval(300 + i * 10)),
-                endTime: Date(timeIntervalSinceNow: TimeInterval(300 + i * 10 + 20)),
-                isAvailable: Array(repeating: true, count: 7))
-        }
+        randomGlobalTodoTasks(taskNumber: 10)
+    }
+    
+    var taskId = 0
+    func getTaskId() -> Int {
+        taskId += 1
+        return taskId
+    }
+    func randomTask(between beginTime: Date, and endTime: Date, type: Int, taskNumber: Int) {
+        let totalSeconds = intervalSeconds(between: beginTime, and: endTime)
+        var timeNodes: [Int] = []
         
-        for i in 1..<4 {
-            timelineModel.addTodoTask(
-                taskName: "示例代办 \(i)",
-                beginTime: Date(timeIntervalSinceNow: TimeInterval(200 + i * 10)))
-            timelineModel.addTodoTask(
-                taskName: "示例重复代办 \(i)",
-                beginTime: Date(timeIntervalSinceNow: TimeInterval(400 + i * 10)),
-                isAvailable: Array(repeating: true, count: 7))
+        for _ in 0..<taskNumber*2 {
+            timeNodes.append(Int(arc4random_uniform(UInt32(totalSeconds))))
         }
+        timeNodes.sort()
         
-        for i in 1..<4 {
-            timelineModel.addGlobalTodoTask(taskName: "示例全局代办 \(i)")
+        var i = 0
+        while i < timeNodes.count {
+            let taskBeginTime = Date(timeInterval: TimeInterval(timeNodes[i]), since: beginTime)
+            let taskEndTime = Date(timeInterval: TimeInterval(timeNodes[i + 1]), since: beginTime)
+            
+            switch(type) {
+            case 0:
+                timelineModel.addCompletedTask(
+                    taskCategoryId: taskCategoryList.randomElement()!.id,
+                    taskDescription: "示例已完成任务 \(getTaskId())",
+                    beginTime: taskBeginTime, endTime: taskEndTime)
+            case 1:
+                timelineModel.addPlannedTask(
+                    taskCategoryId: taskCategoryList.randomElement()!.id,
+                    taskDescription: "示例计划任务 \(getTaskId())",
+                    beginTime: taskBeginTime, endTime: taskEndTime)
+            case 2:
+                timelineModel.addPlannedTask(
+                    taskCategoryId: taskCategoryList.randomElement()!.id,
+                    taskDescription: "示例重复计划任务 \(getTaskId())",
+                    beginTime: taskBeginTime, endTime: taskEndTime,
+                    isAvailable: randomIsAvailable())
+            case 3:
+                timelineModel.addTodoTask(
+                    taskName: "示例代办 \(getTaskId())",
+                    beginTime: taskBeginTime)
+            case 4:
+                timelineModel.addTodoTask(
+                    taskName: "示例重复代办 \(getTaskId())",
+                    beginTime: taskBeginTime,
+                    isAvailable: randomIsAvailable())
+            default:
+                break
+            }
+            i += 2
         }
     }
     
+    func randomGlobalTodoTasks(taskNumber: Int) {
+        for i in 0..<taskNumber {
+            timelineModel.addGlobalTodoTask(taskName: "示例全局代办 \(i)")
+        }
+    }
     
     // MARK: - 管理记录
     

@@ -80,3 +80,39 @@ func getTheStartOf(date: Date) -> Date {
         calendar: calendar, year: year, month: month, day: day,
         hour: 0, minute: 0, second: 0))!
 }
+
+/// 获取一天的结束
+func getTheEndOf(date: Date) -> Date {
+    let calendar = Calendar.current
+    
+    let year = calendar.component(.year, from: date)
+    let month = calendar.component(.month, from: date)
+    let day = calendar.component(.day, from: date)
+    return calendar.date(from: DateComponents(
+        calendar: calendar, year: year, month: month, day: day,
+        hour: 23, minute: 59, second: 59))!
+}
+
+func TheDayAfter(numOfDays: Int, since date: Date) -> Date {
+    return Calendar.current.date(byAdding: .day, value: numOfDays, to: date)!
+}
+
+func TheNextDay(of date: Date) -> Date {
+    return TheDayAfter(numOfDays: 1, since: date)
+}
+
+func TheDayBefore(numOfDays: Int, date: Date) -> Date {
+    return TheDayAfter(numOfDays: -numOfDays, since: date)
+}
+
+func isSameDay(_ date1: Date, _ date2: Date) -> Bool {
+    return Calendar.current.isDate(date1, inSameDayAs: date2)
+}
+
+func randomIsAvailable() -> [Bool] {
+    var isAvailable: [Bool] = []
+    for _ in 0..<7 {
+        isAvailable.append(Int(arc4random_uniform(UInt32(100))) % 3 == 0)
+    }
+    return isAvailable
+}
